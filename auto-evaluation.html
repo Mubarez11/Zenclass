@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Auto-évaluation - Gérer le Stress | ZenClass</title>
+	<link rel="stylesheet" href="stylevideoADID.css">
+	<link rel="stylesheet" href="pages.css">
+	<link rel="stylesheet" href="agent.css">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar animate__animated animate__fadeInDown">
+	<div class="nav-container">
+		<div class="logo">
+			<a href="videoADID.html">
+				<i class="fas fa-brain"></i>
+				<span>ZenClass</span>
+			</a>
+		</div>
+		<ul class="nav-links">
+			<li><a href="videoADID.html"><i class="fas fa-home"></i> Accueil</a></li>
+			<li><a href="quiz.html"><i class="fas fa-question-circle"></i> Quiz</a></li>
+			<li><a href="auto-evaluation.html" class="active"><i class="fas fa-chart-bar"></i> Auto-évaluation</a></li>
+			<li><a href="respiration.html"><i class="fas fa-wind"></i> Respiration</a></li>
+			<li><a href="classification.html"><i class="fas fa-sort"></i> Classification</a></li>
+			<li><a href="jeu-roles.html"><i class="fas fa-theater-masks"></i> Jeu de rôles</a></li>
+		</ul>
+		<div class="hamburger" id="hamburger">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+</nav>
+
+<!-- Hero Section -->
+<section class="page-hero evaluation-hero">
+	<div class="page-hero-content">
+		<div class="hero-badge animate__animated animate__bounceIn">
+			<i class="fas fa-chart-bar"></i> Mesurez votre évolution
+		</div>
+		<h1 class="animate__animated animate__fadeInUp">Auto-évaluation</h1>
+		<p class="animate__animated animate__fadeInUp animate__delay-1s">
+			Évaluez votre niveau de stress et suivez votre progression
+		</p>
+	</div>
+</section>
+
+<!-- Evaluation Section -->
+<section class="evaluation-section">
+	<div class="container">
+		<div class="evaluation-intro" data-aos="fade-up">
+			<p><i class="fas fa-info-circle"></i> Ce questionnaire vous aide à prendre conscience de votre niveau de stress. Répondez honnêtement pour obtenir des résultats pertinents.</p>
+		</div>
+
+		<div class="evaluation-form" id="evaluationForm" data-aos="fade-up">
+			<!-- Question 1 -->
+			<div class="eval-question">
+				<h3><span class="q-num">1</span> Je me sens souvent tendu(e) ou nerveux(se)</h3>
+				<div class="rating-scale">
+					<label class="rating-option">
+						<input type="radio" name="q1" value="1">
+						<span class="rating-circle">1</span>
+						<span class="rating-label">Jamais</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q1" value="2">
+						<span class="rating-circle">2</span>
+						<span class="rating-label">Rarement</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q1" value="3">
+						<span class="rating-circle">3</span>
+						<span class="rating-label">Parfois</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q1" value="4">
+						<span class="rating-circle">4</span>
+						<span class="rating-label">Souvent</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q1" value="5">
+						<span class="rating-circle">5</span>
+						<span class="rating-label">Toujours</span>
+					</label>
+				</div>
+			</div>
+
+			<!-- Question 2 -->
+			<div class="eval-question">
+				<h3><span class="q-num">2</span> J'ai du mal à me concentrer sur mes tâches</h3>
+				<div class="rating-scale">
+					<label class="rating-option">
+						<input type="radio" name="q2" value="1">
+						<span class="rating-circle">1</span>
+						<span class="rating-label">Jamais</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q2" value="2">
+						<span class="rating-circle">2</span>
+						<span class="rating-label">Rarement</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q2" value="3">
+						<span class="rating-circle">3</span>
+						<span class="rating-label">Parfois</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q2" value="4">
+						<span class="rating-circle">4</span>
+						<span class="rating-label">Souvent</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q2" value="5">
+						<span class="rating-circle">5</span>
+						<span class="rating-label">Toujours</span>
+					</label>
+				</div>
+			</div>
+
+			<!-- Question 3 -->
+			<div class="eval-question">
+				<h3><span class="q-num">3</span> Je ressens des tensions physiques (maux de tête, dos, ventre)</h3>
+				<div class="rating-scale">
+					<label class="rating-option">
+						<input type="radio" name="q3" value="1">
+						<span class="rating-circle">1</span>
+						<span class="rating-label">Jamais</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q3" value="2">
+						<span class="rating-circle">2</span>
+						<span class="rating-label">Rarement</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q3" value="3">
+						<span class="rating-circle">3</span>
+						<span class="rating-label">Parfois</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q3" value="4">
+						<span class="rating-circle">4</span>
+						<span class="rating-label">Souvent</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q3" value="5">
+						<span class="rating-circle">5</span>
+						<span class="rating-label">Toujours</span>
+					</label>
+				</div>
+			</div>
+
+			<!-- Question 4 -->
+			<div class="eval-question">
+				<h3><span class="q-num">4</span> Je sais identifier ce qui me stresse</h3>
+				<div class="rating-scale">
+					<label class="rating-option">
+						<input type="radio" name="q4" value="5">
+						<span class="rating-circle">1</span>
+						<span class="rating-label">Jamais</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q4" value="4">
+						<span class="rating-circle">2</span>
+						<span class="rating-label">Rarement</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q4" value="3">
+						<span class="rating-circle">3</span>
+						<span class="rating-label">Parfois</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q4" value="2">
+						<span class="rating-circle">4</span>
+						<span class="rating-label">Souvent</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q4" value="1">
+						<span class="rating-circle">5</span>
+						<span class="rating-label">Toujours</span>
+					</label>
+				</div>
+			</div>
+
+			<!-- Question 5 -->
+			<div class="eval-question">
+				<h3><span class="q-num">5</span> Je connais des techniques pour me calmer</h3>
+				<div class="rating-scale">
+					<label class="rating-option">
+						<input type="radio" name="q5" value="5">
+						<span class="rating-circle">1</span>
+						<span class="rating-label">Aucune</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q5" value="4">
+						<span class="rating-circle">2</span>
+						<span class="rating-label">Peu</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q5" value="3">
+						<span class="rating-circle">3</span>
+						<span class="rating-label">Quelques-unes</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q5" value="2">
+						<span class="rating-circle">4</span>
+						<span class="rating-label">Plusieurs</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q5" value="1">
+						<span class="rating-circle">5</span>
+						<span class="rating-label">Beaucoup</span>
+					</label>
+				</div>
+			</div>
+
+			<!-- Question 6 -->
+			<div class="eval-question">
+				<h3><span class="q-num">6</span> J'arrive à demander de l'aide quand je suis stressé(e)</h3>
+				<div class="rating-scale">
+					<label class="rating-option">
+						<input type="radio" name="q6" value="5">
+						<span class="rating-circle">1</span>
+						<span class="rating-label">Jamais</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q6" value="4">
+						<span class="rating-circle">2</span>
+						<span class="rating-label">Rarement</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q6" value="3">
+						<span class="rating-circle">3</span>
+						<span class="rating-label">Parfois</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q6" value="2">
+						<span class="rating-circle">4</span>
+						<span class="rating-label">Souvent</span>
+					</label>
+					<label class="rating-option">
+						<input type="radio" name="q6" value="1">
+						<span class="rating-circle">5</span>
+						<span class="rating-label">Toujours</span>
+					</label>
+				</div>
+			</div>
+
+			<button class="btn btn-primary btn-large" onclick="showResults()">
+				<i class="fas fa-chart-pie"></i> Voir mes résultats
+			</button>
+		</div>
+
+		<!-- Results Section -->
+		<div class="evaluation-results" id="evaluationResults" data-aos="fade-up">
+			<h2><i class="fas fa-chart-radar"></i> Vos résultats</h2>
+			
+			<div class="results-grid">
+				<div class="chart-container">
+					<canvas id="radarChart"></canvas>
+				</div>
+				
+				<div class="score-summary">
+					<div class="total-score" id="totalScore">
+						<div class="score-label">Score global</div>
+						<div class="score-value">--</div>
+						<div class="score-max">/30</div>
+					</div>
+					
+					<div class="stress-level" id="stressLevel">
+						<div class="level-bar">
+							<div class="level-fill" id="levelFill"></div>
+							<div class="level-marker" id="levelMarker"></div>
+						</div>
+						<div class="level-labels">
+							<span>Faible</span>
+							<span>Modéré</span>
+							<span>Élevé</span>
+						</div>
+					</div>
+					
+					<div class="interpretation" id="interpretation">
+						<!-- Will be filled by JS -->
+					</div>
+				</div>
+			</div>
+
+			<div class="recommendations" id="recommendations">
+				<h3><i class="fas fa-lightbulb"></i> Recommandations personnalisées</h3>
+				<div class="reco-list" id="recoList">
+					<!-- Will be filled by JS -->
+				</div>
+			</div>
+
+			<div class="results-actions">
+				<button class="btn btn-outline" onclick="resetForm()">
+					<i class="fas fa-redo"></i> Refaire le test
+				</button>
+				<button class="btn btn-primary" onclick="printResults()">
+					<i class="fas fa-print"></i> Imprimer
+				</button>
+				<a href="respiration.html" class="btn btn-secondary">
+					<i class="fas fa-wind"></i> Essayer la respiration guidée
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Footer -->
+<footer class="footer simple-footer">
+	<div class="footer-content">
+		<p>© 2026 ZenClass - MALTT ADID | <a href="videoADID.html">Retour à l'accueil</a></p>
+	</div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 800, once: true });
+
+let radarChart = null;
+
+function showResults() {
+	const questions = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'];
+	const scores = {};
+	let total = 0;
+	let answered = 0;
+	
+	questions.forEach(q => {
+		const selected = document.querySelector(`input[name="${q}"]:checked`);
+		if (selected) {
+			scores[q] = parseInt(selected.value);
+			total += scores[q];
+			answered++;
+		}
+	});
+	
+	if (answered < questions.length) {
+		alert('Veuillez répondre à toutes les questions.');
+		return;
+	}
+	
+	// Hide form, show results
+	document.getElementById('evaluationForm').style.display = 'none';
+	document.getElementById('evaluationResults').style.display = 'block';
+	
+	// Update total score
+	document.querySelector('#totalScore .score-value').textContent = total;
+	
+	// Update stress level bar
+	const percentage = (total / 30) * 100;
+	document.getElementById('levelFill').style.width = `${percentage}%`;
+	document.getElementById('levelMarker').style.left = `${percentage}%`;
+	
+	// Set color based on level
+	const levelFill = document.getElementById('levelFill');
+	if (percentage <= 40) {
+		levelFill.style.background = 'linear-gradient(90deg, #48bb78, #68d391)';
+	} else if (percentage <= 70) {
+		levelFill.style.background = 'linear-gradient(90deg, #ecc94b, #f6ad55)';
+	} else {
+		levelFill.style.background = 'linear-gradient(90deg, #fc8181, #f56565)';
+	}
+	
+	// Interpretation
+	const interpretation = document.getElementById('interpretation');
+	if (percentage <= 40) {
+		interpretation.innerHTML = `
+			<div class="interp-icon" style="color: #48bb78;"><i class="fas fa-smile"></i></div>
+			<p><strong>Niveau de stress faible</strong><br>
+			Vous gérez bien votre stress ! Continuez à utiliser vos techniques de relaxation.</p>
+		`;
+	} else if (percentage <= 70) {
+		interpretation.innerHTML = `
+			<div class="interp-icon" style="color: #ecc94b;"><i class="fas fa-meh"></i></div>
+			<p><strong>Niveau de stress modéré</strong><br>
+			Vous ressentez un stress gérable. Les exercices proposés peuvent vous aider à l'améliorer.</p>
+		`;
+	} else {
+		interpretation.innerHTML = `
+			<div class="interp-icon" style="color: #fc8181;"><i class="fas fa-frown"></i></div>
+			<p><strong>Niveau de stress élevé</strong><br>
+			Votre niveau de stress est important. Nous vous recommandons de pratiquer régulièrement les exercices de relaxation.</p>
+		`;
+	}
+	
+	// Recommendations
+	const recoList = document.getElementById('recoList');
+	recoList.innerHTML = '';
+	
+	if (scores.q1 >= 4 || scores.q3 >= 4) {
+		recoList.innerHTML += `
+			<div class="reco-item">
+				<i class="fas fa-wind"></i>
+				<div>
+					<strong>Pratiquez la respiration 4-7-8</strong>
+					<p>Cette technique aide à réduire les tensions physiques et l'anxiété.</p>
+					<a href="respiration.html">Essayer maintenant →</a>
+				</div>
+			</div>
+		`;
+	}
+	
+	if (scores.q4 >= 3) {
+		recoList.innerHTML += `
+			<div class="reco-item">
+				<i class="fas fa-layer-group"></i>
+				<div>
+					<strong>Faites l'exercice de classification</strong>
+					<p>Apprenez à identifier vos sources de stress pour mieux les gérer.</p>
+					<a href="classification.html">Commencer →</a>
+				</div>
+			</div>
+		`;
+	}
+	
+	if (scores.q6 >= 3) {
+		recoList.innerHTML += `
+			<div class="reco-item">
+				<i class="fas fa-theater-masks"></i>
+				<div>
+					<strong>Essayez le jeu de rôles</strong>
+					<p>Développez votre capacité à communiquer sur vos émotions.</p>
+					<a href="jeu-roles.html">Découvrir →</a>
+				</div>
+			</div>
+		`;
+	}
+	
+	if (scores.q5 >= 3) {
+		recoList.innerHTML += `
+			<div class="reco-item">
+				<i class="fas fa-box-open"></i>
+				<div>
+					<strong>Créez votre boîte anti-stress</strong>
+					<p>Constituez votre trousse d'outils personnels pour gérer vos émotions.</p>
+					<a href="videoADID.html#activities">Voir l'activité →</a>
+				</div>
+			</div>
+		`;
+	}
+	
+	// Create radar chart
+	const ctx = document.getElementById('radarChart').getContext('2d');
+	
+	if (radarChart) {
+		radarChart.destroy();
+	}
+	
+	radarChart = new Chart(ctx, {
+		type: 'radar',
+		data: {
+			labels: [
+				'Tension nerveuse',
+				'Concentration',
+				'Tensions physiques',
+				'Identification stress',
+				'Techniques de calme',
+				'Demander de l\'aide'
+			],
+			datasets: [{
+				label: 'Votre profil',
+				data: [scores.q1, scores.q2, scores.q3, 6 - scores.q4, 6 - scores.q5, 6 - scores.q6],
+				backgroundColor: 'rgba(102, 126, 234, 0.2)',
+				borderColor: 'rgba(102, 126, 234, 1)',
+				borderWidth: 2,
+				pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+				pointBorderColor: '#fff',
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: 'rgba(102, 126, 234, 1)'
+			}]
+		},
+		options: {
+			scales: {
+				r: {
+					beginAtZero: true,
+					max: 5,
+					ticks: {
+						stepSize: 1
+					}
+				}
+			},
+			plugins: {
+				legend: {
+					display: false
+				}
+			}
+		}
+	});
+}
+
+function resetForm() {
+	document.getElementById('evaluationForm').style.display = 'block';
+	document.getElementById('evaluationResults').style.display = 'none';
+	
+	// Reset all radio buttons
+	document.querySelectorAll('input[type="radio"]').forEach(radio => {
+		radio.checked = false;
+	});
+}
+
+function printResults() {
+	window.print();
+}
+
+// Mobile menu
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger?.addEventListener('click', () => {
+	hamburger.classList.toggle('active');
+	navLinks.classList.toggle('active');
+});
+</script>
+
+<!-- AI Agent Widget - Assistant Pédagogique ZenClass -->
+<div class="ai-agent-widget" id="aiAgentWidget">
+	<button class="agent-toggle" id="agentToggle" title="Assistant ZenClass">
+		<i class="fas fa-robot chat-icon"></i>
+		<i class="fas fa-times close-icon"></i>
+		<span class="agent-pulse"></span>
+	</button>
+	<div class="agent-window" id="agentWindow">
+		<div class="agent-header">
+			<div class="agent-avatar"><i class="fas fa-brain"></i></div>
+			<div class="agent-info">
+				<h4>Assistant ZenClass</h4>
+				<span class="agent-status"><span class="status-dot"></span> En ligne</span>
+			</div>
+			<button class="agent-close-btn" id="agentCloseBtn" title="Fermer">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>
+			</button>
+		</div>
+		<div class="agent-messages" id="agentMessages">
+			<div class="chat-message bot">
+				<div class="message-content">Bienvenue sur l'<b>Auto-évaluation</b> ! 📊<br><br>Ce questionnaire vous aide à mesurer votre niveau de stress. Répondez honnêtement pour des résultats pertinents.<br><br>Une question sur l'interprétation des résultats ?</div>
+			</div>
+			<div class="chat-suggestions">
+				<button class="suggestion-btn" data-question="Comment interpréter mes résultats ?"><i class="fas fa-chart-line"></i> Interpréter</button>
+				<button class="suggestion-btn" data-question="Conseils pour gérer le stress"><i class="fas fa-lightbulb"></i> Conseils</button>
+				<button class="suggestion-btn" data-question="Respiration 4-7-8"><i class="fas fa-wind"></i> Me relaxer</button>
+			</div>
+		</div>
+		<div class="agent-input">
+			<input type="text" id="agentInput" placeholder="Posez votre question..." autocomplete="off">
+			<button id="agentSend" title="Envoyer">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/></svg>
+			</button>
+		</div>
+	</div>
+</div>
+<script src="agent.js"></script>
+
+</body>
+</html>
