@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gérer le Stress - Plateforme Pédagogique MALTT</title>
+	<link rel="stylesheet" href="stylevideoADID.css">
+	<link rel="stylesheet" href="../zenclass-enhancements.css">
+	<!-- AI Agent Widget -->
+	<link rel="stylesheet" href="agent.css">
+	<!-- AOS Animation Library -->
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- Particules animées en arrière-plan -->
+<div class="particles" id="particles"></div>
+
+<!-- Navigation -->
+<nav class="navbar animate__animated animate__fadeInDown">
+	<div class="nav-container">
+		<div class="logo">
+			<i class="fas fa-brain"></i>
+			<span>ZenClass</span>
+		</div>
+		<ul class="nav-links">
+			<li><a href="#hero"><i class="fas fa-home"></i> Accueil</a></li>
+			<li><a href="#video-section"><i class="fas fa-play-circle"></i> Vidéo</a></li>
+			<li><a href="#activities"><i class="fas fa-tasks"></i> Activités</a></li>
+			<li><a href="#resources"><i class="fas fa-file-pdf"></i> Ressources</a></li>
+			<li class="nav-dropdown">
+				<a href="#" class="dropdown-toggle"><i class="fas fa-gamepad"></i> Interactif <i class="fas fa-chevron-down"></i></a>
+				<ul class="dropdown-menu">
+					<li><a href="quiz.html"><i class="fas fa-question-circle"></i> Quiz</a></li>
+					<li><a href="auto-evaluation.html"><i class="fas fa-chart-bar"></i> Auto-évaluation</a></li>
+					<li><a href="respiration.html"><i class="fas fa-wind"></i> Respiration 4-7-8</a></li>
+					<li><a href="classification.html"><i class="fas fa-layer-group"></i> Classification</a></li>
+					<li><a href="jeu-roles.html"><i class="fas fa-theater-masks"></i> Jeu de rôles</a></li>
+				</ul>
+			</li>
+			<li><a href="#team"><i class="fas fa-users"></i> Équipe</a></li>
+		</ul>
+		<div class="hamburger" id="hamburger">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+</nav>
+
+<!-- Hero Section -->
+<section id="hero" class="hero-section">
+	<div class="hero-overlay"></div>
+	<div class="hero-content">
+		<div class="hero-badge animate__animated animate__bounceIn" data-aos="fade-down">
+			<i class="fas fa-graduation-cap"></i> Formation MALTT - ADID
+		</div>
+		<h1 class="hero-title animate__animated animate__fadeInUp">
+			<span class="highlight">Apprendre à</span>
+			<br>Gérer son Stress
+		</h1>
+		<p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">
+			Une approche pédagogique innovante pour accompagner vos élèves
+			vers le bien-être et la sérénité en milieu scolaire.
+		</p>
+		<div class="hero-buttons animate__animated animate__fadeInUp animate__delay-2s">
+			<a href="#video-section" class="btn btn-primary">
+				<i class="fas fa-play"></i> Voir la vidéo
+			</a>
+			<a href="#resources" class="btn btn-secondary">
+				<i class="fas fa-download"></i> Télécharger les ressources
+			</a>
+		</div>
+		<div class="hero-stats animate__animated animate__fadeIn animate__delay-3s">
+			<div class="stat-item">
+				<span class="stat-number">4</span>
+				<span class="stat-label">Activités</span>
+			</div>
+			<div class="stat-item">
+				<span class="stat-number">6+</span>
+				<span class="stat-label">PDF inclus</span>
+			</div>
+			<div class="stat-item">
+				<span class="stat-number">∞</span>
+				<span class="stat-label">Possibilités</span>
+			</div>
+		</div>
+	</div>
+	<div class="scroll-indicator">
+		<div class="mouse">
+			<div class="wheel"></div>
+		</div>
+		<span>Scroll</span>
+	</div>
+</section>
+
+<!-- Introduction Section -->
+<section class="intro-section" id="intro">
+	<div class="container">
+		<div class="intro-grid">
+			<div class="intro-text" data-aos="fade-right" data-aos-duration="1000">
+				<span class="section-tag"><i class="fas fa-info-circle"></i> À propos</span>
+				<h2>Une vidéo pédagogique complète</h2>
+				<p>Cette vidéo est réalisée dans le cadre du cours <strong>ADID</strong> du <strong>MALTT</strong> (Master of Science in Learning and Teaching Technologies) de l'Université de Genève.</p>
+				<ul class="feature-list">
+					<li><i class="fas fa-check-circle"></i> À destination des enseignants du primaire et secondaire</li>
+					<li><i class="fas fa-check-circle"></i> 4 activités pratiques à réaliser en classe</li>
+					<li><i class="fas fa-check-circle"></i> Navigation par chapitres intégrée</li>
+					<li><i class="fas fa-check-circle"></i> Ressources téléchargeables en PDF</li>
+				</ul>
+			</div>
+			<div class="intro-image" data-aos="fade-left" data-aos-duration="1000">
+				<div class="image-card">
+					<img src="image_sans_etoile.jpeg" alt="Gestion du stress en classe - Équipe TECFA">
+					<div class="image-overlay">
+						<span><i class="fas fa-heart"></i> Bien-être scolaire</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Video Section -->
+<section id="video-section" class="video-section">
+	<div class="container">
+		<div class="section-header" data-aos="fade-up">
+			<span class="section-tag"><i class="fas fa-play-circle"></i> Vidéo principale</span>
+			<h2>Découvrez notre formation</h2>
+			<p>Naviguez directement vers les sections qui vous intéressent</p>
+		</div>
+		
+		<!-- Image promotionnelle -->
+		<div class="promo-banner" data-aos="fade-up" data-aos-duration="800">
+			<img src="image_sans_etoile.jpg" alt="ADID - Gérer son stress - Formation TECFA MALTT">
+			<div class="promo-overlay">
+				<h3>ADID - Gérer son stress</h3>
+				<p>Une formation complète pour le bien-être en milieu scolaire</p>
+			</div>
+		</div>
+		
+		<!-- Navigation chapitres -->
+		<div class="chapter-nav" data-aos="fade-up" data-aos-delay="200">
+			<button class="chapter-btn" onclick="return pointTo(0)">
+				<i class="fas fa-play"></i>
+				<span>Introduction</span>
+			</button>
+			<button class="chapter-btn" onclick="return pointTo(87)">
+				<i class="fas fa-layer-group"></i>
+				<span>Classification</span>
+			</button>
+			<button class="chapter-btn" onclick="return pointTo(143)">
+				<i class="fas fa-theater-masks"></i>
+				<span>Jeux de rôles</span>
+			</button>
+			<button class="chapter-btn" onclick="return pointTo(247)">
+				<i class="fas fa-wind"></i>
+				<span>Respiration</span>
+			</button>
+			<button class="chapter-btn" onclick="return pointTo(283)">
+				<i class="fas fa-box"></i>
+				<span>Boîte anti-stress</span>
+			</button>
+			<button class="chapter-btn" onclick="return pointTo(339)">
+				<i class="fas fa-clipboard-check"></i>
+				<span>Auto-évaluation</span>
+			</button>
+		</div>
+
+		<!-- Video Player -->
+		<div class="video-wrapper" data-aos="zoom-in" data-aos-duration="800">
+			<div class="video-frame">
+				<iframe
+					id="player"
+					title="Vidéo pédagogique - Gérer son stress en milieu scolaire"
+					src="https://www.youtube.com/embed/G03KPCttNC0?enablejsapi=1"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					referrerpolicy="strict-origin-when-cross-origin"
+					allowfullscreen>
+				</iframe>
+			</div>
+			<div class="video-glow"></div>
+		</div>
+	</div>
+</section>
+
+<!-- Resources Section -->
+<section id="resources" class="resources-section">
+	<div class="container">
+		<div class="section-header" data-aos="fade-up">
+			<span class="section-tag"><i class="fas fa-file-pdf"></i> Ressources</span>
+			<h2>Documentation pédagogique</h2>
+			<p>Téléchargez tous les supports pour vos cours</p>
+		</div>
+		
+		<div class="resources-grid">
+			<div class="resource-card main-resource" data-aos="flip-left" data-aos-duration="800">
+				<div class="resource-icon">
+					<i class="fas fa-book-open"></i>
+				</div>
+				<h3>Dossier Complet</h3>
+				<p>Le guide pédagogique intégral pour apprendre à gérer le stress en milieu scolaire.</p>
+				<div class="resource-buttons">
+					<a href="https://tecfaetu.unige.ch/etu-maltt/freya/avogadr5/ADID/Dossier%20pour%20apprendre%20%C3%A0%20g%C3%A9rer%20le%20stress%20en%20milieu%20scolaire.pdf" class="resource-btn pdf">
+						<i class="fas fa-file-pdf"></i> PDF
+					</a>
+					<a href="https://tecfaetu.unige.ch/etu-maltt/freya/avogadr5/ADID/Dossier%20pour%20apprendre%20%C3%A0%20g%C3%A9rer%20le%20stress%20en%20milieu%20scolaire.docx" class="resource-btn word">
+						<i class="fas fa-file-word"></i> Word
+					</a>
+				</div>
+			</div>
+			
+			<div class="resource-card" data-aos="flip-left" data-aos-duration="800" data-aos-delay="200">
+				<div class="resource-icon justif">
+					<i class="fas fa-microscope"></i>
+				</div>
+				<h3>Justifications Pédagogiques</h3>
+				<p>Les fondements théoriques et scientifiques de notre approche.</p>
+				<a href="Justification.pdf" class="resource-btn pdf">
+					<i class="fas fa-file-pdf"></i> Consulter
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Activities Section -->
+<section id="activities" class="activities-section">
+	<div class="container">
+		<div class="section-header" data-aos="fade-up">
+			<span class="section-tag"><i class="fas fa-tasks"></i> Activités</span>
+			<h2>4 activités clé en main</h2>
+			<p>Des exercices pratiques prêts à être utilisés dans vos classes</p>
+		</div>
+		
+		<div class="activities-grid">
+			<!-- Activité 1 -->
+			<div class="activity-card" data-aos="fade-up" data-aos-duration="800">
+				<div class="activity-number">01</div>
+				<div class="activity-icon">
+					<i class="fas fa-layer-group"></i>
+				</div>
+				<div class="activity-content">
+					<h3>Classification</h3>
+					<div class="activity-objective">
+						<span class="label"><i class="fas fa-bullseye"></i> Objectif</span>
+						<p>Reconnaître et évaluer les situations qui peuvent générer du stress.</p>
+					</div>
+					<div class="activity-criteria">
+						<span class="label"><i class="fas fa-check-double"></i> Critère de réussite</span>
+						<p>L'élève parvient à repérer, classer et ordonner les situations stressantes de son quotidien.</p>
+					</div>
+					<div class="activity-synthesis">
+						<span class="label"><i class="fas fa-lightbulb"></i> Institutionnalisation</span>
+						<p>Identifier les signes de stress et trouver des méthodes pour les apaiser.</p>
+					</div>
+				</div>
+				<a href="act1.pdf" class="activity-download">
+					<img src="img1.png" alt="Aperçu activité 1">
+					<div class="download-overlay">
+						<i class="fas fa-download"></i>
+						<span>Télécharger PDF</span>
+					</div>
+				</a>
+			</div>
+
+			<!-- Activité 2 -->
+			<div class="activity-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+				<div class="activity-number">02</div>
+				<div class="activity-icon">
+					<i class="fas fa-theater-masks"></i>
+				</div>
+				<div class="activity-content">
+					<h3>Jeux de rôles</h3>
+					<div class="activity-objective">
+						<span class="label"><i class="fas fa-bullseye"></i> Objectifs</span>
+						<p>Réussir à se mettre à la place de l'autre. Développer l'empathie. S'approprier des conseils.</p>
+					</div>
+					<div class="activity-criteria">
+						<span class="label"><i class="fas fa-check-double"></i> Critère de réussite</span>
+						<p>L'élève parvient à conseiller un camarade et à reconnaître les comportements déclenchés par le stress.</p>
+					</div>
+					<div class="activity-synthesis">
+						<span class="label"><i class="fas fa-users"></i> Matériel</span>
+						<p>9 cartes « élève stressé » et 9 cartes « coach » pour des activités en binôme.</p>
+					</div>
+				</div>
+				<a href="act2.pdf" class="activity-download">
+					<img src="img2.png" alt="Aperçu activité 2">
+					<div class="download-overlay">
+						<i class="fas fa-download"></i>
+						<span>Télécharger PDF</span>
+					</div>
+				</a>
+			</div>
+
+			<!-- Activité 3 -->
+			<div class="activity-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+				<div class="activity-number">03</div>
+				<div class="activity-icon">
+					<i class="fas fa-box-open"></i>
+				</div>
+				<div class="activity-content">
+					<h3>Boîte anti-stress</h3>
+					<div class="activity-objective">
+						<span class="label"><i class="fas fa-bullseye"></i> Concept</span>
+						<p>Un patron à imprimer et des cartes modèles à construire avec les élèves.</p>
+					</div>
+					<div class="activity-criteria">
+						<span class="label"><i class="fas fa-palette"></i> Personnalisation</span>
+						<p>Couleurs personnalisables selon les besoins : vert (apaisement), bleu (colère), rose (conflits).</p>
+					</div>
+					<div class="activity-synthesis">
+						<span class="label"><i class="fas fa-toolbox"></i> Utilisation</span>
+						<p>Devient la boîte à outils personnelle de l'élève pour gérer ses émotions.</p>
+					</div>
+				</div>
+				<a href="act3.pdf" class="activity-download">
+					<img src="img3.png" alt="Aperçu activité 3">
+					<div class="download-overlay">
+						<i class="fas fa-download"></i>
+						<span>Télécharger PDF</span>
+					</div>
+				</a>
+			</div>
+
+			<!-- Activité 4 -->
+			<div class="activity-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+				<div class="activity-number">04</div>
+				<div class="activity-icon">
+					<i class="fas fa-clipboard-list"></i>
+				</div>
+				<div class="activity-content">
+					<h3>Auto-évaluation</h3>
+					<div class="activity-objective">
+						<span class="label"><i class="fas fa-bullseye"></i> Objectif</span>
+						<p>Mesurer la progression et la prise de conscience des élèves.</p>
+					</div>
+					<div class="activity-criteria">
+						<span class="label"><i class="fas fa-clock"></i> Timing</span>
+						<p>À distribuer au début ET à la fin de la séquence pour mesurer l'évolution.</p>
+					</div>
+					<div class="activity-synthesis">
+						<span class="label"><i class="fas fa-chart-line"></i> Évaluation</span>
+						<p>Permet une réflexion métacognitive sur la gestion du stress.</p>
+					</div>
+				</div>
+				<a href="act4.pdf" class="activity-download">
+					<img src="img4.png" alt="Aperçu activité 4">
+					<div class="download-overlay">
+						<i class="fas fa-download"></i>
+						<span>Télécharger PDF</span>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Interactive Section -->
+<section id="interactive" class="interactive-section">
+	<div class="container">
+		<div class="section-header" data-aos="fade-up">
+			<span class="section-tag"><i class="fas fa-gamepad"></i> Interactif</span>
+			<h2>Exercices en ligne</h2>
+			<p>Des activités interactives pour pratiquer et tester ses connaissances</p>
+		</div>
+		
+		<div class="interactive-grid">
+			<a href="quiz.html" class="interactive-card" data-aos="fade-up" data-aos-delay="0">
+				<div class="interactive-icon icon-quiz">
+					<i class="fas fa-question-circle"></i>
+				</div>
+				<h3>Quiz</h3>
+				<p>Testez vos connaissances sur la gestion du stress avec 10 questions.</p>
+				<span class="interactive-cta">Commencer <i class="fas fa-arrow-right"></i></span>
+			</a>
+			
+			<a href="auto-evaluation.html" class="interactive-card" data-aos="fade-up" data-aos-delay="100">
+				<div class="interactive-icon icon-evaluation">
+					<i class="fas fa-chart-bar"></i>
+				</div>
+				<h3>Auto-évaluation</h3>
+				<p>Évaluez votre niveau de stress et recevez des conseils personnalisés.</p>
+				<span class="interactive-cta">S'évaluer <i class="fas fa-arrow-right"></i></span>
+			</a>
+			
+			<a href="respiration.html" class="interactive-card" data-aos="fade-up" data-aos-delay="200">
+				<div class="interactive-icon icon-respiration">
+					<i class="fas fa-wind"></i>
+				</div>
+				<h3>Respiration 4-7-8</h3>
+				<p>Un exercice guidé pour pratiquer la technique de respiration anti-stress.</p>
+				<span class="interactive-cta">Pratiquer <i class="fas fa-arrow-right"></i></span>
+			</a>
+			
+			<a href="classification.html" class="interactive-card" data-aos="fade-up" data-aos-delay="300">
+				<div class="interactive-icon icon-classification">
+					<i class="fas fa-layer-group"></i>
+				</div>
+				<h3>Classification</h3>
+				<p>Glissez-déposez les situations de stress dans les bonnes catégories.</p>
+				<span class="interactive-cta">Jouer <i class="fas fa-arrow-right"></i></span>
+			</a>
+			
+			<a href="jeu-roles.html" class="interactive-card" data-aos="fade-up" data-aos-delay="400">
+				<div class="interactive-icon icon-roleplay">
+					<i class="fas fa-theater-masks"></i>
+				</div>
+				<h3>Jeu de rôles</h3>
+				<p>Tirez des cartes de mises en situation pour pratiquer l'expression émotionnelle.</p>
+				<span class="interactive-cta">Découvrir <i class="fas fa-arrow-right"></i></span>
+			</a>
+		</div>
+	</div>
+</section>
+
+<!-- Tips Section -->
+<section class="tips-section">
+	<div class="container">
+		<div class="section-header" data-aos="fade-up">
+			<span class="section-tag"><i class="fas fa-lightbulb"></i> Conseils</span>
+			<h2>Techniques de relaxation</h2>
+			<p>Des astuces simples à partager avec vos élèves</p>
+		</div>
+		
+		<div class="tips-grid">
+			<div class="tip-card" data-aos="zoom-in" data-aos-delay="0">
+				<div class="tip-icon"><i class="fas fa-wind"></i></div>
+				<h4>Respiration 4-7-8</h4>
+				<p>Inspirez 4 secondes, retenez 7 secondes, expirez 8 secondes.</p>
+			</div>
+			<div class="tip-card" data-aos="zoom-in" data-aos-delay="100">
+				<div class="tip-icon"><i class="fas fa-hand-holding-heart"></i></div>
+				<h4>Ancrage sensoriel</h4>
+				<p>5 choses vues, 4 touchées, 3 entendues, 2 senties, 1 goûtée.</p>
+			</div>
+			<div class="tip-card" data-aos="zoom-in" data-aos-delay="200">
+				<div class="tip-icon"><i class="fas fa-walking"></i></div>
+				<h4>Pause active</h4>
+				<p>2 minutes de mouvement ou d'étirements entre les activités.</p>
+			</div>
+			<div class="tip-card" data-aos="zoom-in" data-aos-delay="300">
+				<div class="tip-icon"><i class="fas fa-pen"></i></div>
+				<h4>Journal émotionnel</h4>
+				<p>Écrire ses émotions aide à mieux les comprendre et les gérer.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Team Section -->
+<section id="team" class="team-section">
+	<div class="container">
+		<div class="section-header" data-aos="fade-up">
+			<span class="section-tag"><i class="fas fa-users"></i> Équipe</span>
+			<h2>Réalisé par</h2>
+			<p>Étudiants du Master MALTT - Université de Genève</p>
+		</div>
+		
+		<div class="team-grid">
+			<div class="team-card" data-aos="fade-up" data-aos-delay="0">
+				<div class="team-avatar">
+					<i class="fas fa-user-graduate"></i>
+				</div>
+				<h4>Mohammad</h4>
+				<a href="https://tecfaetu.unige.ch/etu-maltt/freya/mohamsa1/" target="_blank" rel="noopener">
+					<i class="fas fa-external-link-alt"></i> Portfolio
+				</a>
+			</div>
+			<div class="team-card" data-aos="fade-up" data-aos-delay="100">
+				<div class="team-avatar">
+					<i class="fas fa-user-graduate"></i>
+				</div>
+				<h4>Julien</h4>
+				<a href="https://tecfaetu.unige.ch/perso/maltt/kouchek1/index.html" target="_blank" rel="noopener">
+					<i class="fas fa-external-link-alt"></i> Portfolio
+				</a>
+			</div>
+			<div class="team-card" data-aos="fade-up" data-aos-delay="200">
+				<div class="team-avatar">
+					<i class="fas fa-user-graduate"></i>
+				</div>
+				<h4>Karim</h4>
+				<a href="https://tecfaetu.unige.ch/etu-maltt/freya/dzajic9/" target="_blank" rel="noopener">
+					<i class="fas fa-external-link-alt"></i> Portfolio
+				</a>
+			</div>
+			<div class="team-card" data-aos="fade-up" data-aos-delay="300">
+				<div class="team-avatar">
+					<i class="fas fa-user-graduate"></i>
+				</div>
+				<h4>Audrey</h4>
+				<a href="https://tecfaetu.unige.ch/perso/maltt/avogadr5/index.html" target="_blank" rel="noopener">
+					<i class="fas fa-external-link-alt"></i> Portfolio
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+	<div class="footer-wave">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+			<path fill="#1a1a2e" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+		</svg>
+	</div>
+	<div class="footer-content">
+		<div class="footer-grid">
+			<!-- Logo & Description -->
+			<div class="footer-brand">
+				<div class="footer-logo">
+					<i class="fas fa-brain"></i>
+					<span>ZenClass</span>
+				</div>
+				<p>Plateforme pédagogique pour le bien-être scolaire. Apprenez à gérer le stress et les émotions avec des outils adaptés aux enseignants et aux élèves.</p>
+				<div class="footer-social">
+					<a href="https://github.com/Mubarez11" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+					<a href="https://linkedin.com/" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+					<a href="mailto:mohammadshabana2001@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+				</div>
+			</div>
+
+			<!-- Navigation rapide -->
+			<div class="footer-nav">
+				<h4>Navigation</h4>
+				<ul>
+					<li><a href="#hero"><i class="fas fa-home"></i> Accueil</a></li>
+					<li><a href="#video-section"><i class="fas fa-play-circle"></i> Vidéo</a></li>
+					<li><a href="#activities"><i class="fas fa-tasks"></i> Activités</a></li>
+					<li><a href="#resources"><i class="fas fa-file-pdf"></i> Ressources</a></li>
+				</ul>
+			</div>
+
+			<!-- Exercices interactifs -->
+			<div class="footer-nav">
+				<h4>Exercices en ligne</h4>
+				<ul>
+					<li><a href="quiz.html"><i class="fas fa-question-circle"></i> Quiz</a></li>
+					<li><a href="auto-evaluation.html"><i class="fas fa-chart-bar"></i> Auto-évaluation</a></li>
+					<li><a href="respiration.html"><i class="fas fa-wind"></i> Respiration 4-7-8</a></li>
+					<li><a href="classification.html"><i class="fas fa-layer-group"></i> Classification</a></li>
+					<li><a href="jeu-roles.html"><i class="fas fa-theater-masks"></i> Jeu de rôles</a></li>
+				</ul>
+			</div>
+
+			<!-- Partenaires -->
+			<div class="footer-nav">
+				<h4>Partenaires</h4>
+				<ul>
+					<li><a href="https://tecfa.unige.ch/" target="_blank" rel="noopener"><i class="fas fa-university"></i> TECFA</a></li>
+					<li><a href="https://www.unige.ch/" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Université de Genève</a></li>
+					<li><a href="https://maltt.unige.ch/" target="_blank" rel="noopener"><i class="fas fa-book"></i> Master MALTT</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="footer-bottom">
+			<p>© 2026 ZenClass - MALTT ADID. Tous droits réservés.</p>
+			<p class="footer-credits">Conçu avec <i class="fas fa-heart"></i> pour le bien-être scolaire</p>
+		</div>
+	</div>
+</footer>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop" title="Retour en haut" aria-label="Retour en haut de la page">
+	<i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- AI Agent Widget - Assistant Pédagogique ZenClass -->
+<div class="ai-agent-widget" id="aiAgentWidget">
+	<!-- Toggle Button -->
+	<button class="agent-toggle" id="agentToggle" title="Assistant ZenClass">
+		<i class="fas fa-robot chat-icon"></i>
+		<i class="fas fa-times close-icon"></i>
+		<span class="agent-pulse"></span>
+	</button>
+	
+	<!-- Chat Window -->
+	<div class="agent-window" id="agentWindow">
+		<!-- Header -->
+		<div class="agent-header">
+			<div class="agent-avatar">
+				<i class="fas fa-brain"></i>
+			</div>
+			<div class="agent-info">
+				<h4>Assistant ZenClass</h4>
+				<span class="agent-status"><span class="status-dot"></span> En ligne</span>
+			</div>
+			<button class="agent-close-btn" id="agentCloseBtn" title="Fermer">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M6 18L18 6M6 6l12 12"/>
+				</svg>
+			</button>
+		</div>
+		
+		<!-- Messages Area -->
+		<div class="agent-messages" id="agentMessages">
+			<div class="chat-message bot">
+				<div class="message-content">
+					Bonjour ! 👋 Je suis l'assistant <b>ZenClass</b>, votre guide pédagogique pour la gestion du stress.<br><br>
+					Je peux vous aider à :
+					<ul>
+						<li>Découvrir les activités interactives</li>
+						<li>Comprendre les techniques de relaxation</li>
+						<li>Naviguer sur la plateforme</li>
+					</ul>
+					Comment puis-je vous aider ?
+				</div>
+			</div>
+			<div class="chat-suggestions">
+				<button class="suggestion-btn" data-question="C'est quoi ZenClass ?"><i class="fas fa-info-circle"></i> C'est quoi ZenClass ?</button>
+				<button class="suggestion-btn" data-question="Voir les activités"><i class="fas fa-gamepad"></i> Activités</button>
+				<button class="suggestion-btn" data-question="Respiration 4-7-8"><i class="fas fa-wind"></i> Respiration</button>
+				<button class="suggestion-btn" data-question="Aide"><i class="fas fa-question"></i> Aide</button>
+			</div>
+		</div>
+		
+		<!-- Input Area -->
+		<div class="agent-input">
+			<input type="text" id="agentInput" placeholder="Posez votre question..." autocomplete="off">
+			<button id="agentSend" title="Envoyer">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/>
+				</svg>
+			</button>
+		</div>
+	</div>
+</div>
+
+<!-- Scripts -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="videoADID.js"></script>
+<script src="agent.js"></script>
+
+<script src="../zenclass-enhancements.js"></script>
+</body>
+</html>

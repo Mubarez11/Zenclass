@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZenClass | Parcours par axe</title>
+  <style>
+    :root {
+      --font-primary: "Poppins", "Aptos", "Avenir Next", "Segoe UI Variable", "Segoe UI", sans-serif;
+      --font-display: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      --color-primary: #667eea;
+      --color-primary-dark: #5a67d8;
+      --gray-900: #1a202c;
+      --gray-800: #2d3748;
+      --gray-700: #4a5568;
+      --gray-600: #718096;
+      --gray-200: #edf2f7;
+      --gray-100: #f7fafc;
+      --white: #ffffff;
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-warning: linear-gradient(135deg, #63b3ed, #5a67d8);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-purple: linear-gradient(135deg, #9f7aea, #805ad5);
+      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 18px 48px rgba(15, 23, 42, 0.12);
+      --transition: 0.3s ease;
+      --container-width: 980px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-primary);
+      color: var(--gray-800);
+      background:
+        radial-gradient(circle at 10% 15%, rgba(102, 126, 234, 0.12), transparent 28%),
+        radial-gradient(circle at 88% 12%, rgba(79, 172, 254, 0.1), transparent 24%),
+        linear-gradient(180deg, #f6f8fc 0%, #ffffff 34%, #f8fbff 100%);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a,
+    button {
+      color: inherit;
+      font: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    ul {
+      margin: 0;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--container-width));
+      margin: 0 auto;
+    }
+
+    .navbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 40;
+      padding: 14px 0;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04), 0 12px 24px rgba(15, 23, 42, 0.05);
+    }
+
+    .nav-container {
+      width: min(100% - 32px, var(--container-width));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .brand img {
+      width: 210px;
+      height: auto;
+    }
+
+    .nav-links {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a,
+    .nav-links button,
+    .objective-card,
+    .hero-link {
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
+    }
+
+    .nav-links a,
+    .nav-links button,
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(102, 126, 234, 0.08);
+      color: var(--color-primary-dark);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible,
+    .nav-links button:hover,
+    .nav-links button:focus-visible,
+    .hero-link:hover,
+    .hero-link:focus-visible,
+    .objective-card:hover,
+    .objective-card:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      outline: none;
+    }
+
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .dropdown-entry {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dropdown-parent-link {
+      flex: 1 1 auto;
+    }
+
+    .dropdown-toggle-button {
+      min-width: 42px;
+      padding: 10px 12px;
+      flex: 0 0 auto;
+    }
+
+    .dropdown-caret {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      background-color: currentColor;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      transition: transform var(--transition);
+    }
+
+    .nav-dropdown:hover .dropdown-caret,
+    .nav-dropdown:focus-within .dropdown-caret {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      min-width: 220px;
+      margin: 0;
+      padding: 10px;
+      list-style: none;
+      display: grid;
+      gap: 4px;
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+    }
+
+    .nav-dropdown:hover .dropdown-menu,
+    .nav-dropdown:focus-within .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .dropdown-menu a {
+      justify-content: flex-start;
+      min-height: 40px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: transparent;
+      color: var(--gray-700);
+      box-shadow: none;
+    }
+
+    .dropdown-menu a:hover,
+    .dropdown-menu a:focus-visible {
+      transform: none;
+      box-shadow: none;
+      background: rgba(102, 126, 234, 0.08);
+      color: var(--color-primary-dark);
+    }
+
+    .page-shell {
+      padding: 106px 0 56px;
+    }
+
+    .hero-card,
+    .section-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-card::before,
+    .section-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 6px;
+      background: var(--theme-gradient, var(--gradient-primary));
+    }
+
+    .hero-card {
+      padding: 22px;
+      display: grid;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .hero-head {
+      display: grid;
+      gap: 10px;
+    }
+
+    .section-tag,
+    .objective-meta {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 30px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(102, 126, 234, 0.08);
+      color: var(--color-primary-dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .hero-card h1,
+    .section-card h2 {
+      font-family: var(--font-display);
+      color: var(--gray-900);
+      line-height: 1.08;
+    }
+
+    .hero-card h1 {
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+    }
+
+    .hero-card p,
+    .section-card > p {
+      color: var(--gray-600);
+      font-size: 0.96rem;
+      line-height: 1.6;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-kpi {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--gray-100);
+      color: var(--gray-700);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .section-card {
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .section-card h2 {
+      font-size: clamp(1.8rem, 3vw, 2.25rem);
+    }
+
+    .objective-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .objective-card {
+      display: grid;
+      gap: 10px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: rgba(248, 250, 252, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .objective-card h3 {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: var(--gray-900);
+    }
+
+    .objective-card p {
+      color: var(--gray-600);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .objective-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .objective-open {
+      color: var(--color-primary-dark);
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .axis-theme-1 { --theme-gradient: var(--gradient-primary); }
+    .axis-theme-2 { --theme-gradient: var(--gradient-warning); }
+    .axis-theme-3 { --theme-gradient: var(--gradient-accent); }
+    .axis-theme-4 { --theme-gradient: var(--gradient-purple); }
+
+    @media (max-width: 980px) {
+      .nav-container {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+    }
+
+    @media (max-width: 640px) {
+      .nav-links,
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .dropdown-entry {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .dropdown-parent-link,
+      .nav-links a,
+      .nav-links button,
+      .hero-link {
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        left: 0;
+        right: 0;
+        min-width: 0;
+      }
+
+      .hero-card,
+      .section-card {
+        padding: 22px;
+      }
+
+    }
+  </style>
+  <link rel="stylesheet" href="zenclass-header.css" />
+  <link rel="stylesheet" href="zenclass-enhancements.css" />
+</head>
+<body>
+  <nav class="navbar" aria-label="Navigation principale">
+    <div class="nav-container">
+      <a class="logo brand" href="plateforme-etudiante-zenclass.html#parcours" aria-label="Retour à ZenClass">
+        <img src="zenclass-logo.svg" alt="ZenClass" />
+      </a>
+
+      <ul class="nav-links">
+        <li class="nav-dropdown">
+          <div class="dropdown-entry">
+            <a class="nav-link-parcours dropdown-parent-link" href="plateforme-etudiante-zenclass.html#parcours">Parcours</a>
+            <button class="dropdown-toggle-button" type="button" aria-label="Sous-menu Parcours">
+              <span class="dropdown-caret" aria-hidden="true"></span>
+            </button>
+          </div>
+          <ul class="dropdown-menu">
+            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-1">Axe 1</a></li>
+            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-2">Axe 2</a></li>
+            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-3">Axe 3</a></li>
+            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-4">Axe 4</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-dropdown">
+          <div class="dropdown-entry">
+            <a class="nav-link-interactif dropdown-parent-link" href="zenclass-modele/quiz.html">Interactif</a>
+            <button class="dropdown-toggle-button" type="button" aria-label="Sous-menu Interactif">
+              <span class="dropdown-caret" aria-hidden="true"></span>
+            </button>
+          </div>
+          <ul class="dropdown-menu">
+            <li><a href="zenclass-modele/quiz.html">Quiz</a></li>
+            <li><a href="zenclass-modele/auto-evaluation.html">Auto-évaluation</a></li>
+            <li><a href="zenclass-modele/respiration.html">Respiration 4-7-8</a></li>
+            <li><a href="zenclass-modele/classification.html">Classification</a></li>
+            <li><a href="zenclass-modele/jeu-roles.html">Jeu de rôles</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-dropdown">
+          <div class="dropdown-entry">
+            <a class="nav-link-theory dropdown-parent-link" href="plateforme-etudiante-zenclass.html#ressources-theoriques">Ressources théoriques</a>
+            <button class="dropdown-toggle-button" type="button" aria-label="Sous-menu Ressources théoriques">
+              <span class="dropdown-caret" aria-hidden="true"></span>
+            </button>
+          </div>
+          <ul class="dropdown-menu">
+            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-1">Axe 1</a></li>
+            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2">Axe 2</a></li>
+            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3">Axe 3</a></li>
+            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-4">Axe 4</a></li>
+          </ul>
+        </li>
+
+        <li><a class="nav-link-class" href="ma-classe.html">Ressources pour ma classe</a></li>
+        <li><a class="nav-link-progress" href="plateforme-etudiante-zenclass-progression.html">Mon suivi de progression</a></li>
+        <li><a class="nav-link-team" href="plateforme-etudiante-zenclass.html#equipe">Équipe</a></li>
+        <li><a class="nav-link-forum" href="plateforme-etudiante-zenclass.html#forum">Forum</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <div class="container">
+      <section class="hero-card axis-theme-1" id="heroCard">
+        <div class="hero-head">
+          <span class="section-tag">Parcours</span>
+          <div class="hero-meta">
+            <span class="hero-kpi" id="objectiveCount">0 objectif</span>
+          </div>
+          <h1 id="pageTitle">Axe</h1>
+          <p id="pageIntro">Retrouvez ici les activités de l’axe en accès direct, puis les objectifs détaillés juste en dessous.</p>
+        </div>
+
+        <div class="hero-actions">
+          <a class="hero-link" id="resourcesLink" href="plateforme-etudiante-zenclass-ressources-theoriques.html">Voir les ressources théoriques de cet axe</a>
+        </div>
+
+      </section>
+
+      <section class="section-card axis-theme-1" id="axisPanel">
+        <h2 id="panelTitle">Objectifs de l’axe</h2>
+        <p id="panelCopy">Sélectionnez un objectif pour ouvrir sa page dédiée.</p>
+        <div class="objective-grid" id="objectiveGrid" aria-label="Objectifs de l’axe"></div>
+      </section>
+    </div>
+  </main>
+
+  <script src="plateforme-etudiante/data.js"></script>
+  <script>
+    (function () {
+      const data = window.platformData;
+      const storageKey = "adid-platform-progress-v2";
+      const axisThemes = ["axis-theme-1", "axis-theme-2", "axis-theme-3", "axis-theme-4"];
+
+      function readState() {
+        try {
+          const parsed = JSON.parse(window.localStorage.getItem(storageKey));
+          return parsed && typeof parsed === "object" ? parsed : { saved: {} };
+        } catch (error) {
+          return { saved: {} };
+        }
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function objectiveProgress(axisId, objective, state) {
+        const completed = (objective.activities || []).filter(function (activity) {
+          return Boolean(state.saved[axisId + "::" + objective.id + "::" + activity.number]);
+        }).length;
+        const total = (objective.activities || []).length;
+        return {
+          completed: completed,
+          total: total,
+          percent: total ? Math.round((completed / total) * 100) : 0
+        };
+      }
+
+      function getObjectiveUrl(axisId, objectiveId) {
+        return "objectif.html?axe=" + encodeURIComponent(axisId) + "&objectif=" + encodeURIComponent(objectiveId);
+      }
+
+      if (!data || !Array.isArray(data.axes)) {
+        return;
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const requestedAxisId = params.get("axe");
+      const axis = data.axes.find(function (item) {
+        return item.id === requestedAxisId;
+      }) || data.axes[0];
+      const axisIndex = Math.max(0, data.axes.findIndex(function (item) {
+        return item.id === axis.id;
+      }));
+      const themeClass = axisThemes[axisIndex % axisThemes.length];
+      const state = readState();
+
+      const heroCard = document.getElementById("heroCard");
+      const axisPanel = document.getElementById("axisPanel");
+      const objectiveCount = document.getElementById("objectiveCount");
+      const pageTitle = document.getElementById("pageTitle");
+      const pageIntro = document.getElementById("pageIntro");
+      const panelTitle = document.getElementById("panelTitle");
+      const panelCopy = document.getElementById("panelCopy");
+      const objectiveGrid = document.getElementById("objectiveGrid");
+      const resourcesLink = document.getElementById("resourcesLink");
+
+      heroCard.classList.remove("axis-theme-1", "axis-theme-2", "axis-theme-3", "axis-theme-4");
+      axisPanel.classList.remove("axis-theme-1", "axis-theme-2", "axis-theme-3", "axis-theme-4");
+      heroCard.classList.add(themeClass);
+      axisPanel.classList.add(themeClass);
+
+      const axisActivities = axis.objectives.reduce(function (items, objective) {
+        return items.concat(objective.activities || []);
+      }, []);
+
+      objectiveCount.textContent = axisActivities.length + (axisActivities.length > 1 ? " activités" : " activité");
+      pageTitle.textContent = axis.title;
+      pageIntro.textContent = "Chaque objectif de " + axis.shortLabel.toLowerCase() + " reste accessible ici avec sa progression détaillée.";
+      panelTitle.textContent = axis.shortLabel + " · " + axis.title;
+      panelCopy.textContent = "Choisissez un objectif pour retrouver ses activités sur la plateforme étudiante.";
+      resourcesLink.href = "plateforme-etudiante-zenclass-ressources-theoriques.html?axe=" + encodeURIComponent(axis.id);
+      document.title = "ZenClass | " + axis.shortLabel;
+
+      objectiveGrid.innerHTML = axis.objectives.map(function (objective) {
+        const progress = objectiveProgress(axis.id, objective, state);
+        return (
+          '<a class="objective-card" href="' + escapeHtml(getObjectiveUrl(axis.id, objective.id)) + '">' +
+            '<span class="objective-meta">' + escapeHtml(objective.label) + "</span>" +
+            "<h3>" + escapeHtml(objective.title) + "</h3>" +
+            "<p>" + progress.completed + " activité" + (progress.completed > 1 ? "s" : "") + " terminée" + (progress.completed > 1 ? "s" : "") + " sur " + progress.total + ".</p>" +
+            '<div class="objective-footer">' +
+              '<span class="hero-kpi">' + progress.percent + " %</span>" +
+              '<span class="objective-open">Ouvrir l’objectif</span>' +
+            "</div>" +
+          "</a>"
+        );
+      }).join("");
+    }());
+  </script>
+  <script src="zenclass-enhancements.js"></script>
+</body>
+</html>

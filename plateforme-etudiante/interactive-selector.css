@@ -1,0 +1,288 @@
+/* ============================================
+   ZenClass Interactive Selector
+   Exact recreation from 21st.dev/interactive-selector
+   ============================================ */
+
+:root {
+  --is-bg: #222;
+  --is-card-bg: #18181b;
+  --is-border-active: #fff;
+  --is-border-inactive: #292929;
+  --is-shadow-active: 0 20px 60px rgba(0,0,0,0.50);
+  --is-shadow-inactive: 0 10px 30px rgba(0,0,0,0.30);
+  --is-transition: 700ms ease-in-out;
+  --is-icon-bg: rgba(32,32,32,0.85);
+  --is-icon-border: #444;
+  --is-text: #ffffff;
+  --is-text-muted: #9ca3af;
+}
+
+.is-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--is-bg);
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--is-text);
+  padding: 32px 16px;
+}
+
+/* Header */
+.is-header {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.is-header h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: var(--is-text);
+  margin: 0 0 12px 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  animation: fadeInFromTop 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.is-header p {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--is-text-muted);
+  font-weight: 500;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: fadeInFromTop 0.8s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+/* Cards Container */
+.is-cards {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  min-width: 600px;
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Individual Card */
+.is-card {
+  position: relative;
+  flex: 1 1 0%;
+  min-width: 60px;
+  min-height: 100px;
+  margin: 0;
+  border-radius: 0;
+  border: 2px solid var(--is-border-inactive);
+  background-color: var(--is-card-bg);
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: all var(--is-transition);
+  box-shadow: var(--is-shadow-inactive);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.is-card.active {
+  flex: 7 1 0%;
+  border-color: var(--is-border-active);
+  box-shadow: var(--is-shadow-active);
+  z-index: 10;
+  background-size: auto 100%;
+}
+
+.is-card:not(.active) {
+  background-size: auto 120%;
+}
+
+/* Shadow overlay */
+.is-card-shadow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 120px;
+  box-shadow: inset 0 -120px 0px -120px #000, inset 0 -120px 0px -80px #000;
+  transition: all var(--is-transition);
+  pointer-events: none;
+  bottom: 0;
+}
+
+.is-card:not(.active) .is-card-shadow {
+  bottom: -40px;
+}
+
+/* Label (icon + text) */
+.is-card-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 48px;
+  padding: 0 16px;
+  gap: 12px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Icon */
+.is-card-icon {
+  min-width: 44px;
+  max-width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--is-icon-bg);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  border: 2px solid var(--is-icon-border);
+  flex-shrink: 0;
+  flex-grow: 0;
+  transition: all 0.2s ease;
+}
+
+.is-card-icon svg {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+/* Text Info */
+.is-card-info {
+  white-space: pre;
+  position: relative;
+}
+
+.is-card-info .is-card-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--is-text);
+  opacity: 0;
+  transform: translateX(25px);
+  transition: all var(--is-transition);
+}
+
+.is-card-info .is-card-desc {
+  font-size: 1rem;
+  color: var(--is-text-muted);
+  opacity: 0;
+  transform: translateX(25px);
+  transition: all var(--is-transition);
+}
+
+.is-card.active .is-card-info .is-card-title,
+.is-card.active .is-card-info .is-card-desc {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Button */
+.is-card-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all var(--is-transition);
+  z-index: 3;
+  pointer-events: auto;
+}
+
+.is-card-btn:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateY(-2px);
+}
+
+.is-card.active .is-card-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.is-card-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Animation keyframes */
+@keyframes fadeInFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Initial animation for cards */
+.is-card {
+  opacity: 0;
+  transform: translateX(-60px);
+  animation: slideFadeIn 0.5s ease forwards;
+}
+
+.is-card:nth-child(1) { animation-delay: 0.1s; }
+.is-card:nth-child(2) { animation-delay: 0.2s; }
+.is-card:nth-child(3) { animation-delay: 0.3s; }
+.is-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .is-cards {
+    flex-direction: column;
+    min-width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
+  
+  .is-card,
+  .is-card.active {
+    flex: none;
+    width: 100%;
+    min-height: 120px;
+    background-size: cover !important;
+  }
+  
+  .is-card:not(.active) .is-card-info .is-card-title,
+  .is-card:not(.active) .is-card-info .is-card-desc {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

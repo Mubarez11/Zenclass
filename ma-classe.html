@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ma classe | ZenClass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-primary: "Poppins", "Aptos", "Avenir Next", "Segoe UI Variable", "Segoe UI", sans-serif;
+      --font-display: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+
+      --color-primary: #667eea;
+      --color-primary-dark: #5a67d8;
+      --color-secondary: #764ba2;
+      --color-accent: #4facfe;
+      --color-success: #48bb78;
+      --color-warning: #63b3ed;
+      --color-danger: #fc8181;
+      --gray-900: #1a202c;
+      --gray-800: #2d3748;
+      --gray-700: #4a5568;
+      --gray-600: #718096;
+      --gray-500: #a0aec0;
+      --gray-400: #cbd5e0;
+      --gray-300: #e2e8f0;
+      --gray-200: #edf2f7;
+      --gray-100: #f7fafc;
+      --white: #ffffff;
+
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-success: linear-gradient(135deg, #48bb78, #38a169);
+      --gradient-warning: linear-gradient(135deg, #63b3ed, #5a67d8);
+      --gradient-purple: linear-gradient(135deg, #9f7aea, #805ad5);
+      --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 18px 48px rgba(15, 23, 42, 0.12);
+      --shadow-xl: 0 26px 60px rgba(15, 23, 42, 0.16);
+
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 34px;
+
+      --section-padding: 96px 0;
+      --container-width: 1220px;
+      --transition: 0.3s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-primary);
+      color: var(--gray-800);
+      background:
+        radial-gradient(circle at 10% 20%, rgba(102, 126, 234, 0.12), transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(79, 172, 254, 0.1), transparent 22%),
+        linear-gradient(180deg, #f6f8fc 0%, #ffffff 35%, #f8fbff 100%);
+      line-height: 1.65;
+      overflow-x: hidden;
+      padding-top: 72px;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(125deg, rgba(102, 126, 234, 0.04), transparent 28%),
+        linear-gradient(320deg, rgba(118, 75, 162, 0.03), transparent 26%);
+      z-index: 0;
+    }
+    a, button { font: inherit; color: inherit; }
+    a { text-decoration: none; }
+    button { border: 0; background: none; cursor: pointer; }
+    h1, h2, h3, h4, p, ul { margin: 0; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(100% - 32px, var(--container-width));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Nav */
+    .ace-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+      height: 72px;
+      display: flex;
+      align-items: center;
+    }
+    .ace-inner {
+      width: min(100% - 32px, var(--container-width));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ace-logo img { height: 52px; width: auto; }
+    .ace-menu { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .ace-item { position: relative; }
+    .ace-ibtn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 18px; border-radius: 999px;
+      font-size: 0.9rem; font-weight: 600;
+      color: var(--gray-700);
+      transition: background var(--transition), color var(--transition);
+    }
+    .ace-ibtn:hover { background: rgba(102, 126, 234, 0.08); color: var(--color-primary); }
+    .ace-drop {
+      display: none; position: absolute; top: calc(100% + 8px); right: 0;
+      background: var(--white); border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl); border: 1px solid rgba(15, 23, 42, 0.08);
+      padding: 18px; min-width: 340px;
+    }
+    .ace-item:hover .ace-drop { display: block; }
+    .ace-drop-grid { display: grid; gap: 8px; }
+    .ace-dcard {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px; border-radius: var(--radius-md);
+      transition: background var(--transition);
+    }
+    .ace-dcard:hover { background: rgba(102, 126, 234, 0.06); }
+    .ace-dicon { width: 40px; height: 40px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
+    .ace-dname { font-weight: 700; font-size: 0.92rem; color: var(--gray-900); }
+    .ace-dsub { font-size: 0.8rem; color: var(--gray-500); margin-top: 2px; }
+
+    /* Section */
+    .resources-section { padding: var(--section-padding); position: relative; z-index: 1; }
+    .resources-stack { display: grid; gap: 38px; }
+    .resource-column { display: grid; gap: 24px; }
+    .resource-section-head, .resource-subsection-head {
+      display: grid; gap: 14px; justify-items: start;
+    }
+    .resource-section-head h2, .resource-subsection-head h3 {
+      font-family: var(--font-display); line-height: 1.12; color: var(--gray-900);
+    }
+    .resource-section-head h2 { font-size: clamp(1.9rem, 4vw, 2.7rem); }
+    .resource-subsection-head h3 { font-size: clamp(1.55rem, 3vw, 2.15rem); }
+    .resource-section-head p, .resource-subsection-head p { color: var(--gray-600); font-size: 1rem; line-height: 1.75; }
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 36px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: var(--gradient-primary);
+      color: var(--white);
+      font-size: 0.84rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 0 10px 24px rgba(102, 126, 234, 0.24);
+    }
+
+    /* Grids */
+    .zen-video-grid, .zen-docs-grid, .zen-activities-grid {
+      display: grid; gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .zen-video-grid .zen-doc-card { width: min(100%, 860px); margin: 0 auto; }
+
+    /* Doc Card */
+    .zen-doc-card, .zen-activity-card {
+      position: relative; overflow: hidden;
+      background: var(--white);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 28px;
+      box-shadow: var(--shadow-md);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .zen-doc-card::before, .zen-activity-card::before {
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 6px;
+      background: var(--gradient-primary);
+    }
+    .zen-doc-card { padding: 32px 28px; display: grid; gap: 18px; }
+    .zen-doc-card.is-featured {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.06) 0%, rgba(118, 75, 162, 0.05) 100%);
+    }
+
+    .axis-theme-1 { --theme-gradient: var(--gradient-primary); }
+    .axis-theme-2 { --theme-gradient: var(--gradient-warning); }
+    .axis-theme-3 { --theme-gradient: var(--gradient-accent); }
+    .axis-theme-4 { --theme-gradient: var(--gradient-purple); }
+    .zen-doc-card:hover, .zen-activity-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(102, 126, 234, 0.18);
+    }
+    .zen-doc-icon {
+      width: 72px; height: 72px; border-radius: 24px;
+      display: grid; place-items: center;
+      font-size: 1.15rem; font-weight: 700; color: var(--white);
+      background: var(--gradient-primary);
+      box-shadow: 0 14px 28px rgba(102, 126, 234, 0.24);
+    }
+    .zen-doc-card h3 {
+      margin: 0; font-family: var(--font-display); line-height: 1.18; color: var(--gray-900); font-size: 1.5rem;
+    }
+    .zen-doc-card p { color: var(--gray-600); font-size: 0.96rem; line-height: 1.72; }
+    .zen-doc-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .zen-doc-card .library-embed { margin-top: 4px; }
+
+    /* Action button */
+    .zen-action {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 42px; padding: 10px 18px; border-radius: 14px;
+      background: var(--gradient-primary); color: var(--white);
+      font-size: 0.9rem; font-weight: 600;
+      box-shadow: 0 10px 22px rgba(102, 126, 234, 0.2);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .zen-action:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(102, 126, 234, 0.26); }
+    .zen-action.is-word {
+      background: linear-gradient(135deg, #4a74c6, #31589e);
+      box-shadow: 0 10px 22px rgba(49, 88, 158, 0.22);
+    }
+
+    /* Library embed */
+    .library-embed {
+      overflow: hidden; border-radius: 18px; border: 1px solid rgba(148, 163, 184, 0.16);
+      background: #000; aspect-ratio: 16 / 9;
+    }
+    .library-embed iframe { width: 100%; height: 100%; border: 0; }
+
+    /* Activity Card */
+    .zen-activities-grid { align-items: start; }
+    .zen-activity-card { display: flex; flex-direction: column; width: min(100%, 420px); min-height: 100%; margin: 0 auto; }
+    .zen-activity-head { position: relative; }
+    .zen-activity-band {
+      position: relative; min-height: 172px; padding: 28px 30px;
+      background: var(--gradient-primary); display: grid; place-items: center;
+    }
+    .zen-activity-copy { display: grid; gap: 18px; flex: 1 1 auto; padding: 34px 30px 30px; }
+    .zen-activity-number {
+      position: absolute; top: 22px; right: 26px;
+      font-size: 3.35rem; font-weight: 800; line-height: 1; color: rgba(255, 255, 255, 0.9);
+    }
+    .zen-activity-symbol {
+      width: 66px; height: 66px; color: var(--white);
+    }
+    .zen-activity-title-row { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+    .zen-activity-title-icon { width: 24px; height: 24px; flex: 0 0 auto; color: var(--color-primary); }
+    .zen-activity-card h3 { margin: 0; font-family: var(--font-display); line-height: 1.18; color: var(--gray-900); font-size: 1.5rem; }
+    .zen-activity-copy-block { display: grid; gap: 8px; }
+    .zen-activity-label {
+      display: inline-flex; align-items: center; width: fit-content; min-height: 34px;
+      padding: 6px 14px; border-radius: 999px;
+      background: rgba(102, 126, 234, 0.08); color: var(--color-primary-dark);
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .zen-activity-download {
+      position: relative; display: block; margin-top: auto; overflow: hidden;
+      background: linear-gradient(180deg, #f6f8fc 0%, #eef4ff 100%);
+      border-top: 1px solid rgba(148, 163, 184, 0.14);
+    }
+    .zen-activity-download img {
+      width: 100%; height: 210px; object-fit: cover; object-position: center;
+      padding: 14px; background: rgba(255, 255, 255, 0.92);
+      transition: transform 0.35s ease;
+    }
+    .zen-activity-download:hover img { transform: scale(1.05); }
+    .zen-download-overlay {
+      position: absolute; inset: 0; display: grid; align-content: center; justify-items: center;
+      gap: 10px; background: rgba(102, 126, 234, 0.88); color: var(--white);
+      font-size: 0.92rem; font-weight: 700; opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .zen-activity-download:hover .zen-download-overlay { opacity: 1; }
+
+    /* SVG Icons */
+    .zen-activity-symbol, .zen-activity-title-icon, .team-link::before, .team-avatar::before {
+      display: inline-block; background-color: currentColor;
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      -webkit-mask-position: center; mask-position: center;
+      -webkit-mask-size: contain; mask-size: contain;
+    }
+    .zen-icon-classification {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M12 2 1 7l11 5 9-4.09V15h2V7L12 2Zm-7 9 7 3 7-3v3l-7 3-7-3v-3Zm0 6 7 3 7-3v3l-7 3-7-3v-3Z'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M12 2 1 7l11 5 9-4.09V15h2V7L12 2Zm-7 9 7 3 7-3v3l-7 3-7-3v-3Zm0 6 7 3 7-3v3l-7 3-7-3v-3Z'/%3E%3C/svg%3E");
+    }
+    .zen-icon-roles {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M4 3h8l1 4 3-1 4 3-2 9-6-1-3 4-7-5 2-13Zm5 4c-1 0-2 .9-2 2s1 2 2 2 2-.9 2-2-1-2-2-2Zm8 2c-.8 0-1.5.7-1.5 1.5S16.2 12 17 12s1.5-.7 1.5-1.5S17.8 9 17 9Z'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M4 3h8l1 4 3-1 4 3-2 9-6-1-3 4-7-5 2-13Zm5 4c-1 0-2 .9-2 2s1 2 2 2 2-.9 2-2-1-2-2-2Zm8 2c-.8 0-1.5.7-1.5 1.5S16.2 12 17 12s1.5-.7 1.5-1.5S17.8 9 17 9Z'/%3E%3C/svg%3E");
+    }
+    .zen-icon-boite {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M3 7.5 12 4l9 3.5v2L12 13 3 9.5v-2Zm0 4L11 15v5l-8-3.1v-5.4Zm10 8.5v-5l8-3.5v5.4L13 20Z'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M3 7.5 12 4l9 3.5v2L12 13 3 9.5v-2Zm0 4L11 15v5l-8-3.1v-5.4Zm10 8.5v-5l8-3.5v5.4L13 20Z'/%3E%3C/svg%3E");
+    }
+    .zen-icon-evaluation {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M9 2h6v2h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4V2Zm-2 6v2h10V8H7Zm0 4v2h7v-2H7Zm0 4v2h5v-2H7Z'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M9 2h6v2h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4V2Zm-2 6v2h10V8H7Zm0 4v2h7v-2H7Zm0 4v2h5v-2H7Z'/%3E%3C/svg%3E");
+    }
+
+    .resources-section,
+    .bridge-section {
+      padding: var(--section-padding);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .resource-column {
+      padding: 30px;
+      border-radius: 28px;
+      background: var(--white);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow-md);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+      display: grid;
+      gap: 18px;
+      justify-items: center;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 1.08;
+      color: var(--gray-900);
+    }
+
+    .section-header p {
+      max-width: 70ch;
+      font-size: 1.08rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+    }
+
+    .forum-section {
+      padding: var(--section-padding);
+      background: var(--gradient-dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .forum-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 24%, rgba(79, 172, 254, 0.14), transparent 20%),
+        radial-gradient(circle at 86% 76%, rgba(159, 122, 234, 0.12), transparent 18%);
+    }
+
+    .forum-section .section-header h2,
+    .forum-section .section-header p {
+      color: var(--white);
+    }
+
+    .forum-section .section-header p {
+      color: rgba(255, 255, 255, 0.76);
+    }
+
+    .forum-grid {
+      display: grid;
+      gap: 26px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .forum-card {
+      position: relative;
+      overflow: hidden;
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 28px;
+      box-shadow: none;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .forum-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .forum-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 6px;
+      background: var(--theme-gradient, var(--gradient-accent));
+    }
+
+    .forum-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      line-height: 1.18;
+      color: var(--white);
+    }
+
+    .forum-card p {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    .forum-badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 28px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .bridge-section {
+      background: linear-gradient(180deg, #ffffff 0%, #f4f8ff 100%);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      justify-items: center;
+    }
+
+    .footer-brand {
+      width: min(100%, 760px);
+      padding: 30px;
+      border-radius: 28px;
+      background: var(--white);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      box-shadow: var(--shadow-md);
+      display: grid;
+      gap: 16px;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .footer-brand h3 {
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      line-height: 1.15;
+      color: var(--gray-900);
+    }
+
+    .footer-brand p {
+      color: var(--gray-600);
+      line-height: 1.8;
+    }
+
+    .team-grid {
+      width: min(100%, 920px);
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      justify-content: center;
+    }
+
+    .team-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 230px;
+      padding: 24px 18px 20px;
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+      align-content: start;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(248, 250, 252, 0.94) 100%);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 28px;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.05);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .team-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 38px rgba(15, 23, 42, 0.07);
+      border-color: rgba(102, 126, 234, 0.12);
+    }
+
+    .team-card::before {
+      display: none;
+    }
+
+    .team-avatar {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      margin-top: 4px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--gradient-primary);
+      box-shadow: 0 14px 28px rgba(102, 126, 234, 0.18);
+    }
+
+    .team-avatar::before {
+      content: "";
+      position: absolute;
+      inset: 50%;
+      width: 48px;
+      height: 48px;
+      transform: translate(-50%, -50%);
+      color: var(--white);
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='black'%3E%3Cpath d='M32 8 10 16l22 8 18-6.55V27h4V16L32 8Zm-12 19v7c0 6 6 11 12 11s12-5 12-11v-7l-12 4-12-4Zm-2 23c0-6 6-10 14-10s14 4 14 10v4H18v-4Z'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='black'%3E%3Cpath d='M32 8 10 16l22 8 18-6.55V27h4V16L32 8Zm-12 19v7c0 6 6 11 12 11s12-5 12-11v-7l-12 4-12-4Zm-2 23c0-6 6-10 14-10s14 4 14 10v4H18v-4Z'/%3E%3C/svg%3E");
+    }
+
+    .team-card h4 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.45rem, 2vw, 1.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--gray-900);
+    }
+
+    .team-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 2px;
+      color: #5f77e6;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color var(--transition), transform var(--transition);
+    }
+
+    .team-link::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      color: currentColor;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3ZM5 5h6v2H7v10h10v-4h2v6H5V5Z'/%3E%3C/svg%3E");
+    }
+
+    .team-link:hover,
+    .team-link:focus-visible {
+      color: #465fd0;
+      transform: translateY(-1px);
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 26px;
+      bottom: 26px;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: var(--gradient-primary);
+      color: var(--white);
+      box-shadow: 0 16px 28px rgba(102, 126, 234, 0.28);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: opacity var(--transition), visibility var(--transition), transform var(--transition);
+      z-index: 55;
+    }
+
+    .back-to-top.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover,
+    .back-to-top:focus-visible {
+      transform: translateY(-3px);
+      outline: none;
+    }
+
+    /* Animations */
+    .fade-in {
+      animation: fadeInUp 0.7s ease both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Page intro */
+    .page-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.8fr);
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+    .page-intro-copy {
+      display: grid;
+      gap: 18px;
+    }
+    .page-intro-copy h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6vw, 4.1rem);
+      line-height: 1.02;
+      color: var(--gray-900);
+    }
+    .page-intro-copy p {
+      max-width: 62ch;
+      color: var(--gray-600);
+      font-size: 1.02rem;
+    }
+    .page-intro-card {
+      display: grid;
+      gap: 14px;
+      padding: 24px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(79, 172, 254, 0.08));
+      border: 1px solid rgba(102, 126, 234, 0.12);
+      box-shadow: var(--shadow-md);
+    }
+    .page-intro-card strong {
+      color: var(--gray-900);
+      font-size: 1rem;
+    }
+    .page-intro-card p {
+      color: var(--gray-600);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border-radius: 999px;
+      background: rgba(102, 126, 234, 0.08); color: var(--color-primary);
+      font-size: 0.88rem; font-weight: 600;
+      transition: background var(--transition);
+    }
+    .back-link:hover { background: rgba(102, 126, 234, 0.16); }
+
+    .ace-ibtn.is-active {
+      background: rgba(102, 126, 234, 0.1);
+      color: var(--color-primary);
+      box-shadow: inset 0 0 0 1px rgba(102, 126, 234, 0.14);
+    }
+
+    @media (max-width: 980px) {
+      .ace-inner {
+        gap: 14px;
+        align-items: flex-start;
+      }
+      .ace-menu {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .page-intro {
+        grid-template-columns: 1fr;
+      }
+
+      .team-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .ace-header {
+        height: auto;
+        padding: 12px 0;
+      }
+      body {
+        padding-top: 110px;
+      }
+      .ace-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .ace-menu {
+        gap: 10px;
+      }
+      .ace-item,
+      .ace-item > a,
+      .ace-item > button {
+        width: 100%;
+      }
+      .ace-ibtn {
+        width: 100%;
+        justify-content: center;
+      }
+      .ace-drop {
+        left: 0;
+        right: auto;
+        min-width: min(100vw - 32px, 340px);
+      }
+
+      .resource-column,
+      .zen-doc-card,
+      .team-card,
+      .footer-brand,
+      .forum-card {
+        padding: 22px;
+      }
+
+      .team-grid {
+        width: min(100%, 420px);
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        margin-bottom: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV HEADER -->
+  <header class="ace-header">
+    <div class="ace-inner">
+      <a href="plateforme-etudiante-zenclass.html" class="ace-logo">
+        <img src="logo zenclasse reworked.png" alt="ZenClass" />
+      </a>
+      <nav class="ace-menu">
+        <a href="plateforme-etudiante-zenclass.html#hero" class="ace-ibtn">Accueil</a>
+        <div class="ace-item">
+          <button class="ace-ibtn">Parcours</button>
+          <div class="ace-drop">
+            <div class="ace-drop-grid">
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-1" class="ace-dcard">
+                <div class="ace-dicon" style="background:#667eea33;color:#667eea">A1</div>
+                <div><div class="ace-dname">Axe 1</div><div class="ace-dsub">Émotions & Bien-être</div></div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-2" class="ace-dcard">
+                <div class="ace-dicon" style="background:#63b3ed33;color:#63b3ed">A2</div>
+                <div><div class="ace-dname">Axe 2</div><div class="ace-dsub">Détecter pour prévenir</div></div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-3" class="ace-dcard">
+                <div class="ace-dicon" style="background:#4facfe33;color:#4facfe">A3</div>
+                <div><div class="ace-dname">Axe 3</div><div class="ace-dsub">Communication soutenante</div></div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-4" class="ace-dcard">
+                <div class="ace-dicon" style="background:#48bb7833;color:#48bb78">A4</div>
+                <div><div class="ace-dname">Axe 4</div><div class="ace-dsub">Climat & Bien-être global</div></div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="ace-item">
+          <button class="ace-ibtn">Ressources</button>
+          <div class="ace-drop">
+            <div class="ace-drop-grid">
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-1" class="ace-dcard">
+                <div class="ace-dicon" style="background:#667eea33;color:#667eea">A1</div>
+                <div><div class="ace-dname">Axe 1</div><div class="ace-dsub">Ressources théoriques</div></div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2" class="ace-dcard">
+                <div class="ace-dicon" style="background:#63b3ed33;color:#63b3ed">A2</div>
+                <div><div class="ace-dname">Axe 2</div><div class="ace-dsub">Ressources théoriques</div></div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3" class="ace-dcard">
+                <div class="ace-dicon" style="background:#4facfe33;color:#4facfe">A3</div>
+                <div><div class="ace-dname">Axe 3</div><div class="ace-dsub">Ressources théoriques</div></div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-4" class="ace-dcard">
+                <div class="ace-dicon" style="background:#48bb7833;color:#48bb78">A4</div>
+                <div><div class="ace-dname">Axe 4</div><div class="ace-dsub">Ressources théoriques</div></div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <a href="ma-classe.html" class="ace-ibtn is-active" aria-current="page">Ma classe</a>
+        <a href="#forum" class="ace-ibtn">Forum</a>
+        <a href="#equipe" class="ace-ibtn">Équipe</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="resources-section" id="ressources">
+      <div class="container">
+        <div class="resources-stack">
+          <section class="resource-column fade-in" id="ressources-classe" aria-label="Ressources pour ma classe">
+            <header class="resource-section-head">
+              <span class="section-tag">Ressources pour ma classe</span>
+              <h2>Documentation pédagogique</h2>
+              <p>Téléchargez tous les supports pour vos cours</p>
+            </header>
+            <header class="resource-subsection-head">
+              <h3>Vidéo pédagogique</h3>
+              <p>La capsule principale ZenClass, directement accessible depuis cette rubrique</p>
+            </header>
+            <div class="zen-video-grid" id="zenVideoGrid"></div>
+            <header class="resource-subsection-head">
+              <h3>Documents pédagogiques</h3>
+              <p>Les dossiers et justifications à consulter ou télécharger</p>
+            </header>
+            <div class="zen-docs-grid" id="zenDocsGrid"></div>
+            <header class="resource-subsection-head">
+              <h3>4 activités clé en main</h3>
+              <p>Des exercices pratiques prêts à être utilisés dans vos classes</p>
+            </header>
+            <div class="zen-activities-grid" id="zenActivitiesGrid"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="forum-section" id="forum">
+      <div class="container">
+        <header class="section-header fade-in">
+          <span class="section-tag">Forum</span>
+          <h2>Des amorces de discussion alignées sur les 4 axes</h2>
+          <p>Un espace d'échange entre vous. Cliquez sur l'axe correspondant à votre demande pour poser une question ou ouvrir un sujet de discussion.</p>
+        </header>
+
+        <div class="forum-grid" id="forumGrid" aria-label="Amorces de discussion par axe"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bridge-section" id="equipe">
+    <div class="container footer-grid">
+      <section class="footer-brand fade-in">
+        <span class="section-tag">Équipe</span>
+        <h3>Réalisé par l’équipe ZenClass</h3>
+        <p>Étudiants du Master MALTT - Université de Genève. Retrouvez ici les portfolios de l’équipe en fin de parcours, juste après le forum.</p>
+      </section>
+      <div class="team-grid fade-in" id="teamGrid"></div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Retour en haut">↑</button>
+
+  <script src="plateforme-etudiante/data.js"></script>
+  <script>
+    (function () {
+      var data = window.platformData;
+      const axisThemes = ["axis-theme-1", "axis-theme-2", "axis-theme-3", "axis-theme-4"];
+      const forumPrompts = [
+        "Dans quelles situations les émotions soutiennent-elles ou freinent-elles les apprentissages ?",
+        "Quels indices vous semblent les plus fiables pour repérer un stress probable chez un élève ?",
+        "Quelles postures de communication vous paraissent réellement apaisantes en classe ?",
+        "Quels rituels permettraient d'installer un climat plus sécurisant au quotidien ?"
+      ];
+
+      const zenClassDocuments = [
+        {
+          featured: true,
+          icon: "DOC",
+          title: "Dossier Complet",
+          description: "Le guide pédagogique intégral pour apprendre à gérer le stress en milieu scolaire.",
+          actions: [
+            { href: "zenclass-modele/zenclass-dossier.pdf", label: "PDF" },
+            { href: "zenclass-modele/zenclass-dossier.docx", label: "Word", kind: "word" }
+          ]
+        },
+        {
+          icon: "VID",
+          title: "Vidéo pédagogique",
+          description: "La capsule principale ZenClass, directement accessible depuis cette rubrique.",
+          embed: "https://www.youtube.com/embed/G03KPCttNC0",
+          actions: [
+            { href: "https://www.youtube.com/watch?v=G03KPCttNC0", label: "Voir sur YouTube" }
+          ]
+        },
+        {
+          icon: "PDF",
+          title: "Justifications Pédagogiques",
+          description: "Les fondements théoriques et scientifiques de notre approche.",
+          actions: [
+            { href: "zenclass-modele/Justification.pdf", label: "Consulter" }
+          ]
+        }
+      ];
+
+      const zenClassActivities = [
+        {
+          number: "01",
+          icon: "CL",
+          iconKey: "classification",
+          title: "Classification",
+          preview: "zenclass-modele/img1.png",
+          download: "zenclass-modele/act1.pdf",
+          blocks: [
+            { label: "Objectif", text: "Reconnaître et évaluer les situations qui peuvent générer du stress." },
+            { label: "Critère de réussite", text: "L'élève parvient à repérer, classer et ordonner les situations stressantes de son quotidien." },
+            { label: "Institutionnalisation", text: "Identifier les signes de stress et trouver des méthodes pour les apaiser." }
+          ]
+        },
+        {
+          number: "02",
+          icon: "JR",
+          iconKey: "roles",
+          title: "Jeux de rôles",
+          preview: "zenclass-modele/img2.png",
+          download: "zenclass-modele/act2.pdf",
+          blocks: [
+            { label: "Objectifs", text: "Réussir à se mettre à la place de l'autre. Développer l'empathie. S'approprier des conseils." },
+            { label: "Critère de réussite", text: "L'élève parvient à conseiller un camarade et à reconnaître les comportements déclenchés par le stress." },
+            { label: "Matériel", text: "9 cartes « élève stressé » et 9 cartes « coach » pour des activités en binôme." }
+          ]
+        },
+        {
+          number: "03",
+          icon: "BA",
+          iconKey: "boite",
+          title: "Boîte anti-stress",
+          preview: "zenclass-modele/img3.png",
+          download: "zenclass-modele/act3.pdf",
+          blocks: [
+            { label: "Concept", text: "Un patron à imprimer et des cartes modèles à construire avec les élèves." },
+            { label: "Personnalisation", text: "Couleurs personnalisables selon les besoins : vert (apaisement), bleu (colère), rose (conflits)." },
+            { label: "Utilisation", text: "Devient la boîte à outils personnelle de l'élève pour gérer ses émotions." }
+          ]
+        },
+        {
+          number: "04",
+          icon: "AE",
+          iconKey: "evaluation",
+          title: "Auto-évaluation",
+          preview: "zenclass-modele/img4.png",
+          download: "zenclass-modele/act4.pdf",
+          blocks: [
+            { label: "Objectif", text: "Mesurer la progression et la prise de conscience des élèves." },
+            { label: "Timing", text: "À distribuer au début ET à la fin de la séquence pour mesurer l'évolution." },
+            { label: "Évaluation", text: "Permet une réflexion métacognitive sur la gestion du stress." }
+          ]
+        }
+      ];
+
+      const zenTeamMembers = [
+        {
+          name: "Mohammad",
+          href: "https://tecfaetu.unige.ch/etu-maltt/freya/mohamsa1/"
+        },
+        {
+          name: "Julien",
+          href: "https://tecfaetu.unige.ch/perso/maltt/kouchek1/index.html"
+        },
+        {
+          name: "Karim",
+          href: "https://tecfaetu.unige.ch/etu-maltt/freya/dzajic9/"
+        },
+        {
+          name: "Audrey",
+          href: "https://tecfaetu.unige.ch/perso/maltt/avogadr5/index.html"
+        }
+      ];
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function renderClassResources() {
+        const videoGrid = document.getElementById("zenVideoGrid");
+        const docsGrid = document.getElementById("zenDocsGrid");
+        const activitiesGrid = document.getElementById("zenActivitiesGrid");
+
+        if (videoGrid) {
+          videoGrid.innerHTML = zenClassDocuments.filter(function (item) {
+            return Boolean(item.embed);
+          }).map(function (item, index) {
+            var themeClass = axisThemes[index % axisThemes.length];
+            var featuredClass = item.featured ? " is-featured" : "";
+            var embed = item.embed
+              ? '<div class="library-embed"><iframe src="' + escapeHtml(item.embed) + '" title="' + escapeHtml(item.title) + '" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>'
+              : "";
+            var actions = item.actions.map(function (action) {
+              var actionClass = action.kind === "word" ? " zen-action is-word" : " zen-action";
+              return '<a class="' + actionClass.trim() + '" href="' + escapeHtml(action.href) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(action.label) + "</a>";
+            }).join("");
+
+            return (
+              '<article class="zen-doc-card ' + themeClass + featuredClass + ' fade-in">' +
+                '<div class="zen-doc-icon">' + escapeHtml(item.icon) + "</div>" +
+                "<h3>" + escapeHtml(item.title) + "</h3>" +
+                "<p>" + escapeHtml(item.description) + "</p>" +
+                embed +
+                '<div class="zen-doc-actions">' + actions + "</div>" +
+              "</article>"
+            );
+          }).join("");
+        }
+
+        if (docsGrid) {
+          docsGrid.innerHTML = zenClassDocuments.filter(function (item) {
+            return !item.embed;
+          }).map(function (item, index) {
+            var themeClass = axisThemes[index % axisThemes.length];
+            var featuredClass = item.featured ? " is-featured" : "";
+            var actions = item.actions.map(function (action) {
+              var actionClass = action.kind === "word" ? " zen-action is-word" : " zen-action";
+              return '<a class="' + actionClass.trim() + '" href="' + escapeHtml(action.href) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(action.label) + "</a>";
+            }).join("");
+
+            return (
+              '<article class="zen-doc-card ' + themeClass + featuredClass + ' fade-in">' +
+                '<div class="zen-doc-icon">' + escapeHtml(item.icon) + "</div>" +
+                "<h3>" + escapeHtml(item.title) + "</h3>" +
+                "<p>" + escapeHtml(item.description) + "</p>" +
+                '<div class="zen-doc-actions">' + actions + "</div>" +
+              "</article>"
+            );
+          }).join("");
+        }
+
+        if (activitiesGrid) {
+          activitiesGrid.innerHTML = zenClassActivities.map(function (item, index) {
+            var themeClass = axisThemes[index % axisThemes.length];
+            var iconClass = item.iconKey ? " zen-icon-" + item.iconKey : "";
+            var blocks = item.blocks.map(function (block) {
+              return (
+                '<div class="zen-activity-copy-block">' +
+                  '<span class="zen-activity-label">' + escapeHtml(block.label) + "</span>" +
+                  "<p>" + escapeHtml(block.text) + "</p>" +
+                "</div>"
+              );
+            }).join("");
+
+            return (
+              '<article class="zen-activity-card ' + themeClass + ' fade-in">' +
+                '<div class="zen-activity-head">' +
+                  '<div class="zen-activity-band">' +
+                    '<span class="zen-activity-symbol' + iconClass + '" aria-hidden="true"></span>' +
+                    '<span class="zen-activity-number">' + escapeHtml(item.number) + "</span>" +
+                  "</div>" +
+                "</div>" +
+                '<div class="zen-activity-copy">' +
+                  '<div class="zen-activity-title-row">' +
+                    '<span class="zen-activity-title-icon' + iconClass + '" aria-hidden="true"></span>' +
+                    "<h3>" + escapeHtml(item.title) + "</h3>" +
+                  "</div>" +
+                  blocks +
+                "</div>" +
+                '<a class="zen-activity-download" href="' + escapeHtml(item.download) + '" target="_blank" rel="noopener noreferrer">' +
+                  '<img src="' + escapeHtml(item.preview) + '" alt="' + escapeHtml("Aperçu " + item.title) + '" />' +
+                  '<div class="zen-download-overlay"><span>Télécharger PDF</span></div>' +
+                "</a>" +
+              "</article>"
+            );
+          }).join("");
+        }
+      }
+
+      function renderTeam() {
+        var grid = document.getElementById("teamGrid");
+
+        if (!grid) {
+          return;
+        }
+
+        grid.innerHTML = zenTeamMembers.map(function (member) {
+          return (
+            '<article class="team-card fade-in">' +
+              '<div class="team-avatar" aria-hidden="true"></div>' +
+              "<h4>" + escapeHtml(member.name) + "</h4>" +
+              '<a class="team-link" href="' + escapeHtml(member.href) + '" target="_blank" rel="noopener noreferrer">Portfolio</a>' +
+            "</article>"
+          );
+        }).join("");
+      }
+
+      function renderForum() {
+        var forumGrid = document.getElementById("forumGrid");
+
+        if (!forumGrid || !data || !Array.isArray(data.axes)) {
+          return;
+        }
+
+        forumGrid.innerHTML = data.axes.map(function (axis, index) {
+          return (
+            '<article class="forum-card ' + axisThemes[index % axisThemes.length] + ' fade-in">' +
+              '<span class="forum-badge">' + escapeHtml(axis.shortLabel) + "</span>" +
+              "<h3>" + escapeHtml(axis.title) + "</h3>" +
+              "<p>" + escapeHtml(forumPrompts[index]) + "</p>" +
+            "</article>"
+          );
+        }).join("");
+      }
+
+      function setupBackToTop() {
+        var backToTop = document.getElementById("backToTop");
+
+        if (!backToTop) {
+          return;
+        }
+
+        function updateBackToTop() {
+          backToTop.classList.toggle("is-visible", window.scrollY > 500);
+        }
+
+        backToTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        window.addEventListener("scroll", updateBackToTop, { passive: true });
+        updateBackToTop();
+      }
+
+      function initFadeIns() {
+        var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+          document.querySelectorAll(".fade-in").forEach(function (el) {
+            el.classList.add("is-visible");
+          });
+          return;
+        }
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -12% 0px", threshold: 0.14 });
+
+        document.querySelectorAll(".fade-in").forEach(function (el) {
+          observer.observe(el);
+        });
+      }
+
+      if (!data || !Array.isArray(data.axes)) {
+        return;
+      }
+
+      renderClassResources();
+      renderForum();
+      renderTeam();
+      setupBackToTop();
+      initFadeIns();
+    }());
+  </script>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Quiz - Gérer le Stress | ZenClass</title>
+	<link rel="stylesheet" href="stylevideoADID.css">
+	<link rel="stylesheet" href="pages.css">
+	<link rel="stylesheet" href="agent.css">
+	<link rel="stylesheet" href="../zenclass-header.css">
+	<link rel="stylesheet" href="../zenclass-enhancements.css">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar" aria-label="Navigation principale">
+	<div class="nav-container">
+		<a class="logo brand" href="../plateforme-etudiante-zenclass.html#parcours" aria-label="Retour à ZenClass">
+			<img class="logo-image" src="../zenclass-logo.svg" alt="ZenClass">
+		</a>
+		<ul class="nav-links">
+			<li class="nav-dropdown">
+				<div class="dropdown-entry">
+					<a class="nav-link-parcours dropdown-parent-link" href="../plateforme-etudiante-zenclass.html#parcours">Parcours</a>
+					<button class="dropdown-toggle dropdown-toggle-button" type="button" aria-label="Sous-menu Parcours">
+						<span class="dropdown-caret" aria-hidden="true"></span>
+					</button>
+				</div>
+				<ul class="dropdown-menu">
+					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-1">Axe 1</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-2">Axe 2</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-3">Axe 3</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-4">Axe 4</a></li>
+				</ul>
+			</li>
+			<li class="nav-dropdown">
+				<div class="dropdown-entry">
+					<a class="nav-link-interactif dropdown-parent-link" href="quiz.html">Interactif</a>
+					<button class="dropdown-toggle dropdown-toggle-button" type="button" aria-label="Sous-menu Interactif">
+						<span class="dropdown-caret" aria-hidden="true"></span>
+					</button>
+				</div>
+				<ul class="dropdown-menu">
+					<li><a href="quiz.html" class="active">Quiz</a></li>
+					<li><a href="auto-evaluation.html">Auto-évaluation</a></li>
+					<li><a href="respiration.html">Respiration 4-7-8</a></li>
+					<li><a href="classification.html">Classification</a></li>
+					<li><a href="jeu-roles.html">Jeu de rôles</a></li>
+				</ul>
+			</li>
+			<li class="nav-dropdown">
+				<div class="dropdown-entry">
+					<a class="nav-link-theory dropdown-parent-link" href="../plateforme-etudiante-zenclass.html#ressources-theoriques">Ressources théoriques</a>
+					<button class="dropdown-toggle dropdown-toggle-button" type="button" aria-label="Sous-menu Ressources théoriques">
+						<span class="dropdown-caret" aria-hidden="true"></span>
+					</button>
+				</div>
+				<ul class="dropdown-menu">
+					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-1">Axe 1</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2">Axe 2</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3">Axe 3</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-4">Axe 4</a></li>
+				</ul>
+			</li>
+			<li><a class="nav-link-class" href="../ma-classe.html">Ressources pour ma classe</a></li>
+			<li><a class="nav-link-progress" href="../plateforme-etudiante-zenclass-progression.html">Mon suivi de progression</a></li>
+			<li><a class="nav-link-team" href="../plateforme-etudiante-zenclass.html#equipe">Équipe</a></li>
+			<li><a class="nav-link-forum" href="../plateforme-etudiante-zenclass.html#forum">Forum</a></li>
+		</ul>
+	</div>
+</nav>
+
+<!-- Hero Section -->
+<section class="page-hero quiz-hero">
+	<div class="page-hero-content">
+		<div class="hero-badge animate__animated animate__bounceIn">
+			<i class="fas fa-question-circle"></i> Testez vos connaissances
+		</div>
+		<h1 class="animate__animated animate__fadeInUp">Quiz Interactif</h1>
+		<p class="animate__animated animate__fadeInUp animate__delay-1s">
+			Vérifiez votre compréhension de la gestion du stress en milieu scolaire
+		</p>
+	</div>
+</section>
+
+<!-- Quiz Section -->
+<section class="quiz-section">
+	<div class="container">
+		<div class="quiz-container" data-aos="fade-up">
+			<!-- Progress Bar -->
+			<div class="quiz-progress">
+				<div class="progress-bar">
+					<div class="progress-fill" id="progressFill"></div>
+				</div>
+				<span class="progress-text">Question <span id="currentQ">1</span> sur <span id="totalQ">10</span></span>
+			</div>
+
+			<!-- Quiz Card -->
+			<div class="quiz-card" id="quizCard">
+				<div class="question-number" id="questionNumber">Q1</div>
+				<h2 class="question-text" id="questionText">Chargement de la question...</h2>
+				
+				<div class="answers-container" id="answersContainer">
+					<!-- Answers will be generated by JS -->
+				</div>
+
+				<div class="quiz-navigation">
+					<button class="btn btn-outline" id="prevBtn" disabled>
+						<i class="fas fa-arrow-left"></i> Précédent
+					</button>
+					<button class="btn btn-primary" id="nextBtn">
+						Suivant <i class="fas fa-arrow-right"></i>
+					</button>
+				</div>
+			</div>
+
+			<!-- Results Card (hidden initially) -->
+			<div class="results-card" id="resultsCard">
+				<div class="results-icon" id="resultsIcon">
+					<i class="fas fa-trophy"></i>
+				</div>
+				<h2 id="resultsTitle">Félicitations !</h2>
+				<div class="score-circle">
+					<svg viewBox="0 0 100 100">
+						<circle class="score-bg" cx="50" cy="50" r="45"></circle>
+						<circle class="score-fill" id="scoreFill" cx="50" cy="50" r="45"></circle>
+					</svg>
+					<div class="score-text">
+						<span id="scoreValue">0</span>%
+					</div>
+				</div>
+				<p class="results-message" id="resultsMessage">Vous avez répondu correctement à X questions sur Y.</p>
+				
+				<div class="results-details" id="resultsDetails">
+					<!-- Detailed results will be shown here -->
+				</div>
+
+				<div class="results-actions">
+					<button class="btn btn-primary" onclick="restartQuiz()">
+						<i class="fas fa-redo"></i> Recommencer
+					</button>
+					<a href="../plateforme-etudiante-zenclass.html" class="btn btn-outline">
+						<i class="fas fa-home"></i> Retour à l'accueil
+					</a>
+				</div>
+
+				<div class="badge-earned" id="badgeEarned">
+					<i class="fas fa-award"></i>
+					<span>Badge "Expert du bien-être" obtenu !</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 800, once: true });
+
+// Quiz Questions
+const quizData = [
+	{
+		question: "Quel est l'objectif principal de l'activité de classification ?",
+		answers: [
+			"Apprendre à compter",
+			"Reconnaître et évaluer les situations qui génèrent du stress",
+			"Faire du sport",
+			"Dessiner des émotions"
+		],
+		correct: 1
+	},
+	{
+		question: "Dans le jeu de rôles, quels sont les deux rôles principaux ?",
+		answers: [
+			"Professeur et élève",
+			"Parent et enfant",
+			"Élève stressé et Coach",
+			"Médecin et patient"
+		],
+		correct: 2
+	},
+	{
+		question: "Quelle technique de respiration est recommandée pour gérer le stress ?",
+		answers: [
+			"Respirer très vite",
+			"Retenir sa respiration longtemps",
+			"La technique 4-7-8 (inspirer, retenir, expirer)",
+			"Ne pas respirer du tout"
+		],
+		correct: 2
+	},
+	{
+		question: "À quoi sert la boîte anti-stress ?",
+		answers: [
+			"À ranger ses affaires",
+			"À stocker des outils personnels pour gérer ses émotions",
+			"À jeter ses soucis",
+			"À faire un cadeau"
+		],
+		correct: 1
+	},
+	{
+		question: "Quand doit-on distribuer le questionnaire d'auto-évaluation ?",
+		answers: [
+			"Uniquement à la fin",
+			"Uniquement au début",
+			"Au début ET à la fin de la séquence",
+			"Jamais"
+		],
+		correct: 2
+	},
+	{
+		question: "Quel est un signe physique courant du stress ?",
+		answers: [
+			"Avoir faim",
+			"Avoir sommeil",
+			"Avoir le cœur qui bat vite, transpirer",
+			"Avoir envie de jouer"
+		],
+		correct: 2
+	},
+	{
+		question: "Que développe l'activité de jeu de rôles ?",
+		answers: [
+			"La compétition",
+			"L'empathie et la capacité à conseiller",
+			"La vitesse",
+			"La mémoire des dates"
+		],
+		correct: 1
+	},
+	{
+		question: "Comment peut-on personnaliser la boîte anti-stress ?",
+		answers: [
+			"En la jetant",
+			"En utilisant des couleurs selon les besoins (vert: apaisement, bleu: colère, rose: conflits)",
+			"En la gardant vide",
+			"En la donnant à quelqu'un d'autre"
+		],
+		correct: 1
+	},
+	{
+		question: "Quel est l'ancrage sensoriel recommandé (méthode 5-4-3-2-1) ?",
+		answers: [
+			"5 sons, 4 goûts, 3 odeurs, 2 touches, 1 vue",
+			"5 choses vues, 4 touchées, 3 entendues, 2 senties, 1 goûtée",
+			"Compter jusqu'à 5",
+			"Faire 5 exercices physiques"
+		],
+		correct: 1
+	},
+	{
+		question: "Pourquoi est-il important d'identifier les signes de stress ?",
+		answers: [
+			"Pour impressionner les autres",
+			"Pour gagner des points",
+			"Pour trouver des méthodes pour les apaiser",
+			"Pour les ignorer"
+		],
+		correct: 2
+	}
+];
+
+let currentQuestion = 0;
+let userAnswers = [];
+let score = 0;
+
+// DOM Elements
+const questionNumber = document.getElementById('questionNumber');
+const questionText = document.getElementById('questionText');
+const answersContainer = document.getElementById('answersContainer');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const progressFill = document.getElementById('progressFill');
+const currentQ = document.getElementById('currentQ');
+const totalQ = document.getElementById('totalQ');
+const quizCard = document.getElementById('quizCard');
+const resultsCard = document.getElementById('resultsCard');
+
+// Initialize
+totalQ.textContent = quizData.length;
+loadQuestion();
+
+function loadQuestion() {
+	const q = quizData[currentQuestion];
+	questionNumber.textContent = `Q${currentQuestion + 1}`;
+	questionText.textContent = q.question;
+	currentQ.textContent = currentQuestion + 1;
+	progressFill.style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+	
+	answersContainer.innerHTML = '';
+	q.answers.forEach((answer, index) => {
+		const btn = document.createElement('button');
+		btn.className = 'answer-btn';
+		btn.innerHTML = `<span class="answer-letter">${String.fromCharCode(65 + index)}</span> ${answer}`;
+		
+		if (userAnswers[currentQuestion] === index) {
+			btn.classList.add('selected');
+		}
+		
+		btn.addEventListener('click', () => selectAnswer(index));
+		answersContainer.appendChild(btn);
+	});
+	
+	prevBtn.disabled = currentQuestion === 0;
+	nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Voir les résultats' : 'Suivant';
+	nextBtn.innerHTML = currentQuestion === quizData.length - 1 
+		? '<i class="fas fa-check"></i> Voir les résultats' 
+		: 'Suivant <i class="fas fa-arrow-right"></i>';
+}
+
+function selectAnswer(index) {
+	userAnswers[currentQuestion] = index;
+	document.querySelectorAll('.answer-btn').forEach((btn, i) => {
+		btn.classList.toggle('selected', i === index);
+	});
+}
+
+prevBtn.addEventListener('click', () => {
+	if (currentQuestion > 0) {
+		currentQuestion--;
+		loadQuestion();
+	}
+});
+
+nextBtn.addEventListener('click', () => {
+	if (userAnswers[currentQuestion] === undefined) {
+		alert('Veuillez sélectionner une réponse.');
+		return;
+	}
+	
+	if (currentQuestion < quizData.length - 1) {
+		currentQuestion++;
+		loadQuestion();
+	} else {
+		showResults();
+	}
+});
+
+function showResults() {
+	score = 0;
+	quizData.forEach((q, i) => {
+		if (userAnswers[i] === q.correct) score++;
+	});
+	
+	const percentage = Math.round((score / quizData.length) * 100);
+	
+	quizCard.style.display = 'none';
+	resultsCard.style.display = 'block';
+	
+	document.getElementById('scoreValue').textContent = percentage;
+	document.getElementById('resultsMessage').textContent = 
+		`Vous avez répondu correctement à ${score} questions sur ${quizData.length}.`;
+	
+	// Animate score circle
+	const scoreFill = document.getElementById('scoreFill');
+	const circumference = 2 * Math.PI * 45;
+	scoreFill.style.strokeDasharray = circumference;
+	scoreFill.style.strokeDashoffset = circumference - (percentage / 100) * circumference;
+	
+	// Results icon and message
+	const resultsIcon = document.getElementById('resultsIcon');
+	const resultsTitle = document.getElementById('resultsTitle');
+	
+	if (percentage >= 80) {
+		resultsIcon.innerHTML = '<i class="fas fa-trophy"></i>';
+		resultsIcon.style.color = '#ffd700';
+		resultsTitle.textContent = 'Excellent !';
+		document.getElementById('badgeEarned').style.display = 'flex';
+	} else if (percentage >= 60) {
+		resultsIcon.innerHTML = '<i class="fas fa-medal"></i>';
+		resultsIcon.style.color = '#c0c0c0';
+		resultsTitle.textContent = 'Bien joué !';
+	} else {
+		resultsIcon.innerHTML = '<i class="fas fa-book-reader"></i>';
+		resultsIcon.style.color = 'var(--primary)';
+		resultsTitle.textContent = 'Continuez à apprendre !';
+	}
+	
+	// Show detailed results
+	const details = document.getElementById('resultsDetails');
+	details.innerHTML = '<h3>Détail des réponses :</h3>';
+	quizData.forEach((q, i) => {
+		const isCorrect = userAnswers[i] === q.correct;
+		details.innerHTML += `
+			<div class="result-item ${isCorrect ? 'correct' : 'incorrect'}">
+				<span class="result-icon">${isCorrect ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>'}</span>
+				<span class="result-text">Q${i + 1}: ${isCorrect ? 'Correct' : 'Incorrect'}</span>
+			</div>
+		`;
+	});
+}
+
+function restartQuiz() {
+	currentQuestion = 0;
+	userAnswers = [];
+	score = 0;
+	quizCard.style.display = 'block';
+	resultsCard.style.display = 'none';
+	document.getElementById('badgeEarned').style.display = 'none';
+	loadQuestion();
+}
+
+</script>
+
+<!-- AI Agent Widget - Assistant Pédagogique ZenClass -->
+<div class="ai-agent-widget" id="aiAgentWidget">
+	<button class="agent-toggle" id="agentToggle" title="Assistant ZenClass">
+		<i class="fas fa-robot chat-icon"></i>
+		<i class="fas fa-times close-icon"></i>
+		<span class="agent-pulse"></span>
+	</button>
+	<div class="agent-window" id="agentWindow">
+		<div class="agent-header">
+			<div class="agent-avatar"><i class="fas fa-brain"></i></div>
+			<div class="agent-info">
+				<h4>Assistant ZenClass</h4>
+				<span class="agent-status"><span class="status-dot"></span> En ligne</span>
+			</div>
+			<button class="agent-close-btn" id="agentCloseBtn" title="Fermer">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>
+			</button>
+		</div>
+		<div class="agent-messages" id="agentMessages">
+			<div class="chat-message bot">
+				<div class="message-content">Bonjour ! 👋 Je suis l'assistant <b>ZenClass</b>. Vous êtes sur le <b>Quiz Interactif</b> - testez vos connaissances sur la gestion du stress !<br><br>Besoin d'aide ou d'informations sur les autres activités ?</div>
+			</div>
+			<div class="chat-suggestions">
+				<button class="suggestion-btn" data-question="Comment fonctionne le quiz ?"><i class="fas fa-question-circle"></i> Comment ça marche ?</button>
+				<button class="suggestion-btn" data-question="Voir les activités"><i class="fas fa-gamepad"></i> Autres activités</button>
+				<button class="suggestion-btn" data-question="Respiration 4-7-8"><i class="fas fa-wind"></i> Respiration</button>
+			</div>
+		</div>
+		<div class="agent-input">
+			<input type="text" id="agentInput" placeholder="Posez votre question..." autocomplete="off">
+			<button id="agentSend" title="Envoyer">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/></svg>
+			</button>
+		</div>
+	</div>
+</div>
+<script src="agent.js"></script>
+<script src="../zenclass-enhancements.js"></script>
+
+</body>
+</html>

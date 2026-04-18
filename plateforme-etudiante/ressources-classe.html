@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plateforme étudiante | Ressource</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../zenclass-enhancements.css" />
+</head>
+<body data-page="resources-class">
+  <header class="topbar">
+    <a class="brand" href="accueil.html" aria-label="Retour à l'accueil">
+      <span class="brand-mark">AD</span>
+      <span class="brand-copy">
+        <strong>Plateforme étudiante</strong>
+        <small>Ressource</small>
+      </span>
+    </a>
+
+    <nav class="topnav" aria-label="Navigation principale">
+      <a class="topnav-link" href="index.html">Parcours</a>
+      <a class="topnav-link" href="interactif.html">Interactif</a>
+      <a class="topnav-link" href="equipe.html">Équipe</a>
+      <a class="topnav-link" href="ressources-theoriques.html">Ressources théoriques</a>
+      <a class="topnav-link is-active" href="ressources-classe.html">Ressource</a>
+      <a class="topnav-link" href="forum.html">Forum</a>
+    </nav>
+
+    <section class="topbar-progress" aria-label="Progression globale">
+      <div class="progress-meta">
+        <span>Progression globale</span>
+        <strong id="globalProgressLabel">0 %</strong>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="globalProgressBar"></div>
+      </div>
+    </section>
+  </header>
+
+  <main class="zen-resource-page">
+    <section class="resources-section">
+      <div class="zen-resource-container">
+        <div class="section-header">
+          <span class="section-tag"><i class="fas fa-file-pdf" aria-hidden="true"></i> Ressource</span>
+          <h1>Documentation pédagogique</h1>
+          <p>Téléchargez tous les supports pour vos cours</p>
+        </div>
+
+        <div class="resources-grid" id="classDocsGrid" aria-label="Ressource"></div>
+      </div>
+    </section>
+
+    <section class="activities-section">
+      <div class="zen-resource-container">
+        <div class="section-header">
+          <span class="section-tag"><i class="fas fa-tasks" aria-hidden="true"></i> Activités</span>
+          <h2>4 activités clé en main</h2>
+          <p>Des exercices pratiques prêts à être utilisés dans vos classes</p>
+        </div>
+
+        <div class="activities-grid" id="classActivitiesGrid" aria-label="Activités clé en main"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="../zenclass-enhancements.js"></script>
+</body>
+</html>

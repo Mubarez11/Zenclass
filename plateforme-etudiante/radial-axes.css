@@ -1,0 +1,356 @@
+/* ============================================
+   ZenClass Radial Axes Menu
+   Icons orbit around center, click opens axe content
+   ============================================ */
+
+.radial-axes {
+  --ra-size: 320px;
+  --ra-center-size: 90px;
+  --ra-icon-size: 56px;
+  --ra-orbit-size: 220px;
+  --ra-border-size: 280px;
+  --ra-rotation-duration: 30s;
+  --ra-pulse-duration: 3s;
+  --ra-ease: linear;
+  --ra-bg-overlay: rgba(0, 0, 0, 0.85);
+  --ra-icon-bg: #1a1a2e;
+  --ra-icon-color: #ffffff;
+  --ra-center-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --ra-center-color: #ffffff;
+  --ra-border-color: rgba(255, 255, 255, 0.2);
+
+  position: relative;
+  width: var(--ra-size);
+  height: var(--ra-size);
+  margin: 0 auto;
+}
+
+/* Center button */
+.radial-axes__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--ra-center-size);
+  height: var(--ra-center-size);
+  transform: translate(-50%, -50%);
+  background: var(--ra-center-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.radial-axes__center:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.5);
+}
+
+.radial-axes__center-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--ra-center-color);
+  animation: ra-pulse var(--ra-pulse-duration) ease-in-out infinite;
+}
+
+@keyframes ra-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.85; }
+}
+
+/* Orbit ring */
+.radial-axes__orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--ra-orbit-size);
+  height: var(--ra-orbit-size);
+  transform: translate(-50%, -50%);
+  border: 2px dashed var(--ra-border-color);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+/* Additional rings */
+.radial-axes__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--ra-border-size);
+  height: var(--ra-border-size);
+  transform: translate(-50%, -50%);
+  border: 1px dashed var(--ra-border-color);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+/* Axes items container (counter-rotates) */
+.radial-axes__container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: ra-container-rotate var(--ra-rotation-duration) var(--ra-ease) infinite reverse;
+}
+
+@keyframes ra-container-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Individual axe item */
+.radial-axes__item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--ra-icon-size);
+  height: var(--ra-icon-size);
+  margin-top: calc(var(--ra-icon-size) / -2);
+  margin-left: calc(var(--ra-icon-size) / -2);
+  background: var(--ra-icon-bg);
+  border: 2px solid var(--ra-border-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.radial-axes__item:hover {
+  transform: scale(1.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.radial-axes__item svg {
+  width: 24px;
+  height: 24px;
+  color: var(--ra-icon-color);
+}
+
+/* Counter-rotate icons so they stay upright */
+.radial-axes__item svg {
+  animation: ra-icon-counter-rotate var(--ra-rotation-duration) var(--ra-ease) infinite;
+}
+
+@keyframes ra-icon-counter-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* Axe-specific colors */
+.radial-axes__item--axe-1 { --ra-item-color: #667eea; }
+.radial-axes__item--axe-2 { --ra-item-color: #63b3ed; }
+.radial-axes__item--axe-3 { --ra-item-color: #4facfe; }
+.radial-axes__item--axe-4 { --ra-item-color: #9f7aea; }
+
+.radial-axes__item:hover {
+  background: var(--ra-item-color);
+  border-color: var(--ra-item-color);
+}
+
+/* ============================================
+   Modal Overlay
+   ============================================ */
+
+.radial-axes-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.radial-axes-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.radial-axes-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--ra-bg-overlay);
+  backdrop-filter: blur(8px);
+}
+
+.radial-axes-modal__content {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  max-height: 85vh;
+  background: #1a1a2e;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.4s ease;
+}
+
+.radial-axes-modal.is-open .radial-axes-modal__content {
+  transform: scale(1) translateY(0);
+}
+
+.radial-axes-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.radial-axes-modal__title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.radial-axes-modal__title-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radial-axes-modal__title-icon svg {
+  width: 24px;
+  height: 24px;
+  color: #fff;
+}
+
+.radial-axes-modal__title h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: #fff;
+  margin: 0;
+}
+
+.radial-axes-modal__close {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.radial-axes-modal__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.radial-axes-modal__close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.radial-axes-modal__body {
+  padding: 28px;
+  max-height: calc(85vh - 100px);
+  overflow-y: auto;
+}
+
+.radial-axes-modal__objectives {
+  display: grid;
+  gap: 16px;
+}
+
+.radial-axes-modal__objective {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.radial-axes-modal__objective:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(8px);
+}
+
+.radial-axes-modal__objective-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.radial-axes-modal__objective-text h3 {
+  font-size: 1rem;
+  color: #fff;
+  margin: 0 0 4px 0;
+  font-weight: 600;
+}
+
+.radial-axes-modal__objective-text p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.radial-axes-modal__footer {
+  padding: 20px 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+}
+
+.radial-axes-modal__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.radial-axes-modal__link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+}
+
+.radial-axes-modal__link svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .radial-axes {
+    --ra-size: 260px;
+    --ra-center-size: 70px;
+    --ra-icon-size: 48px;
+    --ra-orbit-size: 180px;
+    --ra-border-size: 220px;
+  }
+}

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Jeu de Rôles - Gérer le Stress | ZenClass</title>
+	<link rel="stylesheet" href="stylevideoADID.css">
+	<link rel="stylesheet" href="pages.css">
+	<link rel="stylesheet" href="agent.css">
+	<link rel="stylesheet" href="../zenclass-header.css">
+	<link rel="stylesheet" href="../zenclass-enhancements.css">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar" aria-label="Navigation principale">
+	<div class="nav-container">
+		<a class="logo brand" href="../plateforme-etudiante-zenclass.html#parcours" aria-label="Retour à ZenClass">
+			<img class="logo-image" src="../zenclass-logo.svg" alt="ZenClass">
+		</a>
+		<ul class="nav-links">
+			<li class="nav-dropdown">
+				<div class="dropdown-entry">
+					<a class="nav-link-parcours dropdown-parent-link" href="../plateforme-etudiante-zenclass.html#parcours">Parcours</a>
+					<button class="dropdown-toggle dropdown-toggle-button" type="button" aria-label="Sous-menu Parcours">
+						<span class="dropdown-caret" aria-hidden="true"></span>
+					</button>
+				</div>
+				<ul class="dropdown-menu">
+					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-1">Axe 1</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-2">Axe 2</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-3">Axe 3</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-4">Axe 4</a></li>
+				</ul>
+			</li>
+			<li class="nav-dropdown">
+				<div class="dropdown-entry">
+					<a class="nav-link-interactif dropdown-parent-link" href="quiz.html">Interactif</a>
+					<button class="dropdown-toggle dropdown-toggle-button" type="button" aria-label="Sous-menu Interactif">
+						<span class="dropdown-caret" aria-hidden="true"></span>
+					</button>
+				</div>
+				<ul class="dropdown-menu">
+					<li><a href="quiz.html">Quiz</a></li>
+					<li><a href="auto-evaluation.html">Auto-évaluation</a></li>
+					<li><a href="respiration.html">Respiration 4-7-8</a></li>
+					<li><a href="classification.html">Classification</a></li>
+					<li><a href="jeu-roles.html" class="active">Jeu de rôles</a></li>
+				</ul>
+			</li>
+			<li class="nav-dropdown">
+				<div class="dropdown-entry">
+					<a class="nav-link-theory dropdown-parent-link" href="../plateforme-etudiante-zenclass.html#ressources-theoriques">Ressources théoriques</a>
+					<button class="dropdown-toggle dropdown-toggle-button" type="button" aria-label="Sous-menu Ressources théoriques">
+						<span class="dropdown-caret" aria-hidden="true"></span>
+					</button>
+				</div>
+				<ul class="dropdown-menu">
+					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-1">Axe 1</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2">Axe 2</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3">Axe 3</a></li>
+					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-4">Axe 4</a></li>
+				</ul>
+			</li>
+			<li><a class="nav-link-class" href="../ma-classe.html">Ressources pour ma classe</a></li>
+			<li><a class="nav-link-progress" href="../plateforme-etudiante-zenclass-progression.html">Mon suivi de progression</a></li>
+			<li><a class="nav-link-team" href="../plateforme-etudiante-zenclass.html#equipe">Équipe</a></li>
+			<li><a class="nav-link-forum" href="../plateforme-etudiante-zenclass.html#forum">Forum</a></li>
+		</ul>
+	</div>
+</nav>
+
+<!-- Hero Section -->
+<section class="page-hero roleplay-hero">
+	<div class="page-hero-content">
+		<div class="hero-badge animate__animated animate__bounceIn">
+			<i class="fas fa-theater-masks"></i> Activité de groupe
+		</div>
+		<h1 class="animate__animated animate__fadeInUp">Jeu de Rôles</h1>
+		<p class="animate__animated animate__fadeInUp animate__delay-1s">
+			Entraînez-vous à communiquer sur vos émotions à travers des mises en situation
+		</p>
+	</div>
+</section>
+
+<!-- Role Play Section -->
+<section class="roleplay-section">
+	<div class="container">
+		<div class="roleplay-intro" data-aos="fade-up">
+			<p><i class="fas fa-info-circle"></i> Tirez une carte, lisez le scénario, puis jouez la situation avec un camarade. L'objectif est de pratiquer l'expression de vos émotions et l'écoute active.</p>
+		</div>
+
+		<!-- Card Display -->
+		<div class="card-display" data-aos="fade-up">
+			<div class="card-deck" id="cardDeck">
+				<div class="deck-back">
+					<i class="fas fa-layer-group"></i>
+					<span>Cliquez pour tirer une carte</span>
+				</div>
+			</div>
+
+			<div class="current-card" id="currentCard">
+				<div class="card-header">
+					<span class="card-category" id="cardCategory">Situation</span>
+					<span class="card-number" id="cardNumber">#1</span>
+				</div>
+				<div class="card-body">
+					<div class="scenario-icon" id="scenarioIcon">
+						<i class="fas fa-question"></i>
+					</div>
+					<h3 id="cardTitle">Titre du scénario</h3>
+					<p class="card-description" id="cardDescription">Description du scénario...</p>
+				</div>
+				<div class="card-roles">
+					<div class="role role-a">
+						<h4><i class="fas fa-user"></i> Rôle A</h4>
+						<p id="roleA">Description du rôle A</p>
+					</div>
+					<div class="role role-b">
+						<h4><i class="fas fa-user-friends"></i> Rôle B</h4>
+						<p id="roleB">Description du rôle B</p>
+					</div>
+				</div>
+				<div class="card-objective">
+					<h4><i class="fas fa-bullseye"></i> Objectif</h4>
+					<p id="cardObjective">L'objectif de cet exercice...</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Controls -->
+		<div class="roleplay-controls" data-aos="fade-up">
+			<button class="btn btn-large btn-primary" id="drawCardBtn">
+				<i class="fas fa-hand-pointer"></i> Tirer une carte
+			</button>
+			<button class="btn btn-large btn-outline" id="shuffleBtn">
+				<i class="fas fa-random"></i> Mélanger
+			</button>
+			<div class="card-counter">
+				<span>Cartes restantes : <strong id="cardsRemaining">10</strong></span>
+			</div>
+		</div>
+
+		<!-- Tips Section -->
+		<div class="roleplay-tips" data-aos="fade-up">
+			<h2><i class="fas fa-lightbulb"></i> Conseils pour bien jouer</h2>
+			<div class="tips-cards">
+				<div class="tip-card">
+					<div class="tip-number">1</div>
+					<h3>Lisez attentivement</h3>
+					<p>Prenez le temps de comprendre la situation et votre rôle avant de commencer.</p>
+				</div>
+				<div class="tip-card">
+					<div class="tip-number">2</div>
+					<h3>Soyez authentique</h3>
+					<p>Exprimez ce que vous ressentiriez réellement dans cette situation.</p>
+				</div>
+				<div class="tip-card">
+					<div class="tip-number">3</div>
+					<h3>Écoutez l'autre</h3>
+					<p>La communication est un échange. Écoutez vraiment avant de répondre.</p>
+				</div>
+				<div class="tip-card">
+					<div class="tip-number">4</div>
+					<h3>Débriefez ensemble</h3>
+					<p>Après le jeu, discutez de ce qui a bien fonctionné et ce qui pourrait être amélioré.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Emotion Vocabulary -->
+		<div class="emotion-vocabulary" data-aos="fade-up">
+			<h2><i class="fas fa-comment-alt"></i> Vocabulaire des émotions</h2>
+			<p class="vocab-intro">Utilisez ces expressions pour mieux communiquer vos sentiments</p>
+			
+			<div class="emotions-grid">
+				<div class="emotion-group negative">
+					<h3><i class="fas fa-cloud"></i> Émotions difficiles</h3>
+					<div class="emotion-tags">
+						<span class="emotion-tag">Je me sens stressé(e)</span>
+						<span class="emotion-tag">J'ai peur de...</span>
+						<span class="emotion-tag">Je suis inquiet(e)</span>
+						<span class="emotion-tag">Ça me fait mal</span>
+						<span class="emotion-tag">Je me sens dépassé(e)</span>
+						<span class="emotion-tag">J'ai besoin d'aide</span>
+						<span class="emotion-tag">Je ne comprends pas</span>
+						<span class="emotion-tag">C'est difficile pour moi</span>
+					</div>
+				</div>
+				
+				<div class="emotion-group positive">
+					<h3><i class="fas fa-sun"></i> Réponses positives</h3>
+					<div class="emotion-tags">
+						<span class="emotion-tag">Je te comprends</span>
+						<span class="emotion-tag">C'est normal de ressentir ça</span>
+						<span class="emotion-tag">Je suis là pour toi</span>
+						<span class="emotion-tag">Comment puis-je t'aider ?</span>
+						<span class="emotion-tag">Prends ton temps</span>
+						<span class="emotion-tag">Tu as le droit d'être triste</span>
+						<span class="emotion-tag">Merci de me faire confiance</span>
+						<span class="emotion-tag">On va trouver une solution</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Footer -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 800, once: true });
+
+// Role play scenarios
+const scenarios = [
+	{
+		id: 1,
+		title: "L'examen de demain",
+		category: "Stress scolaire",
+		icon: "fa-file-alt",
+		description: "Un élève est très anxieux car il a un examen important demain et ne se sent pas prêt.",
+		roleA: "Tu es l'élève stressé. Exprime ton anxiété à ton ami et explique pourquoi tu te sens dépassé.",
+		roleB: "Tu es l'ami. Écoute avec empathie et essaie d'aider ton camarade à se calmer.",
+		objective: "Pratiquer l'expression de l'anxiété et l'écoute bienveillante."
+	},
+	{
+		id: 2,
+		title: "La dispute entre amis",
+		category: "Relations sociales",
+		icon: "fa-user-friends",
+		description: "Deux amis se sont disputés et l'un veut présenter ses excuses.",
+		roleA: "Tu veux t'excuser pour ce que tu as dit hier. Tu te sens mal.",
+		roleB: "Tu es encore blessé(e) par la dispute mais tu es ouvert(e) à la discussion.",
+		objective: "Apprendre à présenter des excuses sincères et à accepter le dialogue."
+	},
+	{
+		id: 3,
+		title: "Trop de pression",
+		category: "Famille",
+		icon: "fa-home",
+		description: "Un adolescent ressent trop de pression de ses parents concernant ses notes.",
+		roleA: "Tu dois expliquer à ton parent que tu te sens sous pression.",
+		roleB: "Tu es le parent. Essaie de comprendre ce que ressent ton enfant.",
+		objective: "Communiquer ses limites de façon respectueuse."
+	},
+	{
+		id: 4,
+		title: "L'exposé oral",
+		category: "Stress scolaire",
+		icon: "fa-chalkboard-teacher",
+		description: "Un élève doit présenter un exposé mais a très peur de parler devant la classe.",
+		roleA: "Tu as peur de parler en public. Confie ta peur à un ami.",
+		roleB: "Rassure ton ami et propose des techniques pour gérer le trac.",
+		objective: "Identifier des stratégies pour gérer le stress de performance."
+	},
+	{
+		id: 5,
+		title: "Se sentir exclu",
+		category: "Relations sociales",
+		icon: "fa-user-minus",
+		description: "Un élève se sent exclu du groupe et n'a pas été invité à une fête.",
+		roleA: "Tu te sens triste et exclu. Exprime ce que tu ressens.",
+		roleB: "Tu découvres que ton ami se sent exclu. Montre ton soutien.",
+		objective: "Exprimer la tristesse et recevoir du soutien émotionnel."
+	},
+	{
+		id: 6,
+		title: "La fatigue chronique",
+		category: "Bien-être",
+		icon: "fa-bed",
+		description: "Un élève est constamment fatigué et n'arrive plus à se concentrer.",
+		roleA: "Tu es épuisé(e) et tu en parles au délégué de classe.",
+		roleB: "Tu es le délégué. Écoute et propose des ressources d'aide.",
+		objective: "Reconnaître les signes d'épuisement et chercher de l'aide."
+	},
+	{
+		id: 7,
+		title: "Le conflit en groupe",
+		category: "Travail d'équipe",
+		icon: "fa-users",
+		description: "Lors d'un travail de groupe, deux membres ne sont pas d'accord.",
+		roleA: "Tu penses que ton idée est meilleure et tu veux la défendre.",
+		roleB: "Tu as une autre vision et tu veux aussi être entendu(e).",
+		objective: "Apprendre à gérer un désaccord de façon constructive."
+	},
+	{
+		id: 8,
+		title: "Demander de l'aide",
+		category: "Communication",
+		icon: "fa-hands-helping",
+		description: "Un élève n'ose pas demander de l'aide au professeur.",
+		roleA: "Tu ne comprends pas une leçon mais tu as honte de demander.",
+		roleB: "Tu es le professeur. Montre que les questions sont bienvenues.",
+		objective: "Surmonter la honte pour demander de l'aide."
+	},
+	{
+		id: 9,
+		title: "Les moqueries",
+		category: "Relations sociales",
+		icon: "fa-comments",
+		description: "Un élève a été moqué et se confie à quelqu'un.",
+		roleA: "Tu as été moqué et tu te sens blessé. Raconte ce qui s'est passé.",
+		roleB: "Tu écoutes et tu montres ton soutien sans minimiser la situation.",
+		objective: "Valider les émotions et offrir un espace de parole sécurisé."
+	},
+	{
+		id: 10,
+		title: "Le changement d'école",
+		category: "Adaptation",
+		icon: "fa-school",
+		description: "Un nouvel élève arrive et a du mal à s'intégrer.",
+		roleA: "Tu es nouveau et tu te sens perdu. Tu essaies de faire connaissance.",
+		roleB: "Tu accueilles le nouvel élève et tu l'aides à se sentir bienvenu.",
+		objective: "Pratiquer l'accueil et l'ouverture aux autres."
+	}
+];
+
+let availableScenarios = [...scenarios];
+let currentScenario = null;
+
+// Elements
+const cardDeck = document.getElementById('cardDeck');
+const currentCard = document.getElementById('currentCard');
+const drawCardBtn = document.getElementById('drawCardBtn');
+const shuffleBtn = document.getElementById('shuffleBtn');
+const cardsRemaining = document.getElementById('cardsRemaining');
+
+// Draw card
+function drawCard() {
+	if (availableScenarios.length === 0) {
+		alert('Toutes les cartes ont été tirées ! Cliquez sur "Mélanger" pour recommencer.');
+		return;
+	}
+	
+	// Animation
+	cardDeck.classList.add('drawing');
+	
+	setTimeout(() => {
+		// Get random card
+		const randomIndex = Math.floor(Math.random() * availableScenarios.length);
+		currentScenario = availableScenarios.splice(randomIndex, 1)[0];
+		
+		// Update display
+		document.getElementById('cardCategory').textContent = currentScenario.category;
+		document.getElementById('cardNumber').textContent = `#${currentScenario.id}`;
+		document.getElementById('scenarioIcon').innerHTML = `<i class="fas ${currentScenario.icon}"></i>`;
+		document.getElementById('cardTitle').textContent = currentScenario.title;
+		document.getElementById('cardDescription').textContent = currentScenario.description;
+		document.getElementById('roleA').textContent = currentScenario.roleA;
+		document.getElementById('roleB').textContent = currentScenario.roleB;
+		document.getElementById('cardObjective').textContent = currentScenario.objective;
+		
+		// Show card
+		cardDeck.style.display = 'none';
+		currentCard.style.display = 'block';
+		currentCard.classList.add('animate__animated', 'animate__flipInY');
+		
+		// Update counter
+		cardsRemaining.textContent = availableScenarios.length;
+		
+		cardDeck.classList.remove('drawing');
+	}, 500);
+}
+
+// Shuffle cards
+function shuffleCards() {
+	availableScenarios = [...scenarios];
+	cardsRemaining.textContent = availableScenarios.length;
+	
+	// Hide current card, show deck
+	currentCard.style.display = 'none';
+	currentCard.classList.remove('animate__animated', 'animate__flipInY');
+	cardDeck.style.display = 'flex';
+	
+	// Shuffle animation
+	cardDeck.classList.add('shuffling');
+	setTimeout(() => {
+		cardDeck.classList.remove('shuffling');
+	}, 600);
+}
+
+// Event listeners
+drawCardBtn.addEventListener('click', drawCard);
+shuffleBtn.addEventListener('click', shuffleCards);
+cardDeck.addEventListener('click', drawCard);
+
+</script>
+
+<style>
+/* Card animations */
+.card-deck.drawing {
+	animation: deckDraw 0.5s ease;
+}
+
+.card-deck.shuffling {
+	animation: deckShuffle 0.6s ease;
+}
+
+@keyframes deckDraw {
+	0% { transform: scale(1); }
+	50% { transform: scale(0.95) rotateY(10deg); }
+	100% { transform: scale(1) rotateY(0); }
+}
+
+@keyframes deckShuffle {
+	0% { transform: translateX(0); }
+	25% { transform: translateX(-10px) rotateZ(-5deg); }
+	50% { transform: translateX(10px) rotateZ(5deg); }
+	75% { transform: translateX(-5px) rotateZ(-2deg); }
+	100% { transform: translateX(0) rotateZ(0); }
+}
+</style>
+
+<!-- AI Agent Widget - Assistant Pédagogique ZenClass -->
+<div class="ai-agent-widget" id="aiAgentWidget">
+	<button class="agent-toggle" id="agentToggle" title="Assistant ZenClass">
+		<i class="fas fa-robot chat-icon"></i>
+		<i class="fas fa-times close-icon"></i>
+		<span class="agent-pulse"></span>
+	</button>
+	<div class="agent-window" id="agentWindow">
+		<div class="agent-header">
+			<div class="agent-avatar"><i class="fas fa-brain"></i></div>
+			<div class="agent-info">
+				<h4>Assistant ZenClass</h4>
+				<span class="agent-status"><span class="status-dot"></span> En ligne</span>
+			</div>
+			<button class="agent-close-btn" id="agentCloseBtn" title="Fermer">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>
+			</button>
+		</div>
+		<div class="agent-messages" id="agentMessages">
+			<div class="chat-message bot">
+				<div class="message-content">Bienvenue dans le <b>Jeu de Rôles</b> ! 🎭<br><br>Tirez une carte, lisez le scénario et jouez la situation avec un collègue ou un élève. C'est une excellente manière de pratiquer la communication des émotions !<br><br>Besoin de conseils ?</div>
+			</div>
+			<div class="chat-suggestions">
+				<button class="suggestion-btn" data-question="Comment jouer au jeu de rôles ?"><i class="fas fa-info-circle"></i> Comment jouer ?</button>
+				<button class="suggestion-btn" data-question="Comment exprimer ses émotions ?"><i class="fas fa-comment-alt"></i> Vocabulaire</button>
+				<button class="suggestion-btn" data-question="Voir les activités"><i class="fas fa-gamepad"></i> Autres activités</button>
+			</div>
+		</div>
+		<div class="agent-input">
+			<input type="text" id="agentInput" placeholder="Posez votre question..." autocomplete="off">
+			<button id="agentSend" title="Envoyer">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/></svg>
+			</button>
+		</div>
+	</div>
+</div>
+<script src="agent.js"></script>
+<script src="../zenclass-enhancements.js"></script>
+
+</body>
+</html>

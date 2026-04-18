@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZenClass | Mon suivi de progression</title>
+  <link rel="stylesheet" href="zenclass-header.css" />
+  <link rel="stylesheet" href="zenclass-enhancements.css" />
+  <style>
+    :root {
+      --font-primary: "Poppins", "Aptos", "Avenir Next", "Segoe UI Variable", "Segoe UI", sans-serif;
+      --font-display: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      --color-primary: #667eea;
+      --color-primary-dark: #5a67d8;
+      --gray-900: #1a202c;
+      --gray-800: #2d3748;
+      --gray-700: #4a5568;
+      --gray-600: #718096;
+      --gray-200: #edf2f7;
+      --gray-100: #f7fafc;
+      --white: #ffffff;
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-warning: linear-gradient(135deg, #63b3ed, #5a67d8);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-purple: linear-gradient(135deg, #9f7aea, #805ad5);
+      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 18px 48px rgba(15, 23, 42, 0.12);
+      --transition: 0.3s ease;
+      --container-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-primary);
+      color: var(--gray-800);
+      background:
+        radial-gradient(circle at 10% 15%, rgba(102, 126, 234, 0.12), transparent 28%),
+        radial-gradient(circle at 88% 12%, rgba(79, 172, 254, 0.1), transparent 24%),
+        linear-gradient(180deg, #f6f8fc 0%, #ffffff 34%, #f8fbff 100%);
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page-shell {
+      padding: 108px 0 60px;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--container-width));
+      margin: 0 auto;
+    }
+
+    .hero-card,
+    .axis-panel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-card::before,
+    .axis-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 6px;
+      background: var(--theme-gradient, var(--gradient-primary));
+    }
+
+    .hero-card {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .hero-head {
+      display: grid;
+      gap: 10px;
+    }
+
+    .section-tag,
+    .axis-badge,
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 30px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(102, 126, 234, 0.08);
+      color: var(--color-primary-dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric-card {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: var(--gray-100);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      display: grid;
+      gap: 6px;
+    }
+
+    .metric-card span {
+      color: var(--gray-600);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+
+    .metric-card strong {
+      color: var(--gray-900);
+      font-size: 1.25rem;
+    }
+
+    .hero-card h1,
+    .axis-panel h2,
+    .activity-card h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      color: var(--gray-900);
+      line-height: 1.08;
+    }
+
+    .hero-card h1 {
+      font-size: clamp(2rem, 3vw, 2.8rem);
+    }
+
+    .hero-card p,
+    .axis-panel p,
+    .activity-card p {
+      margin: 0;
+      color: var(--gray-600);
+      font-size: 0.96rem;
+      line-height: 1.6;
+    }
+
+    .progress-ring {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.18);
+      overflow: hidden;
+    }
+
+    .progress-ring span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--theme-gradient, var(--gradient-primary));
+    }
+
+    .axis-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .axis-panel {
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .axis-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .axis-head {
+      display: grid;
+      gap: 8px;
+    }
+
+    .axis-progress-meta {
+      color: var(--gray-700);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .activity-card {
+      display: grid;
+      gap: 10px;
+      padding: 16px 18px;
+      border-radius: 20px;
+      background: rgba(248, 250, 252, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .activity-card:hover,
+    .activity-card:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(102, 126, 234, 0.2);
+      outline: none;
+    }
+
+    .activity-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .activity-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      color: var(--gray-700);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-chip.is-done {
+      background: rgba(72, 187, 120, 0.14);
+      color: #2f855a;
+    }
+
+    .status-chip.is-pending {
+      background: rgba(237, 137, 54, 0.14);
+      color: #c05621;
+    }
+
+    .activity-cta {
+      color: var(--color-primary-dark);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .axis-theme-1 { --theme-gradient: var(--gradient-primary); }
+    .axis-theme-2 { --theme-gradient: var(--gradient-warning); }
+    .axis-theme-3 { --theme-gradient: var(--gradient-accent); }
+    .axis-theme-4 { --theme-gradient: var(--gradient-purple); }
+
+    @media (max-width: 900px) {
+      .hero-metrics,
+      .activity-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" aria-label="Navigation principale">
+    <div class="nav-container">
+      <a class="logo brand" href="plateforme-etudiante-zenclass.html#parcours" aria-label="Retour à ZenClass">
+        <img src="zenclass-logo.svg" alt="ZenClass" />
+      </a>
+
+      <ul class="nav-links">
+        <li class="nav-dropdown">
+          <div class="dropdown-entry">
+            <a class="nav-link-parcours dropdown-parent-link" href="plateforme-etudiante-zenclass.html#parcours">Parcours</a>
+            <button class="dropdown-toggle-button" type="button" aria-label="Sous-menu Parcours">
+              <span class="dropdown-caret" aria-hidden="true"></span>
+            </button>
+          </div>
+          <ul class="dropdown-menu">
+            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-1">Axe 1</a></li>
+            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-2">Axe 2</a></li>
+            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-3">Axe 3</a></li>
+            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-4">Axe 4</a></li>
+          </ul>
+        </li>
+        <li class="nav-dropdown">
+          <div class="dropdown-entry">
+            <a class="nav-link-interactif dropdown-parent-link" href="zenclass-modele/quiz.html">Interactif</a>
+            <button class="dropdown-toggle-button" type="button" aria-label="Sous-menu Interactif">
+              <span class="dropdown-caret" aria-hidden="true"></span>
+            </button>
+          </div>
+          <ul class="dropdown-menu">
+            <li><a href="zenclass-modele/quiz.html">Quiz</a></li>
+            <li><a href="zenclass-modele/auto-evaluation.html">Auto-évaluation</a></li>
+            <li><a href="zenclass-modele/respiration.html">Respiration 4-7-8</a></li>
+            <li><a href="zenclass-modele/classification.html">Classification</a></li>
+            <li><a href="zenclass-modele/jeu-roles.html">Jeu de rôles</a></li>
+          </ul>
+        </li>
+        <li class="nav-dropdown">
+          <div class="dropdown-entry">
+            <a class="nav-link-theory dropdown-parent-link" href="plateforme-etudiante-zenclass.html#ressources-theoriques">Ressources théoriques</a>
+            <button class="dropdown-toggle-button" type="button" aria-label="Sous-menu Ressources théoriques">
+              <span class="dropdown-caret" aria-hidden="true"></span>
+            </button>
+          </div>
+          <ul class="dropdown-menu">
+            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-1">Axe 1</a></li>
+            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2">Axe 2</a></li>
+            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3">Axe 3</a></li>
+            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-4">Axe 4</a></li>
+          </ul>
+        </li>
+        <li><a class="nav-link-class" href="ma-classe.html">Ressources pour ma classe</a></li>
+        <li><a class="nav-link-progress active" href="plateforme-etudiante-zenclass-progression.html">Mon suivi de progression</a></li>
+        <li><a class="nav-link-team" href="plateforme-etudiante-zenclass.html#equipe">Équipe</a></li>
+        <li><a class="nav-link-forum" href="plateforme-etudiante-zenclass.html#forum">Forum</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <div class="container">
+      <section class="hero-card axis-theme-1" id="heroCard">
+        <div class="hero-head">
+          <span class="section-tag">Progression</span>
+          <h1>Mon suivi de progression</h1>
+          <p>Retrouvez ici toutes les activités de tous les axes et objectifs, avec leur état d’avancement et un accès direct pour reprendre là où vous vous êtes arrêté.</p>
+        </div>
+        <div class="hero-metrics">
+          <article class="metric-card">
+            <span>Activités terminées</span>
+            <strong id="completedMetric">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>Activités totales</span>
+            <strong id="totalMetric">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>Progression globale</span>
+            <strong id="percentMetric">0 %</strong>
+          </article>
+        </div>
+        <div class="progress-ring axis-theme-1"><span id="globalBar" style="width:0%"></span></div>
+      </section>
+
+      <section class="axis-grid" id="axisGrid" aria-label="Suivi par axe"></section>
+    </div>
+  </main>
+
+  <script src="plateforme-etudiante/data.js"></script>
+  <script>
+    (function () {
+      const data = window.platformData;
+      const storageKey = "adid-platform-progress-v2";
+      const axisThemes = ["axis-theme-1", "axis-theme-2", "axis-theme-3", "axis-theme-4"];
+
+      function readState() {
+        try {
+          const parsed = JSON.parse(window.localStorage.getItem(storageKey));
+          return parsed && typeof parsed === "object" ? parsed : { saved: {} };
+        } catch (error) {
+          return { saved: {} };
+        }
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function getActivityUrl(axisId, objectiveId, activityNumber) {
+        return "activite.html?axe=" + encodeURIComponent(axisId) + "&objectif=" + encodeURIComponent(objectiveId) + "&activite=" + encodeURIComponent(activityNumber);
+      }
+
+      if (!data || !Array.isArray(data.axes)) {
+        return;
+      }
+
+      const state = readState();
+      const axisGrid = document.getElementById("axisGrid");
+      let totalActivities = 0;
+      let completedActivities = 0;
+
+      axisGrid.innerHTML = data.axes.map(function (axis, axisIndex) {
+        const themeClass = axisThemes[axisIndex % axisThemes.length];
+        const activities = axis.objectives.reduce(function (items, objective) {
+          return items.concat((objective.activities || []).map(function (activity) {
+            const isDone = Boolean(state.saved[axis.id + "::" + objective.id + "::" + activity.number]);
+            totalActivities += 1;
+            if (isDone) {
+              completedActivities += 1;
+            }
+
+            return {
+              objective: objective,
+              activity: activity,
+              isDone: isDone
+            };
+          }));
+        }, []);
+
+        const percent = activities.length ? Math.round((activities.filter(function (item) { return item.isDone; }).length / activities.length) * 100) : 0;
+
+        const cards = activities.map(function (entry) {
+          const statusClass = entry.isDone ? "status-chip is-done" : "status-chip is-pending";
+          const statusLabel = entry.isDone ? "Terminé" : "À faire";
+          const activityLabel = "Activité " + entry.activity.number;
+          return (
+            '<a class="activity-card" href="' + escapeHtml(getActivityUrl(axis.id, entry.objective.id, entry.activity.number)) + '">' +
+              '<div class="activity-top">' +
+                '<div class="activity-meta">' +
+                  '<span>' + escapeHtml(axis.shortLabel) + "</span>" +
+                  '<span>' + escapeHtml(entry.objective.label) + "</span>" +
+                "</div>" +
+                '<span class="' + statusClass + '">' + statusLabel + "</span>" +
+              "</div>" +
+              "<h3>" + escapeHtml(activityLabel) + "</h3>" +
+              "<p>" + escapeHtml(entry.activity.title || activityLabel) + "</p>" +
+              '<span class="activity-cta">Ouvrir l’activité</span>' +
+            "</a>"
+          );
+        }).join("");
+
+        return (
+          '<section class="axis-panel ' + themeClass + '">' +
+            '<div class="axis-top">' +
+              '<div class="axis-head">' +
+                '<span class="axis-badge">' + escapeHtml(axis.shortLabel) + "</span>" +
+                "<h2>" + escapeHtml(axis.title) + "</h2>" +
+                '<p class="axis-progress-meta">' + activities.filter(function (item) { return item.isDone; }).length + " activité" + (activities.filter(function (item) { return item.isDone; }).length > 1 ? "s" : "") + " terminée" + (activities.filter(function (item) { return item.isDone; }).length > 1 ? "s" : "") + " sur " + activities.length + ".</p>" +
+              "</div>" +
+              '<span class="status-chip">' + percent + " %</span>" +
+            "</div>" +
+            '<div class="progress-ring ' + themeClass + '"><span style="width:' + percent + '%"></span></div>' +
+            '<div class="activity-grid">' + cards + "</div>" +
+          "</section>"
+        );
+      }).join("");
+
+      const globalPercent = totalActivities ? Math.round((completedActivities / totalActivities) * 100) : 0;
+      document.getElementById("completedMetric").textContent = String(completedActivities);
+      document.getElementById("totalMetric").textContent = String(totalActivities);
+      document.getElementById("percentMetric").textContent = globalPercent + " %";
+      document.getElementById("globalBar").style.width = globalPercent + "%";
+    }());
+  </script>
+  <script src="zenclass-enhancements.js"></script>
+</body>
+</html>

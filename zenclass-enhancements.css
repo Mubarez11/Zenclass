@@ -1,0 +1,388 @@
+:root {
+  --zc-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --zc-shadow-premium: 0 18px 44px rgba(15, 23, 42, 0.08);
+  --zc-shadow-premium-strong: 0 28px 70px rgba(15, 23, 42, 0.14);
+  --zc-shadow-glow: 0 0 0 1px rgba(102, 126, 234, 0.08), 0 16px 38px rgba(102, 126, 234, 0.12);
+}
+
+html {
+  scroll-padding-top: 106px;
+}
+
+body {
+  --zc-scroll-progress: 0%;
+}
+
+.navbar {
+  overflow: visible;
+}
+
+.navbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: var(--zc-scroll-progress, 0%);
+  background: linear-gradient(90deg, #667eea 0%, #4facfe 55%, #764ba2 100%);
+  opacity: 0.95;
+  transition: width 0.12s linear;
+}
+
+body::before {
+  animation: zcBodyAura 18s ease-in-out infinite alternate;
+}
+
+.nav-links a,
+.nav-links button,
+.nav-links li a,
+.nav-links li button,
+.dropdown-menu a,
+.dropdown-menu li a {
+  transition:
+    background 0.26s var(--zc-ease-out),
+    color 0.26s var(--zc-ease-out),
+    transform 0.26s var(--zc-ease-out),
+    box-shadow 0.26s var(--zc-ease-out);
+}
+
+.nav-links a.active,
+.nav-links button.active,
+.nav-links li a.active,
+.nav-links li button.active,
+.dropdown-menu a.active,
+.dropdown-menu li a.active {
+  box-shadow: 0 10px 26px rgba(102, 126, 234, 0.16);
+}
+
+.hero-badge,
+.section-tag,
+.axis-badge,
+.hero-kpi,
+.status-chip,
+.resource-type,
+.forum-badge,
+.panel-kicker {
+  box-shadow: 0 10px 24px rgba(102, 126, 234, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.page-hero::before {
+  animation: zcHeroWash 14s ease-in-out infinite alternate;
+}
+
+.page-hero::after {
+  animation: zcPatternDrift 24s linear infinite;
+}
+
+.page-hero-content {
+  filter: drop-shadow(0 16px 30px rgba(15, 23, 42, 0.14));
+}
+
+.zc-surface {
+  position: relative;
+  will-change: transform, box-shadow;
+  transition:
+    transform 0.34s var(--zc-ease-out),
+    box-shadow 0.34s var(--zc-ease-out),
+    border-color 0.34s var(--zc-ease-out),
+    filter 0.34s var(--zc-ease-out);
+}
+
+.zc-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(
+      340px circle at var(--zc-pointer-x, 50%) var(--zc-pointer-y, 50%),
+      rgba(255, 255, 255, 0.2),
+      transparent 42%
+    );
+  mix-blend-mode: screen;
+  transition: opacity 0.32s var(--zc-ease-out);
+}
+
+.zc-reveal {
+  opacity: 0.001;
+  transform: translateY(24px) scale(0.985);
+  transition:
+    opacity 0.68s var(--zc-ease-out),
+    transform 0.68s var(--zc-ease-out);
+  transition-delay: var(--zc-delay, 0ms);
+}
+
+.zc-reveal.zc-reveal-left {
+  transform: translateX(-28px) scale(0.985);
+}
+
+.zc-reveal.zc-reveal-right {
+  transform: translateX(28px) scale(0.985);
+}
+
+.zc-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.zc-flip-card {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.hero-link,
+.zen-action,
+.resource-action,
+.team-link,
+.btn-primary,
+.btn-outline,
+.btn-secondary,
+.btn-ghost {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-link::after,
+.zen-action::after,
+.resource-action::after,
+.team-link::after,
+.btn-primary::after,
+.btn-outline::after,
+.btn-secondary::after,
+.btn-ghost::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 36%,
+    rgba(255, 255, 255, 0.26) 50%,
+    transparent 64%,
+    transparent 100%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.78s var(--zc-ease-out);
+}
+
+.hero-link:hover::after,
+.hero-link:focus-visible::after,
+.zen-action:hover::after,
+.zen-action:focus-visible::after,
+.resource-action:hover::after,
+.resource-action:focus-visible::after,
+.team-link:hover::after,
+.team-link:focus-visible::after,
+.btn-primary:hover::after,
+.btn-primary:focus-visible::after,
+.btn-outline:hover::after,
+.btn-outline:focus-visible::after,
+.btn-secondary:hover::after,
+.btn-secondary:focus-visible::after,
+.btn-ghost:hover::after,
+.btn-ghost:focus-visible::after {
+  transform: translateX(120%);
+}
+
+.hero-link,
+.zen-action,
+.resource-action,
+.btn-primary,
+.btn-outline,
+.btn-secondary,
+.btn-ghost {
+  box-shadow: 0 14px 30px rgba(102, 126, 234, 0.12);
+}
+
+.answer-btn,
+.rating-circle,
+.drop-zone,
+.card-deck,
+.quiz-card,
+.results-card,
+.evaluation-form,
+.breathing-exercise,
+.breathing-benefits,
+.category,
+.roleplay-intro,
+.roleplay-tips {
+  transition:
+    transform 0.3s var(--zc-ease-out),
+    box-shadow 0.3s var(--zc-ease-out),
+    border-color 0.3s var(--zc-ease-out),
+    background-color 0.3s var(--zc-ease-out);
+}
+
+.quiz-card,
+.results-card,
+.evaluation-form,
+.breathing-exercise,
+.breathing-benefits,
+.category,
+.roleplay-intro,
+.roleplay-tips {
+  box-shadow: var(--zc-shadow-premium);
+}
+
+.answer-btn {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.68), 0 10px 24px rgba(15, 23, 42, 0.04);
+}
+
+.answer-btn:hover,
+.answer-btn:focus-visible {
+  box-shadow: 0 16px 30px rgba(102, 126, 234, 0.12);
+}
+
+.rating-option input:checked + .rating-circle {
+  box-shadow: 0 14px 28px rgba(102, 126, 234, 0.24);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.drop-zone.drag-over {
+  box-shadow: 0 20px 38px rgba(102, 126, 234, 0.18);
+}
+
+.breathing-circle-container {
+  filter: drop-shadow(0 26px 42px rgba(66, 153, 225, 0.18));
+}
+
+.progress-fill,
+.score-fill,
+.progress-ring-circle {
+  filter: drop-shadow(0 0 12px rgba(102, 126, 234, 0.22));
+}
+
+.zen-activity-download img,
+.library-embed iframe,
+.zen-video-card iframe,
+.resource-embed iframe {
+  transition: transform 0.65s var(--zc-ease-out), filter 0.65s var(--zc-ease-out);
+}
+
+.zen-activity-card:hover .zen-activity-download img,
+.zen-activity-card:focus-within .zen-activity-download img,
+.zc-surface:hover .library-embed iframe,
+.zc-surface:hover .zen-video-card iframe,
+.zc-surface:hover .resource-embed iframe {
+  transform: scale(1.028);
+  filter: saturate(1.05);
+}
+
+.back-to-top.is-visible {
+  box-shadow: 0 18px 38px rgba(102, 126, 234, 0.28);
+}
+
+:target {
+  animation: zcTargetPulse 1s var(--zc-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .zc-surface:hover,
+  .zc-surface:focus-within {
+    transform: translateY(-6px);
+    box-shadow: var(--zc-shadow-premium-strong), var(--zc-shadow-glow);
+    filter: saturate(1.02);
+  }
+
+  .zc-surface:hover::after,
+  .zc-surface:focus-within::after {
+    opacity: 1;
+  }
+
+  .zc-flip-card.zc-surface:hover,
+  .zc-flip-card.zc-surface:focus-within {
+    transform: translateY(-6px) rotateX(1.6deg) rotateY(var(--zc-flip-tilt, 4deg));
+  }
+
+  .hero-link:hover,
+  .hero-link:focus-visible,
+  .zen-action:hover,
+  .zen-action:focus-visible,
+  .resource-action:hover,
+  .resource-action:focus-visible,
+  .btn-primary:hover,
+  .btn-primary:focus-visible,
+  .btn-outline:hover,
+  .btn-outline:focus-visible,
+  .btn-secondary:hover,
+  .btn-secondary:focus-visible,
+  .btn-ghost:hover,
+  .btn-ghost:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .card-deck:hover {
+    box-shadow: 0 26px 58px rgba(128, 90, 213, 0.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  .page-hero::before,
+  .page-hero::after,
+  .zc-reveal,
+  .zc-surface,
+  .zc-surface::after,
+  .hero-link::after,
+  .zen-action::after,
+  .resource-action::after,
+  .team-link::after,
+  .btn-primary::after,
+  .btn-outline::after,
+  .btn-secondary::after,
+  .btn-ghost::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .zc-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes zcBodyAura {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.85;
+  }
+  to {
+    transform: translate3d(0, -1.5%, 0) scale(1.03);
+    opacity: 1;
+  }
+}
+
+@keyframes zcHeroWash {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.04) translate3d(1.5%, -1%, 0);
+  }
+}
+
+@keyframes zcPatternDrift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(18px, -14px, 0);
+  }
+}
+
+@keyframes zcTargetPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+  }
+  45% {
+    box-shadow: 0 0 0 14px rgba(102, 126, 234, 0.08);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+  }
+}
