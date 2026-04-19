@@ -12,16 +12,42 @@ Base de travail autonome pour compléter la plateforme ZenClass par axe, objecti
   - `objectif.html`
   - `activite.html`
 
-## Handoff 2026-04-18
+## Handoff 2026-04-19
 
-- `ma-classe.html` contient maintenant les blocs déplacés depuis la page principale :
-  - `Documentation pédagogique`
-  - `Forum`
-  - footer `Équipe`
-- `plateforme-etudiante-zenclass.html` ne doit plus contenir :
-  - la section `Documentation pédagogique`
-  - la section `Forum`
-- Sur la page principale, les liens menu `Forum` et `Équipe` du menu overlay point désormais vers `ma-classe.html#forum` et `ma-classe.html#equipe`
+### objectif.html - Page Objectif redesign (axe-2, obj-3)
+
+Nouvelle section hero inspirée du composant 21st.dev "A Modern Hero Section" :
+
+**Hero Section (nouveau design):**
+- Layout deux colonnes : texte à gauche, carte "AI Dashboard" à droite
+- Badge "AXE 2" avec dot animé violet (pulse)
+- Titre en Playfair Display avec gradient violet sur mots-clés
+- Description de l'objectif
+- Meta items : durée estimée + progression avec icônes SVG
+- Carte sombre avec :
+  - Grille de pixels 8x6 générée dynamiquement (violet/jaune/bleu)
+  - Animation au hover (rotation → 0°)
+  - Stats : 4 activités, 30 min+
+  - Barre de progression
+- Barre de confiance : Émotions, Bien-être, Communication, Climat, Ressources
+
+**Section Activités (Flip Reveal):**
+- Toggle filtres : Tous, Fondations, Guidé, Réflexif, Performance
+- Animation GSAP : scale + opacity au filtrage
+- 4 cartes avec images (pour axe-2 obj-3)
+- Badges colorés sur les images
+- Numéro d'activité en overlay
+- Flèche → qui apparaît au hover
+- Animation d'entrée staggered au chargement
+
+**Fichiers modifiés:**
+- `objectif.html` : CSS inline complet, hero HTML/JS, Flip Reveal cards
+
+**Images intégrées (axe-2, obj-3):**
+- `activité 1 axe 2 objectif 3.png`
+- `activité 2 axe 2 objectif 3 vrai.png`
+- `activité 3 axe 2 objectif 3.png`
+- `activité 4 axe2 objectif 3.png`
 
 ## Règle de travail pour le prochain agent
 
@@ -30,16 +56,22 @@ Base de travail autonome pour compléter la plateforme ZenClass par axe, objecti
 - Avant de modifier une autre zone de la page, vérifier que l'utilisateur l'a bien demandé
 - En cas de doute, préserver l'existant hors de la zone ciblée
 
-## Fichiers à modifier en priorité
+## Pour reprendre demain
 
-- `plateforme-etudiante/data.js`
-  - ajouter ou compléter les activités dans chaque axe / objectif
-  - ajouter des ressources théoriques
-  - ajouter des ressources pour la classe si besoin
-- `plateforme-etudiante/activity-modules.js`
-  - uniquement si vous créez un nouveau type d'activité interactive
-- `plateforme-etudiante/styles.css`
-  - uniquement pour de petits ajustements visuels
+1. Ouvrir `objectif.html?axe=axe-2&objectif=obj-3`
+   - Vérifier que le hero s'affiche correctement
+   - Tester les filtres d'activités
+   - Vérifier que les images des activités chargent
+2. Tester d'autres objectifs/axes pour vérifier la rétrocompatibilité
+3. Si demandé : étendre le design hero aux autres pages objectif
+
+## Pense-bête technique
+
+- `window.platformData` charge les données depuis `plateforme-etudiante/data.js`
+- Les activités sont filtrées par `moduleType` → catégorie CSS
+- Les images axe-2 obj-3 sont dans le dossier racine
+- `app.js` écrit dans `#objectiveHero` (masqué) — ne pas supprimer
+- GSAP 3.12.5 est chargé via CDN pour les animations
 
 ## Structure actuelle
 
@@ -54,119 +86,18 @@ Base de travail autonome pour compléter la plateforme ZenClass par axe, objecti
   - `evaluation`
   - `reflect`
   - `rephrase`
+  - `pathway`
 
-## Etat actuel - Axe 2 / Objectif 3
-
-- Objectif : `Reformuler les consignes stressantes en consignes neutres`
-- Page objectif : `objectif.html?axe=axe-2&objectif=obj-3`
-- Activité 1 : `activite.html?axe=axe-2&objectif=obj-3&activite=1`
-  - module interactif `pathway`
-  - activité de sensibilisation
-  - `8 tâches` ordonnées du repérage simple à la formalisation de repères
-- Activité 2 : `activite.html?axe=axe-2&objectif=obj-3&activite=2`
-  - module interactif `pathway`
-  - atelier de transformation guidée
-  - `7 tâches` ordonnées de l'identification du noyau utile à la réécriture autonome
-- Activité 3 : `activite.html?axe=axe-2&objectif=obj-3&activite=3`
-  - module interactif `reflect`
-  - timer de réflexion `15 min`
-  - carnet de recul en `7 tâches`, situations fréquentes, synthèse personnelle
-- Activité 4 : `activite.html?axe=axe-2&objectif=obj-3&activite=4`
-  - module interactif `rephrase`
-  - studio de reformulation avec timer circulaire
-  - feuille de route en `8 étapes`
-  - phases `Session complete`, `Lancement`, `Studio`, `Relecture`
-  - compteurs en direct, validation `3/4`, corrections possibles
-  - les `4 consignes exactes` du document `AXE2 Activité 4.docx` sont branchées
-
-## Changements du 19 avril 2026 - Navigation
-
-### Navbar harmonisée sur TOUTES les pages
-- La barre de navigation `ace-header` de la page principale (`plateforme-etudiante-zenclass.html`) est maintenant copiée dans **toutes** les pages HTML
-- Fichiers concernés : toutes les pages racine, `plateforme-etudiante/`, et `zenclass-modele/`
-- Les chemins sont adaptés automatiquement selon le dossier
-
-### Structure de la navbar desktop
-- **Parcours** (dropdown avec les 4 axes)
-- **Ressources** (dropdown avec ressources théoriques par axe)
-- CTA "Commencer" + bouton hamburger
-
-### Menu overlay (mobile/burger)
-Contient 9 rubriques : Accueil, Parcours, Interactif, Ressources, Ressources classe, Mon suivi, Ma classe, Forum, Équipe
-
-### Logo uniformisé
-- `logo zenclasse reworked.png` est utilisé sur toutes les pages
-- Plus de `zenclass-logo.svg` mêlé
-
-### Corrections de bugs
-- Texte du menu overlay en blanc visible (correction du gradient qui changeait selon le thème)
-- Dropdowns qui s'affichaient horizontalement → corrigé en vertical
-- Halo lumineux sur le sélecteur orbital (couleur adaptée à l'axe survolé)
-- Glassmorphism sur le panneau d'info du sélecteur orbital
-- Suppression du titre "Les 4 axes..." sous le sélecteur (demande explicite)
-
-## Fichiers modifiés pour cet objectif
+## Fichiers à modifier en priorité
 
 - `plateforme-etudiante/data.js`
-  - contenu complet des activités 1 a 4 de l'objectif 3
-  - activités 1 et 2 structurées en parcours progressifs
-  - données du module `reflect`
-  - données du module `rephrase`
-  - ressource théorique `Prokofieva et al. (2017)` ajoutée pour l'axe 2
+  - ajouter ou compléter les activités dans chaque axe / objectif
+  - ajouter des ressources théoriques
+  - ajouter des ressources pour la classe si besoin
 - `plateforme-etudiante/activity-modules.js`
-  - nouveau module `pathway`
-  - module `reflect` rendu dynamique
-  - module `rephrase` enrichi avec feuille de route, seuil dynamique et validation ajustable
-  - progression, timers, synthèse, validation, animations d'état
+  - uniquement si vous créez un nouveau type d'activité interactive
 - `plateforme-etudiante/styles.css`
-  - styles premium pour les cartes, parcours, timers, métriques, états de réussite
-  - responsive et animations légères
-- `plateforme-etudiante/app.js`
-  - cartes d'activité enrichies avec niveau et nombre de tâches
-- `plateforme-etudiante/orbital-axes.js`
-  - titre complet synchronisé avec l'objectif 3
-
-## Pour reprendre demain
-
-- Ouvrir d'abord `objectif.html?axe=axe-2&objectif=obj-3`
-  - vérifier que les 4 activités affichent bien durée, niveau et nombre de tâches
-- Puis ouvrir `activite.html?axe=axe-2&objectif=obj-3&activite=1`
-  - tester le parcours `pathway` et la persistance des tâches cochées
-- Puis `activite.html?axe=axe-2&objectif=obj-3&activite=3`
-  - vérifier la logique de réflexion et la synthèse dynamique
-- Puis ouvrir `activite.html?axe=axe-2&objectif=obj-3&activite=4`
-  - tester les 4 reformulations
-  - ajuster les `requiredGroups` et `blockedPhrases` dans `plateforme-etudiante/data.js` si la validation est trop stricte ou trop permissive
-- Si tu veux pousser encore le rendu
-  - affiner les textes de feedback activité par activité
-  - ajouter une dernière couche narrative ou sonore légère
-  - éventuellement relier la synthèse de l'activité 3 à l'activité 4
-
-## Pense-bête technique
-
-- Les activités 1 a 4 sauvegardent leur état en `localStorage`
-- Le module `pathway` repose sur `learningPath.tasks`
-- Les timers sont gérés dans `plateforme-etudiante/activity-modules.js`
-- La validation de l'activité 4 repose sur des indices textuels simples, pas sur une analyse sémantique avancée
-- Le seuil de réussite de l'activité 4 est piloté par `performanceTask.passThreshold`
-- Si tu modifies le contenu d'une consigne, pense à mettre à jour aussi son `neutralExample`, ses `requiredGroups` et ses `blockedPhrases`
-
-## Conseils pour l'équipe
-
-- Ne pas renommer les fichiers ou dossiers principaux
-- Conserver les identifiants existants des axes et objectifs
-- Si vous ajoutez une activité, gardez une numérotation continue
-- Si vous ajoutez un PDF, une image ou une vidéo locale, placez-la dans un chemin déjà utilisé par la plateforme ou mettez à jour le chemin dans `data.js`
-- Vérifier systématiquement les liens après ajout d'une nouvelle ressource
-
-## Ressources incluses
-
-- Navigation principale harmonisée
-- Pages interactives
-- Ressources théoriques
-- Ressources pour ma classe
-- Vidéo locale `videoADID.mp4`
-- Documents PDF / DOCX déjà liés dans la plateforme
+  - uniquement pour de petits ajustements visuels
 
 ## Bon réflexe avant envoi
 
