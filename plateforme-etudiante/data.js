@@ -65,6 +65,474 @@ const axe2Objective2Activities = [
   }
 ];
 
+const axe2Objective3Activities = [
+  {
+    number: 1,
+    moduleType: "pathway",
+    title: "Repérer les formulations qui mettent la pression",
+    duration: "20 min",
+    difficulty: "Fondations",
+    taskCount: 8,
+    instruction:
+      "Commencez par détecter, sans encore réécrire, les mots et tournures qui transforment une consigne informative en consigne stressante.",
+    feedbacks: [
+      "Observez d'abord l'effet émotionnel produit, avant de chercher une meilleure formulation.",
+      "Distinguez ce qui informe l'élève de ce qui ajoute une menace, une urgence ou un jugement.",
+      "Gardez une trace des signaux linguistiques que vous retrouvez souvent dans votre propre pratique."
+    ],
+    learningPath: {
+      subtitle: "Activité de sensibilisation",
+      outcome: "Être capable d'isoler les déclencheurs linguistiques les plus fréquents avant toute reformulation.",
+      focusTags: ["notation", "urgence", "menace implicite", "comparaison sociale"],
+      progressLabel: "Parcours 8 tâches",
+      supportCards: [
+        {
+          label: "Point d'attention",
+          text: "Ne corrigez rien au départ : regardez seulement ce qui augmente la tension chez l'élève."
+        },
+        {
+          label: "Ce qu'on conserve",
+          text: "L'information pédagogique utile : date, consigne, évaluation, temps disponible."
+        },
+        {
+          label: "Ce qu'on surveille",
+          text: "Les mots qui rappellent brutalement l'erreur, la sanction, la comparaison ou le manque de temps."
+        }
+      ],
+      reflectionLabel: "Trace de sortie",
+      reflectionPrompt: "Quels trois signaux linguistiques voulez-vous désormais surveiller avant une annonce évaluative ?",
+      reflectionPlaceholder: "Ex. menace implicite, injonction de performance, comparaison avec les autres...",
+      completionMessage: "Le repérage est posé. Vous êtes prêt à passer à une transformation plus guidée.",
+      tasks: [
+        {
+          id: "obj3-a1-t1",
+          level: "Niveau 1",
+          title: "Se mettre en posture d'observation",
+          description: "Relisez l'objectif de l'atelier et adoptez une posture de repérage : on n'améliore pas encore, on observe l'effet produit.",
+          cue: "Question-guide : qu'est-ce qui serre le climat émotionnel avant même que l'élève commence ?"
+        },
+        {
+          id: "obj3-a1-t2",
+          level: "Niveau 1",
+          title: "Lire 8 consignes de classe brutes",
+          description: "Parcourez un lot de formulations typiques liées aux notes, aux contrôles, aux copies et au temps restant.",
+          cue: "Repérez les formulations qui vous semblent les plus dures à entendre pour un élève anxieux."
+        },
+        {
+          id: "obj3-a1-t3",
+          level: "Niveau 2",
+          title: "Surligner les mots de pression",
+          description: "Isolez les mots ou segments qui évoquent la faute, l'urgence, la déception ou la sanction.",
+          cue: "Ex. attention, ne faites pas d'erreurs, dépêchez-vous, vont le sentir."
+        },
+        {
+          id: "obj3-a1-t4",
+          level: "Niveau 2",
+          title: "Classer les stresseurs par famille",
+          description: "Rangez les formulations relevées dans quatre familles : note, temps, menace implicite, comparaison sociale.",
+          cue: "L'idée n'est pas de juger la personne, mais de comprendre le mécanisme linguistique."
+        },
+        {
+          id: "obj3-a1-t5",
+          level: "Niveau 3",
+          title: "Isoler le noyau pédagogique utile",
+          description: "Dans deux consignes repérées, séparez l'information utile à conserver du surplus anxiogène.",
+          cue: "Gardez seulement ce que l'élève a objectivement besoin de savoir pour agir."
+        },
+        {
+          id: "obj3-a1-t6",
+          level: "Niveau 3",
+          title: "Justifier un diagnostic de stress",
+          description: "Formulez en une phrase pourquoi une tournure peut augmenter la tension émotionnelle chez certains élèves.",
+          cue: "Appuyez-vous sur le ton, la syntaxe ou le type de rappel effectué."
+        },
+        {
+          id: "obj3-a1-t7",
+          level: "Niveau 4",
+          title: "Comparer deux versions d'une même annonce",
+          description: "Choisissez la version la plus neutre entre deux propositions et explicitez ce qui change dans le ressenti possible.",
+          cue: "Cherchez la version qui informe sans ajouter de pression de performance."
+        },
+        {
+          id: "obj3-a1-t8",
+          level: "Niveau 4",
+          title: "Formaliser trois repères de vigilance",
+          description: "Synthétisez trois marqueurs linguistiques à surveiller avant une note, un contrôle ou une reprise de copies.",
+          cue: "Cette liste vous servira de filtre rapide dans les activités suivantes."
+        }
+      ]
+    }
+  },
+  {
+    number: 2,
+    moduleType: "pathway",
+    title: "Décomposer puis transformer une consigne à risque",
+    duration: "25 min",
+    difficulty: "Guidé",
+    taskCount: 7,
+    instruction:
+      "Passez du repérage à la transformation guidée : gardez l'intention pédagogique, retirez la pression implicite et stabilisez un ton neutre.",
+    feedbacks: [
+      "Une bonne reformulation ne gomme pas l'information importante : elle la rend plus respirable.",
+      "Travaillez phrase par phrase : ce qui déclenche la pression n'est pas toujours là où on le croit.",
+      "Cherchez un ton sobre, clair et sécurisant, sans basculer dans un message flou."
+    ],
+    learningPath: {
+      subtitle: "Atelier de transformation guidée",
+      outcome: "Apprendre à reconstruire une consigne en conservant le sens tout en réduisant la charge émotionnelle.",
+      focusTags: ["intention pédagogique", "ton neutre", "clarté", "message contenant"],
+      progressLabel: "Parcours 7 tâches",
+      supportCards: [
+        {
+          label: "Cible",
+          text: "Conserver l'objectif pédagogique, pas la pression émotionnelle qui l'accompagnait."
+        },
+        {
+          label: "Réflexe utile",
+          text: "Demandez-vous à chaque étape : cette phrase informe-t-elle ou menace-t-elle ?"
+        },
+        {
+          label: "Critère clé",
+          text: "Une reformulation réussie reste précise, courte et exploitable immédiatement par l'élève."
+        }
+      ],
+      reflectionLabel: "Déclic de l'atelier",
+      reflectionPrompt: "Quelle transformation vous a le plus aidé à garder le sens sans maintenir la pression ?",
+      reflectionPlaceholder: "Ex. remplacer l'injonction de performance par une information claire sur l'attendu...",
+      completionMessage: "La mécanique de transformation est en place. Vous pouvez maintenant observer vos propres automatismes de langage.",
+      tasks: [
+        {
+          id: "obj3-a2-t1",
+          level: "Niveau 1",
+          title: "Repérer l'information non négociable",
+          description: "Dans chaque consigne, relevez ce qui doit absolument rester : date, type d'épreuve, rendu, temps disponible.",
+          cue: "Tout le reste peut potentiellement être déplacé, allégé ou reformulé."
+        },
+        {
+          id: "obj3-a2-t2",
+          level: "Niveau 2",
+          title: "Retirer la menace explicite",
+          description: "Supprimez les segments qui annoncent une sanction, une déception ou une conséquence brutale.",
+          cue: "L'élève a besoin d'une information d'action, pas d'une projection menaçante."
+        },
+        {
+          id: "obj3-a2-t3",
+          level: "Niveau 2",
+          title: "Assouplir l'injonction de performance",
+          description: "Remplacez les ordres liés à l'erreur ou à la réussite parfaite par des formulations plus contenantes.",
+          cue: "Ex. 'Prenez le temps de relire' vaut mieux que 'Ne faites pas d'erreurs'."
+        },
+        {
+          id: "obj3-a2-t4",
+          level: "Niveau 3",
+          title: "Calmer la pression temporelle",
+          description: "Transformez une annonce pressante du temps en rappel clair, prévisible et moins brutal.",
+          cue: "Conservez le cadre temporel, mais retirez le sentiment de menace immédiate."
+        },
+        {
+          id: "obj3-a2-t5",
+          level: "Niveau 3",
+          title: "Réécrire une annonce de contrôle",
+          description: "Reformulez une consigne qui annonce une évaluation en gardant la date et l'enjeu, sans comparaison ni avertissement inutile.",
+          cue: "Cherchez un ton factuel, stable et prévisible."
+        },
+        {
+          id: "obj3-a2-t6",
+          level: "Niveau 4",
+          title: "Réécrire un retour sur copies",
+          description: "Travaillez une formulation sensible au moment de rendre des copies, en retirant les jugements dévalorisants.",
+          cue: "Parlez du travail et des pistes de suite, pas de la valeur des élèves."
+        },
+        {
+          id: "obj3-a2-t7",
+          level: "Niveau 5",
+          title: "Boucler une consigne hybride en autonomie",
+          description: "Terminez en réécrivant une consigne qui mélange note, délai et pression sociale, avec un ton neutre et complet.",
+          cue: "C'est votre répétition générale avant le studio final."
+        }
+      ]
+    }
+  },
+  {
+    number: 3,
+    moduleType: "reflect",
+    title: "Prendre du recul sur ses automatismes langagiers",
+    duration: "15 min",
+    difficulty: "Réflexif",
+    taskCount: 7,
+    instruction:
+      "Avant la tâche finale, prenez un temps de recul pour repérer vos habitudes de langage, les situations les plus sensibles et l'intention pédagogique que vous souhaitez préserver.",
+    feedbacks: [
+      "Nommez des situations réelles : l'activité devient plus utile quand elle s'ancre dans votre pratique.",
+      "Cherchez à comprendre ce que votre formulation voulait protéger ou obtenir, pas seulement ce qu'elle provoque.",
+      "Votre synthèse doit préparer concrètement la reformulation finale."
+    ],
+    reflectionTask: {
+      objective: "Identifier les moments où votre langage augmente la pression sans le vouloir et préparer une ligne directrice plus soutenante.",
+      timerMinutes: 15,
+      timerLabel: "Pause de recul",
+      timerDescription: "Un quart d'heure pour faire émerger vos automatismes, puis préparer votre passage au studio final.",
+      quickSituations: [
+        "Annonce d'une note",
+        "Date de contrôle",
+        "Distribution des copies",
+        "Rappel du temps restant",
+        "Travail à terminer",
+        "Correction collective"
+      ],
+      roadmap: [
+        "Nommer une formulation délicate",
+        "Dire ce qui crée la tension",
+        "Repérer les contextes récurrents",
+        "Identifier les élèves les plus exposés",
+        "Conserver l'intention pédagogique utile",
+        "Choisir un langage à faire évoluer",
+        "Préparer une phrase d'appui"
+      ],
+      prompts: [
+        {
+          id: "hardestInstruction",
+          label: "1. Quelle formulation vous paraît la plus délicate à reformuler ?",
+          placeholder: "Ex. annoncer qu'une activité comptera pour le bulletin ou rappeler brutalement le temps restant..."
+        },
+        {
+          id: "hardestReason",
+          label: "2. Qu'est-ce qui, dans cette formulation, fait monter la pression ?",
+          placeholder: "Repérez un mot, un ton, une syntaxe ou un sous-entendu."
+        },
+        {
+          id: "realSituations",
+          label: "3. Dans quelles situations de votre pratique cela apparaît-il le plus souvent ?",
+          placeholder: "Décrivez les moments de classe où cette formulation revient."
+        },
+        {
+          id: "studentProfile",
+          label: "4. Quels profils d'élèves risquent d'être particulièrement déstabilisés ?",
+          placeholder: "Ex. élèves anxieux, perfectionnistes, lents à démarrer, déjà fragilisés..."
+        },
+        {
+          id: "keepIntent",
+          label: "5. Quelle information pédagogique faut-il absolument conserver ?",
+          placeholder: "Ex. la date, le fait que c'est évalué, l'objectif attendu, la durée restante..."
+        },
+        {
+          id: "changeLanguage",
+          label: "6. Quel type de langage souhaitez-vous faire évoluer en priorité ?",
+          placeholder: "Ex. éviter la menace implicite, réduire l'urgence, sortir de la comparaison sociale..."
+        },
+        {
+          id: "supportivePhrase",
+          label: "7. Quelle phrase d'appui pourriez-vous tester à la place ?",
+          placeholder: "Écrivez une formulation courte, claire et contenante que vous aimeriez adopter."
+        }
+      ],
+      summaryFields: [
+        { id: "hardestInstruction", label: "Formulation la plus sensible" },
+        { id: "hardestReason", label: "Ce qui crée la tension" },
+        { id: "realSituations", label: "Situations où cela revient" },
+        { id: "studentProfile", label: "Élèves particulièrement exposés" },
+        { id: "keepIntent", label: "Intention pédagogique à conserver" },
+        { id: "changeLanguage", label: "Langage à faire évoluer" },
+        { id: "supportivePhrase", label: "Phrase d'appui à tester" }
+      ]
+    }
+  },
+  {
+    number: 4,
+    moduleType: "rephrase",
+    title: "Studio final : reformuler des consignes stressantes",
+    duration: "30 min",
+    difficulty: "Performance",
+    taskCount: 8,
+    instruction:
+      "Réécrivez quatre consignes à risque utilisées en classe en conservant l'objectif pédagogique et en supprimant les formulations susceptibles de créer du stress.",
+    feedbacks: [
+      "Conservez l'information utile : note, date, temps ou rendu si elle est nécessaire à l'action.",
+      "Retirez les menaces implicites, les injonctions de performance et les comparaisons qui ajoutent de la pression.",
+      "Validez au moins 3 reformulations sur 4 pour atteindre le seuil attendu."
+    ],
+    performanceTask: {
+      axis: "Axe 2 - Détecter pour prévenir",
+      audience: "Enseignants 7e-8e",
+      objective: "Dans une situation de classe où il doit annoncer une note ou une date d'examen, l'enseignant reformule des consignes à risque émotionnel en consignes neutres, en conservant le même objectif pédagogique et en supprimant les formulations susceptibles de déclencher une réaction de stress chez les élèves.",
+      pedagogicalReference: "Objectif 3 : Reformuler les consignes stressantes en consignes neutres.",
+      passThreshold: 3,
+      minLength: 18,
+      successCriteria: [
+        "La consigne reformulée conserve le même sens pédagogique que l'originale.",
+        "Le ton reste neutre : pas de menace implicite, pas d'injonction de performance, pas de jugement dévalorisant.",
+        "Au moins 3 reformulations sur 4 répondent aux critères de base."
+      ],
+      theory: [
+        "Prokofieva et al. (2017) montrent que la pression évaluative constitue un stresseur scolaire majeur.",
+        "Les formulations annonçant une notation ou une conséquence forte peuvent déclencher des réponses émotionnelles et physiologiques mesurables.",
+        "Travailler le langage des consignes permet donc d'agir directement sur un stresseur contextuel évitable."
+      ],
+      roadmap: [
+        "Lire la consigne et repérer la pression dominante",
+        "Conserver l'information pédagogique non négociable",
+        "Retirer la menace implicite ou le jugement",
+        "Réécrire la consigne 1",
+        "Réécrire la consigne 2",
+        "Réécrire la consigne 3",
+        "Réécrire la consigne 4",
+        "Relire puis viser 3 validations sur 4"
+      ]
+    },
+    stressSignals: [
+      "injonction de performance",
+      "menace implicite",
+      "comparaison sociale",
+      "urgence temporelle",
+      "jugement dévalorisant"
+    ],
+    sessionFlow: [
+      {
+        id: "launch",
+        label: "Lancement",
+        minutes: 5,
+        description: "Repérez l'information utile à conserver et la pression dominante à retirer."
+      },
+      {
+        id: "studio",
+        label: "Studio",
+        minutes: 20,
+        description: "Réécrivez les quatre consignes avec un ton neutre, clair et contenant."
+      },
+      {
+        id: "review",
+        label: "Relecture",
+        minutes: 5,
+        description: "Relisez, comparez avec les critères et validez votre meilleure version."
+      }
+    ],
+    learningActivities: [
+      {
+        title: "1. Sensibilisation rapide",
+        duration: "5 min",
+        points: [
+          "Lire une consigne à risque à voix haute et repérer immédiatement ce qui serre le climat émotionnel.",
+          "Faire le lien avec les stresseurs évaluatifs décrits par Prokofieva et al. (2017)."
+        ]
+      },
+      {
+        title: "2. Réécriture guidée",
+        duration: "20 min",
+        points: [
+          "Réécrire quatre consignes à risque en gardant l'information nécessaire à l'élève.",
+          "Faire valider chaque proposition à partir des critères : sens conservé, ton neutre, absence de menace implicite."
+        ]
+      },
+      {
+        title: "3. Retour réflexif",
+        duration: "5 min",
+        points: [
+          "Identifier la consigne la plus difficile à reformuler et dire pourquoi.",
+          "Repérer une situation réelle de classe où une formulation voisine peut apparaître."
+        ]
+      }
+    ],
+    prompts: [
+      {
+        id: "bulletin",
+        label: "Consigne 1",
+        original: "Attention, c'est noté et ça compte pour votre bulletin. Ne faites pas d'erreurs.",
+        hint: "Gardez l'information sur la note et le bulletin, mais retirez l'alerte et l'injonction de performance.",
+        neutralExample: "Cette activité est notée et comptera pour votre bulletin. Prenez le temps de lire les consignes et de faire au mieux.",
+        requiredGroups: [
+          ["noté", "notée", "évalué", "évaluée", "évaluation"],
+          ["bulletin"]
+        ],
+        blockedPhrases: ["attention", "ne faites pas d'erreurs", "pas d'erreurs"]
+      },
+      {
+        id: "controle",
+        label: "Consigne 2",
+        original: "Vous avez un contrôle vendredi. Ceux qui n'ont pas travaillé vont le sentir.",
+        hint: "Conservez la date du contrôle, mais retirez la menace adressée aux élèves.",
+        neutralExample: "Vous aurez un contrôle vendredi. Pensez à vous y préparer et à revoir les points travaillés ensemble.",
+        requiredGroups: [
+          ["contrôle", "controle", "évaluation", "épreuve"],
+          ["vendredi"]
+        ],
+        blockedPhrases: ["vont le sentir", "ceux qui n'ont pas travaillé", "ceux qui n ont pas travaillé"]
+      },
+      {
+        id: "copies",
+        label: "Consigne 3",
+        original: "Je rends les copies. Certains d'entre vous ont beaucoup à améliorer, c'est décevant.",
+        hint: "Gardez l'annonce de restitution des copies, mais retirez le jugement global et dévalorisant.",
+        neutralExample: "Je vous rends les copies. Nous regarderons ensemble les points à renforcer pour poursuivre la progression.",
+        requiredGroups: [
+          ["copies", "copie", "travaux", "évaluation"],
+          ["améliorer", "ameliorer", "renforcer", "progresser", "progression"]
+        ],
+        blockedPhrases: ["décevant", "decevant", "beaucoup à améliorer", "beaucoup a améliorer", "c'est décevant", "c est décevant"]
+      },
+      {
+        id: "temps",
+        label: "Consigne 4",
+        original: "Dépêchez-vous, vous avez 5 minutes pour finir, après je ramasse tout.",
+        hint: "Conservez l'information sur le temps restant et le ramassage, mais retirez l'urgence brutale.",
+        neutralExample: "Il vous reste 5 minutes pour terminer. Je ramasserai ensuite les feuilles, pensez à finaliser l'essentiel.",
+        requiredGroups: [
+          ["5 minutes", "cinq minutes", "5 min"],
+          ["ramasse", "ramasserai", "recueillerai", "récupérerai", "récupere", "feuilles"]
+        ],
+        blockedPhrases: ["dépêchez-vous", "depechez-vous", "dépêchez vous", "depechez vous"]
+      }
+    ],
+    facilitatorGuide: {
+      launch: [
+        "Lisez une consigne à risque à voix haute et demandez ce qu'elle fait ressentir avant même de parler de correction.",
+        "Rappelez que l'objectif est de développer une compétence de formulation, pas de culpabiliser les formulations d'origine."
+      ],
+      vigilance: [
+        "Certains apprenants enlèvent toute l'information utile : date, note ou temps. Rappelez que le sens pédagogique doit être conservé.",
+        "D'autres remplacent la pression par un message trop flou : la consigne doit rester exploitable par l'élève."
+      ],
+      helps: [
+        "Que gardez-vous de la consigne originale ? Qu'est-ce qui peut être retiré ou déplacé ?",
+        "Votre formulation donne-t-elle une information claire sans ajouter de menace implicite ?"
+      ],
+      regulation: [
+        "Si le groupe avance vite, proposez une cinquième consigne plus délicate mêlant mauvaise note et comparaison sociale.",
+        "Si le groupe bloque, analysez collectivement la consigne 1 avant de relancer le travail individuel."
+      ],
+      closureSignals: [
+        "Faites émerger trois signaux linguistiques à surveiller : injonction de performance, formulation menaçante, comparaison sociale.",
+        "Invitez chacun à choisir une phrase d'appui qu'il veut réellement tester en classe."
+      ]
+    },
+    resources: [
+      {
+        label: "Fiche des 4 consignes à risque",
+        usage: "Support central de réécriture, utilisable sur la plateforme ou en version papier."
+      },
+      {
+        label: "Article scientifique",
+        usage: "Prokofieva et al. (2017), en lecture d'appui pour comprendre le stress de l'évaluation."
+      },
+      {
+        label: "Grille de correction formateur",
+        usage: "Trois critères : sens conservé, ton neutre, absence de menace implicite."
+      },
+      {
+        label: "Plateforme de soumission",
+        usage: "Recueillir les reformulations et faciliter un retour individualisé."
+      }
+    ],
+    reflectionQuestions: [
+      "Quelle consigne vous a été la plus difficile à reformuler, et pourquoi ?",
+      "Dans quelle situation réelle de votre pratique utilisez-vous encore des formulations voisines ?"
+    ],
+    reference: {
+      href: "https://doi.org/10.4000/rechercheseducations.4657",
+      label: "Prokofieva et al. (2017) - Stress de l'évaluation scolaire"
+    }
+  }
+];
+
 window.platformData = {
   axes: [
     {
@@ -120,8 +588,8 @@ window.platformData = {
           id: "obj-3",
           label: "Objectif 3",
           title: "Reformuler les consignes stressantes en consignes neutres.",
-          duration: "--",
-          activities: makeActivities(4)
+          duration: "1 h 30",
+          activities: axe2Objective3Activities
         }
       ]
     },
@@ -184,7 +652,7 @@ window.platformData = {
       ]
     }
   ],
-  theoryResourceTypes: ["Vidéo", "Article", "Podcast"],
+  theoryResourceTypes: ["Vidéo", "Article", "Article PDF", "Article scientifique", "Site web", "Podcast"],
   classDocuments: [
     {
       featured: true,
@@ -365,6 +833,14 @@ window.platformData = {
         meta: "Auteurs : Leila Valizadeh, Aliraza Farnam, Mahni Rahkar Farshi.",
         href: "../investigation-stress-symptoms-primary-school-children.pdf",
         actionLabel: "Ouvrir le PDF"
+      },
+      {
+        type: "Article scientifique",
+        title: "Stress de l'évaluation scolaire : un nouveau regard sur un problème ancien",
+        description: "Référence centrale pour comprendre pourquoi certaines annonces évaluatives agissent comme des stresseurs contextuels prévisibles.",
+        meta: "Prokofieva, Brandt-Pomares, Velay, Hérold et Kostromina (2017).",
+        href: "https://doi.org/10.4000/rechercheseducations.4657",
+        actionLabel: "Consulter la référence"
       },
       {
         type: "Site web",

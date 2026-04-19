@@ -1173,13 +1173,288 @@
     renderAll();
   }
 
+  function renderPathwayModule(activity) {
+    const path = activity.learningPath || {};
+    const tasks = path.tasks || [];
+    const focusTags = (path.focusTags || []).map(function (label) {
+      return '<span class="rewrite-signal-chip">' + escapeHtml(label) + "</span>";
+    }).join("");
+    const supportCards = (path.supportCards || []).map(function (item) {
+      return (
+        '<article class="pathway-support-card">' +
+          '<span class="rewrite-card-label">' + escapeHtml(item.label || "Repere") + "</span>" +
+          '<p>' + escapeHtml(item.text || "") + "</p>" +
+        "</article>"
+      );
+    }).join("");
+    const taskCards = tasks.map(function (task, index) {
+      return (
+        '<article class="pathway-task-card" data-pathway-task="' + escapeHtml(task.id || String(index)) + '">' +
+          '<div class="pathway-task-head">' +
+            '<span class="pathway-task-order">' + String(index + 1).padStart(2, "0") + "</span>" +
+            '<span class="rewrite-status">' + escapeHtml(task.level || ("Niveau " + (index + 1))) + "</span>" +
+          "</div>" +
+          '<div class="pathway-task-copy">' +
+            "<h3>" + escapeHtml(task.title || ("Tache " + (index + 1))) + "</h3>" +
+            '<p>' + escapeHtml(task.description || "") + "</p>" +
+            '<div class="rewrite-feedback">' + escapeHtml(task.cue || "") + "</div>" +
+          "</div>" +
+          '<button class="btn btn-secondary pathway-task-toggle" type="button" data-pathway-toggle="' + escapeHtml(task.id || String(index)) + '">Marquer comme fait</button>' +
+        "</article>"
+      );
+    }).join("");
+
+    return (
+      '<div class="activity-module pathway-module">' +
+        '<section class="pathway-stage-board">' +
+          '<article class="module-note pathway-hero-card">' +
+            "<h2>Parcours guidé</h2>" +
+            '<p class="rewrite-meta">' + escapeHtml(path.subtitle || "Activité structurée") + "</p>" +
+            '<p><strong>Objectif :</strong> ' + escapeHtml(path.outcome || activity.instruction || "") + "</p>" +
+            '<div class="activity-copy-box reflect-hero-copy">' + escapeHtml(activity.instruction || "") + "</div>" +
+            '<ul class="module-note-list">' +
+              (activity.feedbacks || []).map(function (item) {
+                return "<li>" + escapeHtml(item) + "</li>";
+              }).join("") +
+            "</ul>" +
+            '<div class="rewrite-signal-row">' + focusTags + "</div>" +
+          "</article>" +
+          '<article class="module-panel pathway-progress-card">' +
+            '<div class="module-panel-head">' +
+              "<div>" +
+                "<h2>Progression</h2>" +
+                "<p>Suivez les tâches dans l'ordre croissant de difficulté et gardez une trace finale de ce qui change dans votre pratique.</p>" +
+              "</div>" +
+              '<span class="rewrite-chip" id="pathwayProgressPill">0 / ' + tasks.length + ' tâches</span>' +
+            "</div>" +
+            '<div class="pathway-progress-shell">' +
+              '<div class="pathway-progress-ring" id="pathwayProgressRing">' +
+                '<div class="pathway-progress-inner">' +
+                  '<strong id="pathwayProgressCount">0%</strong>' +
+                  '<span id="pathwayProgressState">Démarrage</span>' +
+                "</div>" +
+              "</div>" +
+              '<div class="pathway-progress-copy">' +
+              '<span class="activity-timer-tag">' + escapeHtml(path.progressLabel || (tasks.length + ' tâches')) + "</span>" +
+                '<p id="pathwayNextTaskText">Commencez par la première tâche du parcours.</p>' +
+              "</div>" +
+            "</div>" +
+            '<div class="pathway-support-grid">' + supportCards + "</div>" +
+          "</article>" +
+        "</section>" +
+        '<section class="module-panel">' +
+          '<div class="module-panel-head">' +
+            "<div>" +
+              "<h2>Feuille de route</h2>" +
+              "<p>Chaque carte correspond à une tâche explicite. Terminez-les dans l'ordre pour monter en exigence sans perdre le fil.</p>" +
+            "</div>" +
+            '<span class="module-kpi">Ordre recommandé</span>' +
+          "</div>" +
+          '<div class="pathway-grid">' + taskCards + "</div>" +
+        "</section>" +
+        '<section class="module-panel module-result-panel">' +
+          '<div class="module-panel-head">' +
+            "<div>" +
+              "<h2>Trace finale</h2>" +
+              "<p>Gardez une trace courte de ce que vous voulez appliquer ensuite en situation de classe.</p>" +
+            "</div>" +
+            '<span class="module-status-badge" id="pathwayResultBadge">En attente</span>' +
+          "</div>" +
+          '<div class="module-field">' +
+            '<label for="pathwayReflectionField">' + escapeHtml(path.reflectionLabel || "Trace réflexive") + "</label>" +
+            '<textarea id="pathwayReflectionField" placeholder="' + escapeHtml(path.reflectionPlaceholder || "Notez ici votre point d'appui pour la suite.") + '"></textarea>' +
+            '<small>' + escapeHtml(path.reflectionPrompt || "") + "</small>" +
+          "</div>" +
+          '<p class="module-result-text" id="pathwayResultText">Complétez progressivement les tâches puis formulez votre trace finale.</p>' +
+          '<p class="module-result-note" id="pathwayResultNote"></p>' +
+          '<div class="module-actions">' +
+            '<button class="btn btn-ghost" type="button" id="pathwayResetBtn">Réinitialiser le parcours</button>' +
+            '<span class="module-inline-note" id="pathwayFlashNote"></span>' +
+          "</div>" +
+        "</section>" +
+      "</div>"
+    );
+  }
+
+  function initPathwayModule(root, context) {
+    const activity = context.activity || {};
+    const path = activity.learningPath || {};
+    const tasks = path.tasks || [];
+    const storageKey = makeKey(context);
+    const defaultState = {
+      done: {},
+      reflection: ""
+    };
+    const state = readStorage(storageKey, defaultState);
+    const reflectionField = root.querySelector("#pathwayReflectionField");
+    const progressRing = root.querySelector("#pathwayProgressRing");
+    const progressCount = root.querySelector("#pathwayProgressCount");
+    const progressState = root.querySelector("#pathwayProgressState");
+    const progressPill = root.querySelector("#pathwayProgressPill");
+    const nextTaskText = root.querySelector("#pathwayNextTaskText");
+    const resultBadge = root.querySelector("#pathwayResultBadge");
+    const resultText = root.querySelector("#pathwayResultText");
+    const resultNote = root.querySelector("#pathwayResultNote");
+    const flashNote = root.querySelector("#pathwayFlashNote");
+
+    if (!state.done || typeof state.done !== "object") {
+      state.done = {};
+    }
+
+    state.reflection = String(state.reflection || "");
+
+    function persist() {
+      writeStorage(storageKey, state);
+    }
+
+    function completedCount() {
+      return tasks.reduce(function (count, task, index) {
+        return count + (state.done[task.id || String(index)] ? 1 : 0);
+      }, 0);
+    }
+
+    function firstPendingTask() {
+      return tasks.find(function (task, index) {
+        return !state.done[task.id || String(index)];
+      }) || null;
+    }
+
+    function renderTasks() {
+      const nextTask = firstPendingTask();
+
+      root.querySelectorAll("[data-pathway-task]").forEach(function (card, index) {
+        const task = tasks[index] || {};
+        const taskId = card.dataset.pathwayTask;
+        const isDone = Boolean(state.done[taskId]);
+        const isNext = !isDone && nextTask && (nextTask.id || String(index)) === taskId;
+        const statusNode = card.querySelector(".rewrite-status");
+        const toggleNode = card.querySelector("[data-pathway-toggle]");
+
+        card.classList.toggle("is-done", isDone);
+        card.classList.toggle("is-next", Boolean(isNext));
+
+        if (statusNode) {
+          statusNode.className = "rewrite-status";
+          statusNode.textContent = isDone
+            ? "Validée"
+            : (isNext ? "À faire" : (task.level || ("Niveau " + (index + 1))));
+          if (isDone) {
+            statusNode.classList.add("is-success");
+          } else if (isNext) {
+            statusNode.classList.add("is-progress");
+          }
+        }
+
+        if (toggleNode) {
+          toggleNode.textContent = isDone ? "Marquer à reprendre" : "Marquer comme fait";
+        }
+      });
+    }
+
+    function renderProgress() {
+      const completed = completedCount();
+      const total = tasks.length;
+      const percent = total ? Math.round((completed / total) * 100) : 0;
+      const nextTask = firstPendingTask();
+
+      if (reflectionField) {
+        reflectionField.value = state.reflection;
+      }
+
+      if (progressRing) {
+        progressRing.style.setProperty("--pathway-angle", (percent / 100) * 360 + "deg");
+      }
+
+      if (progressCount) {
+        progressCount.textContent = percent + "%";
+      }
+
+      if (progressState) {
+        progressState.textContent = completed === total ? "Prêt" : (completed ? "En progression" : "Démarrage");
+      }
+
+      if (progressPill) {
+        progressPill.textContent = completed + " / " + total + " tâches";
+      }
+
+      if (nextTaskText) {
+        nextTaskText.textContent = nextTask
+          ? "Prochaine tâche : " + (nextTask.title || "Suite du parcours")
+          : "Toutes les tâches sont complétées. Vous pouvez consolider votre trace finale.";
+      }
+
+      if (resultBadge) {
+        if (!completed) {
+          resultBadge.textContent = "En attente";
+          resultBadge.className = "module-status-badge";
+        } else if (completed < total || !state.reflection.trim()) {
+          resultBadge.textContent = "En cours";
+          resultBadge.className = "module-status-badge is-warning";
+        } else {
+          resultBadge.textContent = "Prêt";
+          resultBadge.className = "module-status-badge is-success";
+        }
+      }
+
+      if (resultText) {
+        if (!completed) {
+          resultText.textContent = "Commencez par la première tâche du parcours pour construire une progression stable.";
+        } else if (completed < total) {
+          resultText.textContent = completed + " tâches sur " + total + " sont déjà bouclées. Continuez dans l'ordre pour aller jusqu'au niveau final.";
+        } else if (!state.reflection.trim()) {
+          resultText.textContent = "Le parcours est complété. Ajoutez maintenant votre trace finale pour fixer ce que vous retenez.";
+        } else {
+          resultText.textContent = path.completionMessage || "Le parcours est terminé et votre trace finale est en place.";
+        }
+      }
+
+      if (resultNote) {
+        resultNote.textContent = state.reflection.trim()
+          ? "Trace actuelle : " + state.reflection.trim()
+          : "Votre note finale servira de point d'appui pour l'activité suivante.";
+      }
+
+      renderTasks();
+    }
+
+    if (reflectionField) {
+      reflectionField.addEventListener("input", function () {
+        state.reflection = reflectionField.value;
+        persist();
+        renderProgress();
+      });
+    }
+
+    root.querySelectorAll("[data-pathway-toggle]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const taskId = button.dataset.pathwayToggle;
+        state.done[taskId] = !state.done[taskId];
+        persist();
+        renderProgress();
+      });
+    });
+
+    root.querySelector("#pathwayResetBtn").addEventListener("click", function () {
+      if (!window.confirm("Réinitialiser ce parcours ?")) {
+        return;
+      }
+
+      state.done = {};
+      state.reflection = "";
+      persist();
+      renderProgress();
+      setFlashMessage(flashNote, "Parcours réinitialisé.");
+    });
+
+    renderProgress();
+  }
+
   function renderReflectModule(activity) {
     const task = activity.reflectionTask || {};
     const prompts = task.prompts || [];
-    const quickSituationsMarkup = (task.quickSituations || []).map(function (label) {
-      return '<button class="reflect-chip" type="button" data-reflect-chip="' + escapeHtml(label) + '">' + escapeHtml(label) + "</button>";
-    }).join("");
-    const checkpointsMarkup = (task.checkpoints || []).map(function (label, index) {
+    const roadmapItems = (task.roadmap || prompts.map(function (prompt, index) {
+      return prompt.label || ("Tache " + (index + 1));
+    })).map(function (label, index) {
       return (
         '<div class="reflect-checkpoint" data-reflect-checkpoint="' + index + '">' +
           '<span class="reflect-checkpoint-dot" aria-hidden="true"></span>' +
@@ -1187,22 +1462,26 @@
         "</div>"
       );
     }).join("");
-
-    function renderPromptField(prompt, index) {
+    const quickSituationsMarkup = (task.quickSituations || []).map(function (label) {
+      return '<button class="reflect-chip" type="button" data-reflect-chip="' + escapeHtml(label) + '">' + escapeHtml(label) + "</button>";
+    }).join("");
+    const promptCards = prompts.map(function (prompt, index) {
       return (
-        '<div class="module-field">' +
-          '<label for="reflectAnswer-' + index + '">' + escapeHtml(prompt.label || ("Question " + (index + 1))) + "</label>" +
-          '<textarea id="reflectAnswer-' + index + '" data-reflect-answer="' + escapeHtml(prompt.id || String(index)) + '" placeholder="' + escapeHtml(prompt.placeholder || "") + '"></textarea>' +
-        "</div>"
+        '<article class="rewrite-card reflect-card">' +
+          '<div class="module-field">' +
+            '<label for="reflectAnswer-' + index + '">' + escapeHtml(prompt.label || ("Question " + (index + 1))) + "</label>" +
+            '<textarea id="reflectAnswer-' + index + '" data-reflect-answer="' + escapeHtml(prompt.id || String(index)) + '" placeholder="' + escapeHtml(prompt.placeholder || "") + '"></textarea>' +
+          "</div>" +
+        "</article>"
       );
-    }
+    }).join("");
 
     return (
       '<div class="activity-module">' +
         '<section class="reflect-stage-board">' +
           '<article class="module-note reflect-hero-card">' +
-            "<h2>Session de recul guidee</h2>" +
-            '<p class="rewrite-meta">Temps de reflexion avant la tache finale</p>' +
+            "<h2>Session de recul guidée</h2>" +
+            '<p class="rewrite-meta">Temps de réflexion avant la tâche finale</p>' +
             '<p><strong>Objectif :</strong> ' + escapeHtml(task.objective || activity.instruction || "") + "</p>" +
             '<div class="activity-copy-box reflect-hero-copy">' + escapeHtml(activity.instruction || "") + "</div>" +
             '<ul class="module-note-list">' +
@@ -1214,27 +1493,27 @@
           '<article class="module-panel activity-timer-card">' +
             '<div class="module-panel-head">' +
               "<div>" +
-                "<h2>Timer de reflexion</h2>" +
-                "<p>Un tempo de 10 minutes pour faire emerger vos habitudes sans vous presser.</p>" +
+                "<h2>" + escapeHtml(task.timerLabel || "Timer de réflexion") + "</h2>" +
+                "<p>" + escapeHtml(task.timerDescription || "Un temps de recul pour faire émerger vos habitudes sans vous presser.") + "</p>" +
               "</div>" +
-              '<span class="rewrite-chip" id="reflectCompletionPill">0 / 4 reperes</span>' +
+              '<span class="rewrite-chip" id="reflectCompletionPill">0 / ' + prompts.length + ' tâches</span>' +
             "</div>" +
             '<div class="activity-timer-shell">' +
               '<div class="activity-timer-ring" id="reflectTimerRing">' +
                 '<div class="activity-timer-inner">' +
                   '<strong id="reflectTimerClock">' + formatClock((task.timerMinutes || 10) * 60) + "</strong>" +
-                  '<span id="reflectTimerState">Pret</span>' +
+                  '<span id="reflectTimerState">Prêt</span>' +
                 "</div>" +
               "</div>" +
               '<div class="activity-timer-meta">' +
-                '<span class="activity-timer-tag">Session de ' + escapeHtml(String(task.timerMinutes || 10)) + ' min</span>' +
-                '<div class="reflect-checkpoint-list">' + checkpointsMarkup + "</div>" +
+                '<span class="activity-timer-tag">' + escapeHtml(String(task.timerMinutes || 10)) + ' min</span>' +
+                '<div class="reflect-checkpoint-list">' + roadmapItems + "</div>" +
               "</div>" +
             "</div>" +
             '<div class="activity-timer-actions">' +
               '<button class="btn btn-primary" type="button" id="reflectTimerStartBtn">Demarrer</button>' +
               '<button class="btn btn-secondary" type="button" id="reflectTimerPauseBtn">Pause</button>' +
-              '<button class="btn btn-ghost" type="button" id="reflectTimerResetBtn">Relancer 10 min</button>' +
+              '<button class="btn btn-ghost" type="button" id="reflectTimerResetBtn">Relancer ' + escapeHtml(String(task.timerMinutes || 10)) + ' min</button>' +
             "</div>" +
           "</article>" +
         "</section>" +
@@ -1242,39 +1521,31 @@
           '<div class="module-panel-head">' +
             "<div>" +
               "<h2>Carnet de recul</h2>" +
-              "<p>Nommez vos automatismes, puis reformulez votre intention pedagogique de facon plus soutenante.</p>" +
+              "<p>Nommez vos automatismes et gardez une ligne directrice claire avant la reformulation finale.</p>" +
             "</div>" +
-            '<span class="module-kpi">2 questions de bilan + prolongements</span>' +
+            '<span class="module-kpi">' + prompts.length + ' tâches guidées</span>' +
           "</div>" +
-          '<div class="reflect-grid">' +
-            '<article class="rewrite-card reflect-card">' +
-              renderPromptField(prompts[0] || {}, 0) +
-              renderPromptField(prompts[1] || {}, 1) +
-            "</article>" +
-            '<article class="rewrite-card reflect-card">' +
-              '<div class="reflect-chip-group">' +
-                '<span class="rewrite-card-label">Situations frequentes</span>' +
+          (quickSituationsMarkup
+            ? '<div class="reflect-chip-group">' +
+                '<span class="rewrite-card-label">Situations fréquentes</span>' +
                 '<div class="reflect-chip-row">' + quickSituationsMarkup + "</div>" +
-              "</div>" +
-              renderPromptField(prompts[2] || {}, 2) +
-              renderPromptField(prompts[3] || {}, 3) +
-              renderPromptField(prompts[4] || {}, 4) +
-            "</article>" +
-          "</div>" +
+              "</div>"
+            : "") +
+          '<div class="reflect-grid">' + promptCards + "</div>" +
         "</section>" +
         '<section class="module-panel module-result-panel">' +
           '<div class="module-panel-head">' +
             "<div>" +
-              "<h2>Synthese personnelle</h2>" +
-              "<p>Transformez votre recul en ligne directrice pour l'activite 4.</p>" +
+              "<h2>Synthèse personnelle</h2>" +
+              "<p>Transformez votre recul en ligne directrice pour l'activité finale.</p>" +
             "</div>" +
             '<span class="module-status-badge" id="reflectResultBadge">En attente</span>' +
           "</div>" +
-          '<p class="module-result-text" id="reflectResultText">Renseignez vos reperes, puis generez votre synthese de passage.</p>' +
-          '<div class="reflect-summary-box" id="reflectSummaryBox">Votre synthese apparaitra ici pour preparer la tache de performance.</div>' +
+          '<p class="module-result-text" id="reflectResultText">Renseignez vos repères, puis générez votre synthèse de passage.</p>' +
+          '<div class="reflect-summary-box" id="reflectSummaryBox">Votre synthèse apparaîtra ici pour préparer la tâche de performance.</div>' +
           '<div class="module-actions">' +
-            '<button class="btn btn-primary" type="button" id="reflectGenerateBtn">Generer ma synthese</button>' +
-            '<button class="btn btn-ghost" type="button" id="reflectResetBtn">Reinitialiser</button>' +
+            '<button class="btn btn-primary" type="button" id="reflectGenerateBtn">Générer ma synthèse</button>' +
+            '<button class="btn btn-ghost" type="button" id="reflectResetBtn">Réinitialiser</button>' +
             '<span class="module-inline-note" id="reflectFlashNote"></span>' +
           "</div>" +
         "</section>" +
@@ -1285,6 +1556,16 @@
   function initReflectModule(root, context) {
     const activity = context.activity || {};
     const task = activity.reflectionTask || {};
+    const prompts = task.prompts || [];
+    const summaryFields = task.summaryFields && task.summaryFields.length
+      ? task.summaryFields
+      : prompts.map(function (prompt, index) {
+          return {
+            id: prompt.id || String(index),
+            label: prompt.label || ("Question " + (index + 1))
+          };
+        });
+    const chipPromptId = task.chipPromptId || "realSituations";
     const storageKey = makeKey(context);
     const defaultDuration = Math.max(60, Number(task.timerMinutes || 10) * 60);
     const defaultState = {
@@ -1320,6 +1601,14 @@
       return String(state.answers[id] || "").trim();
     }
 
+    function promptCompleted(prompt, index) {
+      const promptId = prompt.id || String(index);
+      if (promptId === chipPromptId) {
+        return Boolean(getAnswer(promptId) || state.situations.length);
+      }
+      return Boolean(getAnswer(promptId));
+    }
+
     function syncInputs() {
       textareas.forEach(function (field) {
         field.value = state.answers[field.dataset.reflectAnswer] || "";
@@ -1332,42 +1621,30 @@
       });
     }
 
-    function checkpointState() {
-      return [
-        Boolean(getAnswer("hardestInstruction")),
-        Boolean(getAnswer("hardestReason")),
-        Boolean(getAnswer("realSituations") || state.situations.length),
-        Boolean(getAnswer("keepIntent") && getAnswer("changeLanguage"))
-      ];
-    }
-
     function buildSummaryMarkup() {
-      const situations = state.situations.slice();
-      const extraSituations = getAnswer("realSituations");
-      const situationsText = situations.length ? situations.join(", ") : "--";
-      const mergedSituations = extraSituations ? (situationsText === "--" ? extraSituations : situationsText + " ; " + extraSituations) : situationsText;
+      const rows = summaryFields.map(function (field) {
+        return (
+          '<p><strong>' + escapeHtml(field.label || "Repère") + ' :</strong> ' + escapeHtml(getAnswer(field.id) || "--") + "</p>"
+        );
+      }).join("");
+      const selectedSituations = state.situations.length
+        ? '<p><strong>Moments cochés :</strong> ' + escapeHtml(state.situations.join(", ")) + "</p>"
+        : "";
 
-      return (
-        '<div class="reflect-summary-stack">' +
-          '<p><strong>Consigne la plus sensible :</strong> ' + escapeHtml(getAnswer("hardestInstruction") || "--") + "</p>" +
-          '<p><strong>Pourquoi :</strong> ' + escapeHtml(getAnswer("hardestReason") || "--") + "</p>" +
-          '<p><strong>Situations ou cela apparait :</strong> ' + escapeHtml(mergedSituations || "--") + "</p>" +
-          '<p><strong>Intention pedagogique a conserver :</strong> ' + escapeHtml(getAnswer("keepIntent") || "--") + "</p>" +
-          '<p><strong>Langage a faire evoluer :</strong> ' + escapeHtml(getAnswer("changeLanguage") || "--") + "</p>" +
-        "</div>"
-      );
+      return '<div class="reflect-summary-stack">' + rows + selectedSituations + "</div>";
     }
 
     function renderResult() {
-      const checkpoints = checkpointState();
-      const completed = checkpoints.filter(Boolean).length;
+      const completed = prompts.reduce(function (count, prompt, index) {
+        return count + (promptCompleted(prompt, index) ? 1 : 0);
+      }, 0);
 
       if (completionPill) {
-        completionPill.textContent = completed + " / 4 reperes";
+        completionPill.textContent = completed + " / " + prompts.length + " tâches";
       }
 
       root.querySelectorAll("[data-reflect-checkpoint]").forEach(function (node, index) {
-        node.classList.toggle("is-done", Boolean(checkpoints[index]));
+        node.classList.toggle("is-done", completed > index);
       });
 
       if (!resultBadge || !resultText || !summaryBox) {
@@ -1377,20 +1654,20 @@
       if (!completed) {
         resultBadge.textContent = "En attente";
         resultBadge.className = "module-status-badge";
-        resultText.textContent = "Commencez a renseigner votre carnet pour faire apparaitre vos reperes de langage.";
-      } else if (completed < 4) {
+        resultText.textContent = "Commencez à renseigner votre carnet pour faire apparaître vos repères de langage.";
+      } else if (completed < prompts.length) {
         resultBadge.textContent = "En cours";
         resultBadge.className = "module-status-badge is-warning";
-        resultText.textContent = completed + " reperes sur 4 sont deja explicites. Poursuivez pour construire une synthese complete.";
+        resultText.textContent = completed + " tâches sur " + prompts.length + " sont déjà explicites. Poursuivez jusqu'à une synthèse complète.";
       } else {
-        resultBadge.textContent = "Pret";
+        resultBadge.textContent = "Prêt";
         resultBadge.className = "module-status-badge is-success";
-        resultText.textContent = "Vos 4 reperes sont nommes. Vous pouvez passer a la tache de performance avec une ligne directrice claire.";
+        resultText.textContent = "Vos repères sont posés. Vous pouvez passer à la tâche de performance avec une ligne directrice claire.";
       }
 
       summaryBox.innerHTML = state.generated
         ? buildSummaryMarkup()
-        : "Votre synthese apparaitra ici pour preparer la tache de performance.";
+        : "Votre synthèse apparaîtra ici pour préparer la tâche de performance.";
     }
 
     const timerController = bindCountdownTimer({
@@ -1402,7 +1679,7 @@
       onComplete: function () {
         persist();
         renderResult();
-        setFlashMessage(flashNote, "Temps ecoule. Generez votre synthese quand vous etes pret.");
+        setFlashMessage(flashNote, "Temps écoulé. Générez votre synthèse quand vous êtes prêt.");
       }
     });
 
@@ -1444,7 +1721,7 @@
     });
     root.querySelector("#reflectTimerResetBtn").addEventListener("click", function () {
       timerController.reset(defaultDuration);
-      setFlashMessage(flashNote, "Timer relance pour 10 minutes.");
+      setFlashMessage(flashNote, "Timer relancé pour " + (task.timerMinutes || 10) + " minutes.");
     });
 
     root.querySelector("#reflectGenerateBtn").addEventListener("click", function () {
@@ -1454,7 +1731,7 @@
     });
 
     root.querySelector("#reflectResetBtn").addEventListener("click", function () {
-      if (!window.confirm("Reinitialiser cette fiche ?")) {
+      if (!window.confirm("Réinitialiser cette fiche ?")) {
         return;
       }
 
@@ -1467,7 +1744,7 @@
       timerController.reset(defaultDuration);
       persist();
       renderAll();
-      setFlashMessage(flashNote, "Carnet reinitialise.");
+      setFlashMessage(flashNote, "Carnet réinitialisé.");
     });
 
     syncInputs();
@@ -1483,10 +1760,11 @@
     }, 0);
     const stageOptions = [{
       id: "full-session",
-      label: "Session complete",
+      label: "Session complète",
       minutes: fullMinutes || 20,
-      description: "Cycle complet de la tache de performance, du cadrage initial a la relecture finale."
+      description: "Cycle complet de la tâche de performance, du cadrage initial à la relecture finale."
     }].concat(activity.sessionFlow || []);
+    const passThreshold = Math.min(prompts.length || 1, Math.max(1, Number(task.passThreshold || 3)));
     const successCriteria = (task.successCriteria || []).map(function (item) {
       return "<li>" + escapeHtml(item) + "</li>";
     }).join("");
@@ -1502,6 +1780,14 @@
           '<span>' + escapeHtml(stage.label) + "</span>" +
           '<small>' + escapeHtml(String(stage.minutes)) + " min</small>" +
         "</button>"
+      );
+    }).join("");
+    const roadmapMarkup = (task.roadmap || []).map(function (item, index) {
+      return (
+        '<article class="rewrite-roadmap-step">' +
+          '<span class="pathway-task-order">' + String(index + 1).padStart(2, "0") + "</span>" +
+          '<p>' + escapeHtml(item) + "</p>" +
+        "</article>"
       );
     }).join("");
     const learningActivities = (activity.learningActivities || []).map(function (item) {
@@ -1586,9 +1872,9 @@
             '<p><strong>Objectif de performance :</strong> ' + escapeHtml(task.objective || activity.instruction || "") + "</p>" +
             '<p><strong>Objectif pedagogique de reference :</strong> ' + escapeHtml(task.pedagogicalReference || "") + "</p>" +
             '<div class="rewrite-signal-row">' + stressSignals + "</div>" +
-            "<h3>Criteres de reussite</h3>" +
+            "<h3>Critères de réussite</h3>" +
             '<ul class="module-note-list">' + successCriteria + "</ul>" +
-            "<h3>Ancrage theorique</h3>" +
+            "<h3>Ancrage théorique</h3>" +
             '<ul class="module-note-list">' + theoryList + "</ul>" +
           "</article>" +
           '<article class="module-panel activity-timer-card">' +
@@ -1619,44 +1905,64 @@
           "</article>" +
         "</section>" +
         '<section class="rewrite-metrics-grid">' +
-          '<article class="rewrite-metric-card"><span>Consignes redigees</span><strong id="rewriteAnsweredCount">0 / ' + prompts.length + '</strong></article>' +
-          '<article class="rewrite-metric-card"><span>Reformulations validees</span><strong id="rewriteValidatedCount">0 / ' + prompts.length + '</strong></article>' +
-          '<article class="rewrite-metric-card"><span>Seuil de reussite</span><strong>3 / ' + prompts.length + '</strong></article>' +
+          '<article class="rewrite-metric-card"><span>Consignes rédigées</span><strong id="rewriteAnsweredCount">0 / ' + prompts.length + '</strong></article>' +
+          '<article class="rewrite-metric-card"><span>Reformulations validées</span><strong id="rewriteValidatedCount">0 / ' + prompts.length + '</strong></article>' +
+          '<article class="rewrite-metric-card"><span>Seuil de réussite</span><strong>' + passThreshold + ' / ' + prompts.length + '</strong></article>' +
+        "</section>" +
+        '<section class="module-panel module-panel-soft rewrite-bridge-panel" id="rewriteBridgePanel" hidden>' +
+          '<div class="module-panel-head">' +
+            "<div>" +
+              "<h2>Mémo issu de l'activité 3</h2>" +
+              "<p>Gardez sous les yeux votre ligne directrice avant de reformuler les consignes finales.</p>" +
+            "</div>" +
+            '<span class="module-kpi">Pont réflexif</span>' +
+          "</div>" +
+          '<div class="rewrite-bridge-content" id="rewriteBridgeContent"></div>' +
         "</section>" +
         '<section class="module-panel">' +
           '<div class="module-panel-head">' +
             "<div>" +
-              "<h2>Activites d'apprentissage</h2>" +
-              "<p>Sequence preparatoire avant la validation finale.</p>" +
+              "<h2>Feuille de route</h2>" +
+              "<p>Suivez les étapes du studio dans l'ordre : du diagnostic de pression jusqu'à la relecture finale.</p>" +
             "</div>" +
-            '<span class="module-kpi">3 etapes</span>' +
+            '<span class="module-kpi">' + ((task.roadmap || []).length || prompts.length) + ' étapes</span>' +
+          "</div>" +
+          '<div class="rewrite-roadmap">' + roadmapMarkup + "</div>" +
+        "</section>" +
+        '<section class="module-panel">' +
+          '<div class="module-panel-head">' +
+            "<div>" +
+              "<h2>Activités d'apprentissage</h2>" +
+              "<p>Séquence préparatoire avant la validation finale.</p>" +
+            "</div>" +
+            '<span class="module-kpi">3 étapes</span>' +
           "</div>" +
           '<div class="rewrite-sequence-grid">' + learningActivities + "</div>" +
         "</section>" +
         '<section class="module-panel">' +
           '<div class="module-panel-head">' +
             "<div>" +
-              "<h2>Fiche d'activite - reecriture</h2>" +
-              "<p>Reformulez chaque consigne sans generer de stress, en gardant l'information pedagogique utile.</p>" +
+              "<h2>Fiche d'activité - réécriture</h2>" +
+              "<p>Reformulez chaque consigne sans générer de stress, en gardant l'information pédagogique utile.</p>" +
             "</div>" +
-            '<strong class="module-kpi" id="rewriteScorePill">0 / ' + prompts.length + ' validees</strong>' +
+            '<strong class="module-kpi" id="rewriteScorePill">0 / ' + prompts.length + ' validées</strong>' +
           "</div>" +
           '<div class="rewrite-grid">' + promptCards + "</div>" +
         "</section>" +
         '<section class="module-panel module-result-panel">' +
           '<div class="module-panel-head">' +
             "<div>" +
-              "<h2>Resultat</h2>" +
-              "<p>Validation minimale : 3 reformulations sur 4.</p>" +
+              "<h2>Résultat</h2>" +
+              "<p>Validation minimale : " + passThreshold + " reformulations sur " + prompts.length + ".</p>" +
             "</div>" +
             '<span class="module-status-badge" id="rewriteResultBadge">En attente</span>' +
           "</div>" +
-          '<p class="module-result-text" id="rewriteResultText">Reformulez les 4 consignes, puis validez votre production.</p>' +
+          '<p class="module-result-text" id="rewriteResultText">Reformulez les ' + prompts.length + ' consignes, puis validez votre production.</p>' +
           '<p class="module-result-note" id="rewriteResultNote"></p>' +
           '<div class="module-actions">' +
             '<button class="btn btn-primary" type="button" id="rewriteValidateBtn">Valider mes reformulations</button>' +
             '<button class="btn btn-secondary" type="button" id="rewriteCorrectionBtn">Afficher des reformulations possibles</button>' +
-            '<button class="btn btn-ghost" type="button" id="rewriteResetBtn">Reinitialiser</button>' +
+            '<button class="btn btn-ghost" type="button" id="rewriteResetBtn">Réinitialiser</button>' +
             '<span class="module-inline-note" id="rewriteFlashNote"></span>' +
           "</div>" +
         "</section>" +
@@ -1667,8 +1973,8 @@
               renderGuideBlock("Lancement", guide.launch) +
               renderGuideBlock("Points de vigilance", guide.vigilance) +
               renderGuideBlock("Aides", guide.helps) +
-              renderGuideBlock("Regulation", guide.regulation) +
-              renderGuideBlock("Cloture", guide.closureSignals) +
+              renderGuideBlock("Régulation", guide.regulation) +
+              renderGuideBlock("Clôture", guide.closureSignals) +
             "</div>" +
           "</article>" +
           '<article class="module-note">' +
@@ -1679,9 +1985,9 @@
                 '<tbody>' + resourcesRows + "</tbody>" +
               "</table>" +
             "</div>" +
-            "<h2>Questions de reflexion</h2>" +
+            "<h2>Questions de réflexion</h2>" +
             '<ul class="rewrite-list">' + reflectionQuestions + "</ul>" +
-            "<h2>Reference</h2>" +
+            "<h2>Référence</h2>" +
             '<div class="rewrite-reference">' + referenceMarkup + "</div>" +
           "</article>" +
         "</section>" +
@@ -1691,16 +1997,18 @@
 
   function initRephraseModule(root, context) {
     const activity = context.activity || {};
+    const task = activity.performanceTask || {};
     const prompts = activity.prompts || [];
     const fullMinutes = (activity.sessionFlow || []).reduce(function (sum, stage) {
       return sum + Number(stage.minutes || 0);
     }, 0);
-    const stageOptions = [{
+      const stageOptions = [{
       id: "full-session",
-      label: "Session complete",
+      label: "Session complète",
       minutes: fullMinutes || 20,
-      description: "Cycle complet de la tache de performance, du cadrage initial a la relecture finale."
+      description: "Cycle complet de la tâche de performance, du cadrage initial à la relecture finale."
     }].concat(activity.sessionFlow || []);
+    const passThreshold = Math.min(prompts.length || 1, Math.max(1, Number(task.passThreshold || 3)));
     const storageKey = makeKey(context);
     const defaultDuration = (stageOptions[0].minutes || 20) * 60;
     const defaultState = {
@@ -1722,6 +2030,8 @@
     const flashNote = root.querySelector("#rewriteFlashNote");
     const activeStageLabel = root.querySelector("#rewriteActiveStageLabel");
     const stageDescription = root.querySelector("#rewriteStageDescription");
+    const bridgePanel = root.querySelector("#rewriteBridgePanel");
+    const bridgeContent = root.querySelector("#rewriteBridgeContent");
 
     if (!state.answers || typeof state.answers !== "object") {
       state.answers = {};
@@ -1756,6 +2066,7 @@
 
     function evaluatePrompt(prompt, answer) {
       const normalized = normalizeText(answer);
+      const minLength = Math.max(12, Number(prompt.minLength || task.minLength || 16));
       const missingGroups = (prompt.requiredGroups || []).filter(function (group) {
         return !textContainsAny(normalized, group);
       });
@@ -1768,24 +2079,24 @@
         issues.push("Ajoutez une reformulation avant de valider.");
       }
 
-      if (normalized && normalized.length < 16) {
+      if (normalized && normalized.length < minLength) {
         issues.push("La reformulation reste trop courte pour conserver clairement l'information utile.");
       }
 
       if (missingGroups.length) {
-        issues.push("Certaines informations pedagogiques de depart ne sont plus explicites.");
+          issues.push("Certaines informations pédagogiques de départ ne sont plus explicites.");
       }
 
       if (blockedPhrases.length) {
-        issues.push("Une ou plusieurs tournures restent trop stressantes.");
+          issues.push("Une ou plusieurs tournures restent trop stressantes.");
       }
 
       if (!issues.length) {
-        issues.push("La reformulation conserve l'information utile avec un ton plus neutre.");
+          issues.push("La reformulation conserve l'information utile avec un ton plus neutre.");
       }
 
       return {
-        valid: Boolean(normalized) && normalized.length >= 16 && !missingGroups.length && !blockedPhrases.length,
+        valid: Boolean(normalized) && normalized.length >= minLength && !missingGroups.length && !blockedPhrases.length,
         issues: issues
       };
     }
@@ -1829,20 +2140,50 @@
       }
     }
 
+    function renderBridgePanel() {
+      if (!bridgePanel || !bridgeContent || !context.axis || !context.objective) {
+        return;
+      }
+
+      const reflectStorageKey = "adid-activity-module::" + context.axis.id + "::" + context.objective.id + "::3";
+      const reflectState = readStorage(reflectStorageKey, { answers: {}, situations: [] });
+      const answers = reflectState.answers && typeof reflectState.answers === "object" ? reflectState.answers : {};
+      const selectedSituations = Array.isArray(reflectState.situations) ? reflectState.situations : [];
+      const memoRows = [
+        { label: "Intention à conserver", value: answers.keepIntent },
+        { label: "Langage à faire évoluer", value: answers.changeLanguage },
+        { label: "Phrase d'appui", value: answers.supportivePhrase },
+        { label: "Situations cochées", value: selectedSituations.join(", ") }
+      ].filter(function (item) {
+        return String(item.value || "").trim();
+      });
+
+      if (!memoRows.length) {
+        bridgePanel.hidden = true;
+        bridgeContent.innerHTML = "";
+        return;
+      }
+
+      bridgePanel.hidden = false;
+      bridgeContent.innerHTML = memoRows.map(function (item) {
+        return '<p><strong>' + escapeHtml(item.label) + ' :</strong> ' + escapeHtml(item.value) + "</p>";
+      }).join("");
+    }
+
     function renderMetrics() {
       const answered = answeredTotal();
       const valid = validTotal();
 
       if (answeredCount) {
-        answeredCount.textContent = answered + " / " + prompts.length;
+          answeredCount.textContent = answered + " / " + prompts.length;
       }
 
       if (validatedCount) {
-        validatedCount.textContent = valid + " / " + prompts.length;
+          validatedCount.textContent = valid + " / " + prompts.length;
       }
 
       if (scorePill) {
-        scorePill.textContent = valid + " / " + prompts.length + " validees";
+          scorePill.textContent = valid + " / " + prompts.length + " validées";
       }
     }
 
@@ -1863,19 +2204,19 @@
       feedbackNode.className = "rewrite-feedback";
 
       if (!state.validated) {
-        statusNode.textContent = answer ? "En cours" : "A traiter";
+          statusNode.textContent = answer ? "En cours" : "À traiter";
         if (answer) {
           statusNode.classList.add("is-progress");
         }
-        feedbackNode.textContent = prompt.hint || "Completez la reformulation avant validation.";
+        feedbackNode.textContent = prompt.hint || "Complétez la reformulation avant validation.";
       } else if (result && result.valid) {
-        statusNode.textContent = "Validee";
+        statusNode.textContent = "Validée";
         statusNode.classList.add("is-success");
         feedbackNode.classList.add("is-success");
         feedbackNode.textContent = result.issues.join(" ");
         cardNode.classList.add("is-success");
       } else {
-        statusNode.textContent = "A retravailler";
+        statusNode.textContent = "À retravailler";
         statusNode.classList.add("is-warning");
         feedbackNode.classList.add("is-warning");
         feedbackNode.textContent = result ? result.issues.join(" ") : (prompt.hint || "");
@@ -1896,25 +2237,25 @@
       if (!state.validated) {
         resultBadge.textContent = "En attente";
         resultBadge.className = "module-status-badge";
-        resultText.textContent = "Reformulez les 4 consignes, puis validez votre production.";
+        resultText.textContent = "Reformulez les " + prompts.length + " consignes, puis validez votre production.";
         resultNote.textContent = state.correctionShown
           ? "Les reformulations possibles sont visibles pour guider votre reprise."
           : "";
         return;
       }
 
-      if (score >= 3) {
-        resultBadge.textContent = "Reussi";
+      if (score >= passThreshold) {
+        resultBadge.textContent = "Réussi";
         resultBadge.className = "module-status-badge is-success";
-        resultText.textContent = score + " reformulations sur " + prompts.length + " repondent aux criteres de base.";
-        resultNote.textContent = "La tache de performance est atteinte. Comparez si besoin vos formulations aux propositions affichees.";
+        resultText.textContent = score + " reformulations sur " + prompts.length + " répondent aux critères de base.";
+        resultNote.textContent = "La tâche de performance est atteinte. Comparez si besoin vos formulations aux propositions affichées.";
         return;
       }
 
-      resultBadge.textContent = "A retravailler";
+      resultBadge.textContent = "À retravailler";
       resultBadge.className = "module-status-badge is-warning";
-      resultText.textContent = score + " reformulations sur " + prompts.length + " repondent aux criteres de base.";
-      resultNote.textContent = "Visez au moins 3 reformulations valides sur 4, en conservant l'information pedagogique sans pression implicite.";
+      resultText.textContent = score + " reformulations sur " + prompts.length + " répondent aux critères de base.";
+      resultNote.textContent = "Visez au moins " + passThreshold + " reformulations valides sur " + prompts.length + ", en conservant l'information pédagogique sans pression implicite.";
     }
 
     const timerController = bindCountdownTimer({
@@ -1926,11 +2267,12 @@
       onComplete: function () {
         persist();
         renderResult();
-        setFlashMessage(flashNote, "Temps ecoule. Passez en relecture ou validez vos reformulations.");
+        setFlashMessage(flashNote, "Temps écoulé. Passez en relecture ou validez vos reformulations.");
       }
     });
 
     function renderAll() {
+      renderBridgePanel();
       renderStagePanel();
       renderMetrics();
       prompts.forEach(function (prompt, index) {
@@ -1978,7 +2320,7 @@
     root.querySelector("#rewriteTimerResetBtn").addEventListener("click", function () {
       const stage = currentStage();
       timerController.reset((stage.minutes || 20) * 60);
-      setFlashMessage(flashNote, "Timer reinitialise pour cette phase.");
+      setFlashMessage(flashNote, "Timer réinitialisé pour cette phase.");
     });
 
     root.querySelector("#rewriteValidateBtn").addEventListener("click", function () {
@@ -1997,7 +2339,7 @@
     });
 
     root.querySelector("#rewriteResetBtn").addEventListener("click", function () {
-      if (!window.confirm("Reinitialiser cette fiche ?")) {
+      if (!window.confirm("Réinitialiser cette fiche ?")) {
         return;
       }
 
@@ -2011,7 +2353,7 @@
       timerController.reset((currentStage().minutes || 20) * 60);
       persist();
       renderAll();
-      setFlashMessage(flashNote, "Fiche reinitialisee.");
+      setFlashMessage(flashNote, "Fiche réinitialisée.");
     });
 
     syncInputs();
@@ -2193,6 +2535,10 @@
     prep: {
       render: renderPrepModule,
       init: initPrepModule
+    },
+    pathway: {
+      render: renderPathwayModule,
+      init: initPathwayModule
     },
     reflect: {
       render: renderReflectModule,

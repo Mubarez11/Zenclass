@@ -580,12 +580,46 @@ h3 {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  align-items: center;
+  align-items: flex-start;
   padding: 13px 14px;
   border: 1px solid var(--line);
   border-radius: 0;
   background: rgba(255, 255, 255, 0.92);
   transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.activity-link-copy {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.activity-link-subtitle {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.activity-link-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+
+.activity-link-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 4px 10px;
+  border: 1px solid rgba(102, 126, 234, 0.16);
+  border-radius: 999px;
+  background: rgba(102, 126, 234, 0.08);
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .activity-link:hover,
@@ -703,13 +737,13 @@ body[data-page="objective"] .objective-activity-list .activity-link-saved {
 .objective-activity-list .activity-link strong {
   flex: 1 1 auto;
   min-width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
 }
 
-.objective-activity-list .activity-link span {
-  flex: 0 0 auto;
+.objective-activity-list .activity-link .activity-link-meta {
+  align-self: center;
 }
 
 body[data-page="objective"] .activity-main {
@@ -1162,6 +1196,20 @@ body[data-page="activity"] .activity-hero .progress-track {
   gap: 10px;
 }
 
+.rewrite-bridge-content {
+  display: grid;
+  gap: 12px;
+}
+
+.rewrite-bridge-content p {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px dashed rgba(17, 17, 17, 0.16);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  line-height: 1.6;
+}
+
 .rewrite-reference-link {
   display: inline-flex;
   align-items: center;
@@ -1182,6 +1230,207 @@ body[data-page="activity"] .activity-hero .progress-track {
   box-shadow: var(--shadow-soft);
   background: rgba(102, 126, 234, 0.12);
   outline: none;
+}
+
+.pathway-stage-board,
+.pathway-grid,
+.pathway-support-grid,
+.pathway-progress-shell,
+.pathway-progress-copy,
+.pathway-task-copy,
+.rewrite-roadmap {
+  display: grid;
+  gap: 16px;
+}
+
+.pathway-stage-board {
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+}
+
+.pathway-progress-shell {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+}
+
+.pathway-support-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pathway-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.rewrite-roadmap {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.pathway-hero-card,
+.pathway-progress-card,
+.pathway-task-card,
+.pathway-support-card,
+.rewrite-roadmap-step {
+  border-radius: 20px;
+}
+
+.pathway-hero-card {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 108, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 249, 242, 0.98));
+}
+
+.pathway-progress-card {
+  display: grid;
+  gap: 18px;
+  background:
+    radial-gradient(circle at top left, rgba(255, 184, 108, 0.16), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 247, 236, 0.98));
+  box-shadow: var(--shadow-soft);
+}
+
+.pathway-progress-ring {
+  --pathway-angle: 0deg;
+  width: 170px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  position: relative;
+  border-radius: 50%;
+  background: conic-gradient(#ff9f43 0deg var(--pathway-angle), rgba(255, 159, 67, 0.12) var(--pathway-angle) 360deg);
+  box-shadow: 0 18px 40px rgba(255, 159, 67, 0.18);
+}
+
+.pathway-progress-ring::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.pathway-progress-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 6px;
+  text-align: center;
+}
+
+.pathway-progress-inner strong {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.pathway-progress-inner span,
+.pathway-progress-copy p,
+.pathway-support-card p,
+.pathway-task-copy p,
+.rewrite-roadmap-step p {
+  color: var(--muted);
+}
+
+.pathway-progress-inner span {
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pathway-progress-copy {
+  align-content: start;
+}
+
+.pathway-progress-copy p,
+.pathway-support-card p,
+.pathway-task-copy p,
+.rewrite-roadmap-step p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.pathway-support-card,
+.rewrite-roadmap-step {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow-soft);
+}
+
+.pathway-task-card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.pathway-task-card:hover,
+.pathway-task-card:focus-within {
+  transform: translateY(-2px);
+}
+
+.pathway-task-card.is-next {
+  border-color: rgba(255, 159, 67, 0.28);
+  box-shadow: 0 18px 34px rgba(255, 159, 67, 0.16);
+}
+
+.pathway-task-card.is-done {
+  border-color: rgba(41, 183, 195, 0.28);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(240, 252, 250, 0.98));
+  box-shadow: 0 16px 30px rgba(41, 183, 195, 0.12);
+}
+
+.pathway-task-card.is-done .pathway-task-order {
+  background: rgba(41, 183, 195, 0.12);
+  color: #177d86;
+}
+
+.pathway-task-card.is-next .pathway-task-order {
+  background: rgba(255, 159, 67, 0.14);
+  color: #b96c09;
+}
+
+.pathway-task-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pathway-task-order {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(102, 126, 234, 0.1);
+  color: #4b5fc7;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.pathway-task-copy h3 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.pathway-task-toggle {
+  width: fit-content;
+}
+
+.rewrite-roadmap-step {
+  gap: 12px;
+}
+
+.rewrite-roadmap-step .pathway-task-order {
+  width: 38px;
+  height: 38px;
 }
 
 .reflect-stage-board,
@@ -1453,7 +1702,11 @@ body[data-page="activity"] .activity-hero .progress-track {
 
 .reflect-stage-board > *,
 .rewrite-stage-board > *,
+.pathway-stage-board > *,
 .rewrite-metric-card,
+.pathway-task-card,
+.pathway-support-card,
+.rewrite-roadmap-step,
 .rewrite-card,
 .rewrite-sequence-card,
 .rewrite-guide-block {
@@ -1462,6 +1715,9 @@ body[data-page="activity"] .activity-hero .progress-track {
 
 .reflect-stage-board > *:nth-child(2),
 .rewrite-stage-board > *:nth-child(2),
+.pathway-stage-board > *:nth-child(2),
+.pathway-task-card:nth-child(2),
+.rewrite-roadmap-step:nth-child(2),
 .rewrite-card:nth-child(2),
 .rewrite-sequence-card:nth-child(2),
 .rewrite-guide-block:nth-child(2) {
@@ -1469,12 +1725,16 @@ body[data-page="activity"] .activity-hero .progress-track {
 }
 
 .rewrite-metric-card:nth-child(2),
+.pathway-task-card:nth-child(3),
+.rewrite-roadmap-step:nth-child(3),
 .rewrite-sequence-card:nth-child(3),
 .rewrite-guide-block:nth-child(3) {
   animation-delay: 0.1s;
 }
 
 .rewrite-metric-card:nth-child(3),
+.pathway-task-card:nth-child(4),
+.rewrite-roadmap-step:nth-child(4),
 .rewrite-guide-block:nth-child(4),
 .rewrite-guide-block:nth-child(5) {
   animation-delay: 0.15s;
@@ -1515,6 +1775,10 @@ body[data-page="activity"] .activity-hero .progress-track {
 }
 
 .reflect-summary-box,
+.pathway-task-card,
+.pathway-progress-card,
+.pathway-support-card,
+.rewrite-roadmap-step,
 .rewrite-card,
 .rewrite-metric-card,
 .activity-timer-card {
@@ -1523,6 +1787,10 @@ body[data-page="activity"] .activity-hero .progress-track {
 }
 
 .reflect-summary-box::before,
+.pathway-task-card::before,
+.pathway-progress-card::before,
+.pathway-support-card::before,
+.rewrite-roadmap-step::before,
 .rewrite-card::before,
 .rewrite-metric-card::before,
 .activity-timer-card::before {
@@ -1535,10 +1803,18 @@ body[data-page="activity"] .activity-hero .progress-track {
 }
 
 .activity-timer-card:hover::before,
+.pathway-task-card:hover::before,
+.pathway-progress-card:hover::before,
+.pathway-support-card:hover::before,
+.rewrite-roadmap-step:hover::before,
 .rewrite-card:hover::before,
 .rewrite-metric-card:hover::before,
 .reflect-summary-box:hover::before {
   animation: sheenSweep 1.2s ease;
+}
+
+.pathway-task-card.is-next {
+  animation: moduleRise 0.55s ease both, pathwayPulse 2.8s ease-in-out infinite;
 }
 
 @keyframes moduleRise {
@@ -1570,6 +1846,16 @@ body[data-page="activity"] .activity-hero .progress-track {
   }
   to {
     transform: translateX(140%);
+  }
+}
+
+@keyframes pathwayPulse {
+  0%,
+  100% {
+    box-shadow: 0 18px 34px rgba(255, 159, 67, 0.16);
+  }
+  50% {
+    box-shadow: 0 22px 40px rgba(255, 159, 67, 0.24);
   }
 }
 
@@ -2712,7 +2998,11 @@ body[data-page="team"] .page-shell {
   }
 
   .reflect-stage-board,
+  .pathway-stage-board,
   .rewrite-stage-board,
+  .pathway-support-grid,
+  .pathway-grid,
+  .rewrite-roadmap,
   .rewrite-sequence-grid,
   .rewrite-grid,
   .rewrite-guide-stack,
@@ -2775,6 +3065,7 @@ body[data-page="team"] .page-shell {
   }
 
   .activity-timer-shell,
+  .pathway-progress-shell,
   .activity-stage-list,
   .rewrite-signal-row,
   .reflect-chip-row {
@@ -2786,8 +3077,18 @@ body[data-page="team"] .page-shell {
     text-align: center;
   }
 
+  .pathway-progress-shell {
+    justify-items: center;
+    text-align: center;
+  }
+
   .activity-timer-meta {
     justify-items: center;
+  }
+
+  .pathway-progress-copy,
+  .activity-link-meta {
+    justify-content: flex-start;
   }
 
   .module-inline-actions,

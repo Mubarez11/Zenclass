@@ -84,6 +84,30 @@
     return "activite.html?axe=" + encodeURIComponent(axisId) + "&objectif=" + encodeURIComponent(objectiveId) + "&activite=" + encodeURIComponent(activityNumber);
   }
 
+  function activityTaskCount(activity) {
+    if (Number(activity && activity.taskCount) > 0) {
+      return Number(activity.taskCount);
+    }
+
+    if (activity && activity.learningPath && Array.isArray(activity.learningPath.tasks)) {
+      return activity.learningPath.tasks.length;
+    }
+
+    if (activity && activity.reflectionTask && Array.isArray(activity.reflectionTask.prompts)) {
+      return activity.reflectionTask.prompts.length;
+    }
+
+    if (activity && activity.performanceTask && Array.isArray(activity.performanceTask.roadmap)) {
+      return activity.performanceTask.roadmap.length;
+    }
+
+    return null;
+  }
+
+  function activityDifficulty(activity) {
+    return activity && activity.difficulty ? activity.difficulty : null;
+  }
+
   function updateGlobalProgress(state) {
     const progress = globalProgress(state);
     const label = document.getElementById("globalProgressLabel");
@@ -178,10 +202,28 @@
     return objective.activities.map(function (activity) {
       const saved = isSaved(state, axis.id, objective.id, activity.number);
       const savedClass = saved ? " activity-link-saved" : "";
+      const taskCount = activityTaskCount(activity);
+      const difficulty = activityDifficulty(activity);
+      const subtitleParts = [];
+
+      if (difficulty) {
+        subtitleParts.push(difficulty);
+      }
+
+      if (taskCount) {
+        subtitleParts.push(taskCount + " tâches");
+      }
+
       return (
         '<a class="activity-link' + savedClass + '" href="' + getActivityUrl(axis.id, objective.id, activity.number) + '">' +
-          "<strong>Activité " + activity.number + " : " + activity.title + "</strong>" +
-          "<span>" + activity.duration + "</span>" +
+          '<div class="activity-link-copy">' +
+            "<strong>Activité " + activity.number + " : " + activity.title + "</strong>" +
+            (subtitleParts.length ? '<small class="activity-link-subtitle">' + subtitleParts.join(" · ") + "</small>" : "") +
+          "</div>" +
+          '<div class="activity-link-meta">' +
+            '<span class="activity-link-pill">' + activity.duration + "</span>" +
+            (taskCount ? '<span class="activity-link-pill">' + taskCount + ' tâches</span>' : "") +
+          "</div>" +
         "</a>"
       );
     }).join("");
@@ -340,6 +382,18 @@
     }
 
     if (hero) {
+      const taskCount = activityTaskCount(activity);
+      const difficulty = activityDifficulty(activity);
+      const subtitleParts = ["Activité " + activity.number];
+
+      if (difficulty) {
+        subtitleParts.push(difficulty);
+      }
+
+      if (taskCount) {
+        subtitleParts.push(taskCount + " tâches");
+      }
+
       hero.classList.add("axis-card-" + (data.axes.indexOf(axis) + 1));
       hero.innerHTML =
         '<div class="header-layout">' +
@@ -349,11 +403,13 @@
               "<strong>" + objective.label + "</strong>" +
             "</div>" +
             "<h1>" + objective.title + "</h1>" +
-            '<p class="hero-subtitle">Activité ' + activity.number + "</p>" +
+            '<p class="hero-subtitle">' + subtitleParts.join(" · ") + "</p>" +
           "</div>" +
           '<div class="header-side">' +
             '<div class="meta-grid">' +
               '<article class="meta-card"><span>Durée estimée</span><strong>' + activity.duration + "</strong></article>" +
+              (taskCount ? '<article class="meta-card"><span>Tâches</span><strong>' + taskCount + '</strong></article>' : "") +
+              (difficulty ? '<article class="meta-card"><span>Niveau</span><strong>' + difficulty + '</strong></article>' : "") +
               '<article class="meta-card"><span>Progression</span><strong>' + progress.percent + ' %</strong></article>' +
             "</div>" +
             '<div class="progress-track" aria-hidden="true"><div class="progress-fill" style="width:' + progress.percent + '%"></div></div>' +

@@ -59,36 +59,55 @@ Base de travail autonome pour compléter la plateforme ZenClass par axe, objecti
 
 - Objectif : `Reformuler les consignes stressantes en consignes neutres`
 - Page objectif : `objectif.html?axe=axe-2&objectif=obj-3`
+- Activité 1 : `activite.html?axe=axe-2&objectif=obj-3&activite=1`
+  - module interactif `pathway`
+  - activité de sensibilisation
+  - `8 tâches` ordonnées du repérage simple à la formalisation de repères
+- Activité 2 : `activite.html?axe=axe-2&objectif=obj-3&activite=2`
+  - module interactif `pathway`
+  - atelier de transformation guidée
+  - `7 tâches` ordonnées de l'identification du noyau utile à la réécriture autonome
 - Activité 3 : `activite.html?axe=axe-2&objectif=obj-3&activite=3`
   - module interactif `reflect`
-  - timer de réflexion 10 min
-  - carnet de recul, situations fréquentes, checkpoints, synthèse personnelle
+  - timer de réflexion `15 min`
+  - carnet de recul en `7 tâches`, situations fréquentes, synthèse personnelle
 - Activité 4 : `activite.html?axe=axe-2&objectif=obj-3&activite=4`
   - module interactif `rephrase`
   - studio de reformulation avec timer circulaire
+  - feuille de route en `8 étapes`
   - phases `Session complete`, `Lancement`, `Studio`, `Relecture`
   - compteurs en direct, validation `3/4`, corrections possibles
+  - les `4 consignes exactes` du document `AXE2 Activité 4.docx` sont branchées
 
 ## Fichiers modifiés pour cet objectif
 
 - `plateforme-etudiante/data.js`
   - contenu complet des activités 1 a 4 de l'objectif 3
+  - activités 1 et 2 structurées en parcours progressifs
   - données du module `reflect`
   - données du module `rephrase`
   - ressource théorique `Prokofieva et al. (2017)` ajoutée pour l'axe 2
 - `plateforme-etudiante/activity-modules.js`
-  - nouveau module `reflect`
-  - nouveau module `rephrase`
-  - timers, synthèse, progression, validation
+  - nouveau module `pathway`
+  - module `reflect` rendu dynamique
+  - module `rephrase` enrichi avec feuille de route, seuil dynamique et validation ajustable
+  - progression, timers, synthèse, validation, animations d'état
 - `plateforme-etudiante/styles.css`
-  - styles premium pour les cartes, timers, métriques, états de réussite
+  - styles premium pour les cartes, parcours, timers, métriques, états de réussite
   - responsive et animations légères
+- `plateforme-etudiante/app.js`
+  - cartes d'activité enrichies avec niveau et nombre de tâches
+- `plateforme-etudiante/orbital-axes.js`
+  - titre complet synchronisé avec l'objectif 3
 
 ## Pour reprendre demain
 
-- Ouvrir d'abord `activite.html?axe=axe-2&objectif=obj-3&activite=3`
-  - vérifier la logique de réflexion
-  - compléter ou ajuster les prompts si besoin
+- Ouvrir d'abord `objectif.html?axe=axe-2&objectif=obj-3`
+  - vérifier que les 4 activités affichent bien durée, niveau et nombre de tâches
+- Puis ouvrir `activite.html?axe=axe-2&objectif=obj-3&activite=1`
+  - tester le parcours `pathway` et la persistance des tâches cochées
+- Puis `activite.html?axe=axe-2&objectif=obj-3&activite=3`
+  - vérifier la logique de réflexion et la synthèse dynamique
 - Puis ouvrir `activite.html?axe=axe-2&objectif=obj-3&activite=4`
   - tester les 4 reformulations
   - ajuster les `requiredGroups` et `blockedPhrases` dans `plateforme-etudiante/data.js` si la validation est trop stricte ou trop permissive
@@ -99,9 +118,11 @@ Base de travail autonome pour compléter la plateforme ZenClass par axe, objecti
 
 ## Pense-bête technique
 
-- Les activités 3 et 4 sauvegardent leur état en `localStorage`
+- Les activités 1 a 4 sauvegardent leur état en `localStorage`
+- Le module `pathway` repose sur `learningPath.tasks`
 - Les timers sont gérés dans `plateforme-etudiante/activity-modules.js`
 - La validation de l'activité 4 repose sur des indices textuels simples, pas sur une analyse sémantique avancée
+- Le seuil de réussite de l'activité 4 est piloté par `performanceTask.passThreshold`
 - Si tu modifies le contenu d'une consigne, pense à mettre à jour aussi son `neutralExample`, ses `requiredGroups` et ses `blockedPhrases`
 
 ## Conseils pour l'équipe

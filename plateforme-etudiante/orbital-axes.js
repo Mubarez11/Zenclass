@@ -60,6 +60,28 @@
     users: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`
   };
 
+  const LOGO_IMAGE = new Image();
+  LOGO_IMAGE.src = 'logo zenclasse reworked.png';
+
+  const ICON_IMAGES = {};
+  const ICON_URLS = [];
+
+  Object.keys(ICONS).forEach(function(key) {
+    const img = new Image();
+    const iconXml = ICONS[key].replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+    const blob = new Blob([iconXml], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    img.src = url;
+    ICON_IMAGES[key] = img;
+    ICON_URLS.push(url);
+  });
+
+  window.addEventListener('beforeunload', function() {
+    ICON_URLS.forEach(function(url) {
+      URL.revokeObjectURL(url);
+    });
+  });
+
   const ORB_R = 160;
   let rotation = 0;
   let hovIdx = -1;
@@ -127,14 +149,12 @@
     ctx.stroke();
 
     // Center logo image
-    const logoImg = new Image();
-    logoImg.src = 'logo zenclasse reworked.png';
-    if (logoImg.complete && logoImg.naturalWidth > 0) {
+    if (LOGO_IMAGE.complete && LOGO_IMAGE.naturalWidth > 0) {
       ctx.save();
       ctx.beginPath();
       ctx.arc(cx, cy, 44, 0, Math.PI * 2);
       ctx.clip();
-      ctx.drawImage(logoImg, cx - 44, cy - 44, 88, 88);
+      ctx.drawImage(LOGO_IMAGE, cx - 44, cy - 44, 88, 88);
       ctx.restore();
     } else {
       // Fallback text if image not loaded
@@ -189,14 +209,10 @@
         ctx.beginPath();
         ctx.arc(x, y, nodeR - 2, 0, Math.PI * 2);
         ctx.clip();
-        
-        // Draw icon as image
-        const img = new Image();
-        const iconXml = iconSvg.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
-        const blob = new Blob([iconXml], { type: 'image/svg+xml' });
-        img.src = URL.createObjectURL(blob);
-        
-        if (img.complete) {
+
+        const img = ICON_IMAGES[axe.icon];
+
+        if (img && img.complete && img.naturalWidth > 0) {
           ctx.drawImage(img, x - nodeR + 4, y - nodeR + 4, (nodeR - 4) * 2, (nodeR - 4) * 2);
         } else {
           // Fallback: draw colored circle
@@ -210,7 +226,6 @@
           ctx.textBaseline = 'middle';
           ctx.fillText(axe.shortName, x, y);
         }
-        URL.revokeObjectURL(img.src);
         ctx.restore();
       }
 
@@ -304,7 +319,7 @@
       'axe-2': [
         { id: 'obj-1', title: 'Repérer les signaux verbaux et non verbaux' },
         { id: 'obj-2', title: 'Repérer les signes de stress chez un élève' },
-        { id: 'obj-3', title: 'Reformuler les consignes stressantes' }
+        { id: 'obj-3', title: 'Reformuler les consignes stressantes en consignes neutres' }
       ],
       'axe-3': [
         { id: 'obj-1', title: 'Moduler sa voix pour apaiser un échange' },
