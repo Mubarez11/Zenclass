@@ -5,6 +5,27 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fredoka+One&family=DM+Serif+Display:ital@0;1&display=swap');
 
+/* Reset conflicting navigation styles from styles.css */
+.topbar {
+  position: fixed !important;
+  top: -200px !important;
+  left: -200px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+.brand, .brand-mark, .brand-copy, .topnav, .topnav-link, .topbar-progress {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+body {
+  padding-top: 72px;
+}
+
 /* ══════════════════════════════════
    CSS VARIABLES (Design Tokens)
    ══════════════════════════════════ */
@@ -199,21 +220,13 @@ ul, ol { list-style: none; }
   font-family: 'DM Serif Display', serif;
   font-size: clamp(2rem, 5vw, 3.6rem);
   font-weight: 400;
-  background: linear-gradient(160deg, #e0e0e0 20%, #888 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
   transition: all 0.3s cubic-bezier(.16,1,.3,1);
   padding: 8px 48px;
   display: block;
   text-decoration: none;
   position: relative;
-}
-[data-theme="light"] .nav-link {
-  background: linear-gradient(160deg, #1a1a1a 20%, #666 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  opacity: 0.85;
 }
 .nav-link::before {
   content: attr(data-num);
@@ -229,17 +242,9 @@ ul, ol { list-style: none; }
   font-family: 'Space Grotesk', sans-serif;
 }
 .nav-link:hover {
-  background: linear-gradient(160deg, #fff 20%, #ddd 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--primary-light);
+  opacity: 1;
   transform: translateX(12px);
-}
-[data-theme="light"] .nav-link:hover {
-  background: linear-gradient(160deg, #000 20%, #333 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .nav-social-row {
@@ -296,43 +301,43 @@ body {
 }
 
 .ace-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 8000;
-  display: flex;
-  justify-content: center;
-  padding: 10px 20px;
-  pointer-events: none;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 8000 !important;
+  display: flex !important;
+  justify-content: center !important;
+  padding: 10px 20px !important;
+  pointer-events: none !important;
 }
 
 .ace-inner {
-  pointer-events: all;
-  display: flex;
-  align-items: center;
-  background: rgba(255,255,255,0.95);
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 100px;
-  padding: 5px 5px 5px 22px;
-  max-width: 760px;
-  width: 100%;
-  justify-content: space-between;
-  transition: background 0.3s;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  pointer-events: all !important;
+  display: flex !important;
+  align-items: center !important;
+  background: rgba(255,255,255,0.95) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  border-radius: 100px !important;
+  padding: 5px 5px 5px 22px !important;
+  max-width: 760px !important;
+  width: 100% !important;
+  justify-content: space-between !important;
+  transition: background 0.3s !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
 }
 
 .ace-logo {
-  font-family: 'DM Serif Display', serif;
-  font-style: italic;
-  font-size: 1.05rem;
-  color: var(--text);
-  text-decoration: none;
-  flex-shrink: 0;
-  margin-right: 4px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-family: 'DM Serif Display', serif !important;
+  font-style: italic !important;
+  font-size: 1.05rem !important;
+  color: var(--text) !important;
+  text-decoration: none !important;
+  flex-shrink: 0 !important;
+  margin-right: 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
 }
 .ace-logo img {
   height: 72px;
@@ -344,14 +349,14 @@ body {
 }
 
 .ace-menu {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 !important;
+  justify-content: center !important;
 }
 
 .ace-item {
-  position: relative;
+  position: relative !important;
 }
 
 .ace-ibg {
@@ -368,19 +373,19 @@ body {
 }
 
 .ace-ibtn {
-  padding: 8px 16px;
-  border-radius: 100px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--text-2);
-  background: none;
-  border: none;
-  font-family: 'Space Grotesk', sans-serif;
-  cursor: pointer;
-  transition: color 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  padding: 8px 16px !important;
+  border-radius: 100px !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  color: var(--text-2) !important;
+  background: none !important;
+  border: none !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  cursor: pointer !important;
+  transition: color 0.2s !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
 }
 .ace-item.hov .ace-ibtn {
   color: var(--text);

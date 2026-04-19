@@ -12,28 +12,28 @@
       title: "Comprendre le lien émotions / bien-être / apprentissages",
       description: "Explorer les relations entre émotions, bien-être et apprentissages",
       color: "#667eea",
-      image: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=800&q=80"
+      image: "axe 1 se.png"
     },
     {
       id: "axe-2",
       title: "Détecter pour prévenir",
       description: "Repérer les signes précurseurs de stress",
       color: "#63b3ed",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+      image: "axe 2 se.png"
     },
     {
       id: "axe-3",
       title: "Communiquer de manière émotionnellement soutenante",
       description: "Adopter une communication apaisante",
       color: "#4facfe",
-      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80"
+      image: "axe3 séléctor.png"
     },
     {
       id: "axe-4",
       title: "Agir sur le climat et le bien-être global",
       description: "Améliorer l'ambiance collective",
       color: "#9f7aea",
-      image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80"
+      image: "image axe 4.png"
     }
   ];
 

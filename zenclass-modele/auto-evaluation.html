@@ -16,66 +16,117 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="../plateforme-etudiante/zenclass-nav.css" />
 </head>
 <body>
 
 <!-- Navigation -->
-<nav class="navbar" aria-label="Navigation principale">
-	<div class="nav-container">
-		<a class="logo brand" href="../plateforme-etudiante-zenclass.html#parcours" aria-label="Retour à ZenClass">
-			<img class="logo-image" src="../zenclass-logo.svg" alt="ZenClass">
-		</a>
-		<ul class="nav-links">
-			<li class="nav-dropdown">
-				<div class="dropdown-entry">
-					<a class="nav-link-parcours dropdown-parent-link" href="../plateforme-etudiante-zenclass.html#parcours">Parcours</a>
-					<button class="dropdown-toggle dropdown-toggle-button" type="button" aria-label="Sous-menu Parcours">
-						<span class="dropdown-caret" aria-hidden="true"></span>
-					</button>
-				</div>
-				<ul class="dropdown-menu">
-					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-1">Axe 1</a></li>
-					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-2">Axe 2</a></li>
-					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-3">Axe 3</a></li>
-					<li><a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-4">Axe 4</a></li>
-				</ul>
-			</li>
-			<li class="nav-dropdown">
-				<div class="dropdown-entry">
-					<a class="nav-link-interactif dropdown-parent-link" href="quiz.html">Interactif</a>
-					<button class="dropdown-toggle dropdown-toggle-button" type="button" aria-label="Sous-menu Interactif">
-						<span class="dropdown-caret" aria-hidden="true"></span>
-					</button>
-				</div>
-				<ul class="dropdown-menu">
-					<li><a href="quiz.html">Quiz</a></li>
-					<li><a href="auto-evaluation.html" class="active">Auto-évaluation</a></li>
-					<li><a href="respiration.html">Respiration 4-7-8</a></li>
-					<li><a href="classification.html">Classification</a></li>
-					<li><a href="jeu-roles.html">Jeu de rôles</a></li>
-				</ul>
-			</li>
-			<li class="nav-dropdown">
-				<div class="dropdown-entry">
-					<a class="nav-link-theory dropdown-parent-link" href="../plateforme-etudiante-zenclass.html#ressources-theoriques">Ressources théoriques</a>
-					<button class="dropdown-toggle dropdown-toggle-button" type="button" aria-label="Sous-menu Ressources théoriques">
-						<span class="dropdown-caret" aria-hidden="true"></span>
-					</button>
-				</div>
-				<ul class="dropdown-menu">
-					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-1">Axe 1</a></li>
-					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2">Axe 2</a></li>
-					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3">Axe 3</a></li>
-					<li><a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-4">Axe 4</a></li>
-				</ul>
-			</li>
-			<li><a class="nav-link-class" href="../ma-classe.html">Ressources pour ma classe</a></li>
-			<li><a class="nav-link-progress" href="../plateforme-etudiante-zenclass-progression.html">Mon suivi de progression</a></li>
-			<li><a class="nav-link-team" href="../plateforme-etudiante-zenclass.html#equipe">Équipe</a></li>
-			<li><a class="nav-link-forum" href="../plateforme-etudiante-zenclass.html#forum">Forum</a></li>
-		</ul>
-	</div>
-</nav>
+<!-- NAV OVERLAY -->
+  <nav class="nav-overlay" id="navOverlay" aria-hidden="true">
+    <button class="nav-close" id="navClose" aria-label="Fermer">✕</button>
+    <div class="nav-links">
+    <a href="../plateforme-etudiante-zenclass.html" class="nav-link" data-num="01" onclick="closeNav()">Accueil</a>
+    <a href="../plateforme-etudiante-zenclass.html#parcours" class="nav-link" data-num="02" onclick="closeNav()">Parcours</a>
+    <a href="../zenclass-modele/quiz.html" class="nav-link" data-num="03" onclick="closeNav()">Interactif</a>
+    <a href="../plateforme-etudiante-zenclass.html#ressources-theoriques" class="nav-link" data-num="04" onclick="closeNav()">Ressources</a>
+    <a href="../ma-classe.html" class="nav-link" data-num="05" onclick="closeNav()">Ressources classe</a>
+    <a href="../plateforme-etudiante-zenclass-progression.html" class="nav-link" data-num="06" onclick="closeNav()">Mon suivi</a>
+    <a href="../ma-classe.html" class="nav-link" data-num="07" onclick="closeNav()">Ma classe</a>
+    <a href="../ma-classe.html#forum" class="nav-link" data-num="08" onclick="closeNav()">Forum</a>
+    <a href="../ma-classe.html#equipe" class="nav-link" data-num="09" onclick="closeNav()">Equipe</a>
+  </div>
+    <div class="nav-social-row">
+      <a href="mailto:contact@zenclass.edu" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></a>
+      <a href="#" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42c-.27-1-.99-1.8-1.93-2.07C18.88 4 12 4 12 4s-6.88 0-8.61.35C2.45 4.62 1.73 5.42 1.46 6.42 1.11 8.18 1.11 12 1.11 12s0 3.82.35 5.58c.27 1 .99 1.8 1.93 2.07C5.12 20 12 20 12 20s6.88 0 8.61-.35c.94-.27 1.66-1.07 1.93-2.07C22.89 15.82 22.89 12 22.89 12s0-3.82-.35-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="currentColor"/></svg></a>
+    </div>
+  </nav>
+
+  <!-- ACE HEADER -->
+  <header class="ace-header" id="siteHeader">
+    <div class="ace-inner">
+      <a href="#hero" class="ace-logo">
+        <img src="../logo zenclasse reworked.png" alt="ZenClass" />
+      </a>
+      <nav class="ace-menu">
+        <!-- Parcours -->
+        <div class="ace-item" id="ai-parcours">
+          <div class="ace-ibg"></div>
+          <button class="ace-ibtn">Parcours</button>
+          <div class="ace-drop">
+            <div class="ace-drop-grid">
+              <a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-1" class="ace-dcard">
+                <div class="ace-dicon" style="background:#667eea33;color:#667eea">A1</div>
+                <div class="ace-dname">Axe 1</div>
+                <div class="ace-dsub">Émotions & Bien-être</div>
+              </a>
+              <a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-2" class="ace-dcard">
+                <div class="ace-dicon" style="background:#63b3ed33;color:#63b3ed">A2</div>
+                <div class="ace-dname">Axe 2</div>
+                <div class="ace-dsub">Détecter pour prévenir</div>
+              </a>
+              <a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-3" class="ace-dcard">
+                <div class="ace-dicon" style="background:#4facfe33;color:#4facfe">A3</div>
+                <div class="ace-dname">Axe 3</div>
+                <div class="ace-dsub">Communication soutenante</div>
+              </a>
+              <a href="../plateforme-etudiante-zenclass-axe.html?axe=axe-4" class="ace-dcard">
+                <div class="ace-dicon" style="background:#9f7aea33;color:#9f7aea">A4</div>
+                <div class="ace-dname">Axe 4</div>
+                <div class="ace-dsub">Climat & Bien-être global</div>
+              </a>
+            </div>
+          </div>
+        </div>
+              
+<!-- Ressources théoriques -->
+        <div class="ace-item" id="ai-ressources">
+          <div class="ace-ibg"></div>
+          <button class="ace-ibtn">Ressources</button>
+          <div class="ace-drop" style="min-width:320px">
+            <div class="ace-drop-list">
+              <a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-1" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#667eea33;color:#667eea">A1</div>
+                <div>
+                  <div class="ace-dname">Axe 1 — Ressources théoriques</div>
+                  <div class="ace-dsub">Émotions, bien-être et apprentissages</div>
+                </div>
+              </a>
+              <a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#63b3ed33;color:#63b3ed">A2</div>
+                <div>
+                  <div class="ace-dname">Axe 2 — Ressources théoriques</div>
+                  <div class="ace-dsub">Prévention du stress</div>
+                </div>
+              </a>
+              <a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#4facfe33;color:#4facfe">A3</div>
+                <div>
+                  <div class="ace-dname">Axe 3 — Ressources théoriques</div>
+                  <div class="ace-dsub">Communication soutenante</div>
+                </div>
+              </a>
+              <a href="../plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-4" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#9f7aea33;color:#9f7aea">A4</div>
+                <div>
+                  <div class="ace-dname">Axe 4 — Ressources théoriques</div>
+                  <div class="ace-dsub">Climat et bien-être global</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Ressources classe -->
+      </nav>
+      <div class="ace-right">
+        <a href="../plateforme-etudiante-zenclass.html#parcours" class="ace-cta">Commencer →</a>
+        <button class="ace-hbg" id="menuToggle" aria-label="Menu" onclick="toggleNav()">
+          <span class="hbg-line"></span>
+          <span class="hbg-line"></span>
+          <span class="hbg-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
 <!-- Hero Section -->
 <section class="page-hero evaluation-hero">
@@ -582,5 +633,36 @@ function printResults() {
 <script src="agent.js"></script>
 <script src="../zenclass-enhancements.js"></script>
 
+
+  <script>
+  function toggleNav() {
+    const navOv = document.getElementById('navOverlay');
+    const menuTgl = document.getElementById('menuToggle');
+    if (!navOv || !menuTgl) return;
+    const isOpen = navOv.classList.toggle('open');
+    navOv.setAttribute('aria-hidden', !isOpen);
+    menuTgl.classList.toggle('open', isOpen);
+  }
+  function closeNav() {
+    const navOv = document.getElementById('navOverlay');
+    const menuTgl = document.getElementById('menuToggle');
+    if (!navOv) return;
+    navOv.classList.remove('open');
+    navOv.setAttribute('aria-hidden', 'true');
+    if (menuTgl) menuTgl.classList.remove('open');
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    var closeBtn = document.getElementById('navClose');
+    if (closeBtn) closeBtn.addEventListener('click', closeNav);
+    var navOv = document.getElementById('navOverlay');
+    if (navOv) {
+      navOv.addEventListener('click', function(e) { if (e.target === navOv) closeNav(); });
+    }
+    document.querySelectorAll('.ace-item').forEach(function(item) {
+      item.addEventListener('mouseenter', function() { this.classList.add('hov'); });
+      item.addEventListener('mouseleave', function() { this.classList.remove('hov'); });
+    });
+  });
+  </script>
 </body>
 </html>

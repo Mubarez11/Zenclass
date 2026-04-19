@@ -5,45 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZenClass | Objectif</title>
   <link rel="stylesheet" href="plateforme-etudiante/styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <style>
     :root {
-      --maroon: #667eea;
-      --terracotta: #764ba2;
-      --apricot: #c8d4ff;
-      --turquoise: #4facfe;
-      --teal: #5a67d8;
-      --ink: #1a202c;
-      --muted: #718096;
-      --line: rgba(148, 163, 184, 0.18);
-      --line-strong: rgba(100, 116, 139, 0.28);
-      --surface: rgba(255, 255, 255, 0.96);
-      --surface-strong: rgba(255, 255, 255, 0.98);
-      --surface-soft: rgba(247, 250, 252, 0.96);
-      --shadow: 0 18px 46px rgba(15, 23, 42, 0.08);
-      --shadow-soft: 0 12px 28px rgba(15, 23, 42, 0.05);
-      --radius-xl: 28px;
-      --radius-lg: 18px;
-      --radius-md: 14px;
-      --radius-sm: 10px;
-      --font-body: "Poppins", "Aptos", "Avenir Next", "Segoe UI Variable", "Segoe UI", sans-serif;
       --zen-primary: #667eea;
       --zen-primary-dark: #5a67d8;
       --zen-secondary: #764ba2;
       --zen-accent: #4facfe;
+      --zen-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --zen-gradient-light: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
       --zen-gray-900: #1a202c;
       --zen-gray-800: #2d3748;
       --zen-gray-700: #4a5568;
       --zen-gray-600: #718096;
       --zen-gray-200: #edf2f7;
-      --zen-gray-100: #f7fafc;
       --zen-white: #ffffff;
-      --zen-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --zen-gradient-warning: linear-gradient(135deg, #63b3ed, #5a67d8);
-      --zen-gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --zen-gradient-purple: linear-gradient(135deg, #9f7aea, #805ad5);
+      --zen-shadow-sm: 0 4px 16px rgba(15, 23, 42, 0.06);
       --zen-shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
       --zen-shadow-lg: 0 18px 48px rgba(15, 23, 42, 0.12);
-      --zen-transition: 0.3s ease;
+      --zen-shadow-glow: 0 8px 32px rgba(102, 126, 234, 0.25);
       --zen-container: 1120px;
       --font-display: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     }
@@ -57,165 +37,6 @@
       overflow-x: hidden;
     }
 
-    body::before {
-      display: none;
-    }
-
-    .navbar {
-      position: fixed;
-      inset: 0 0 auto 0;
-      z-index: 40;
-      padding: 14px 0;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04), 0 12px 24px rgba(15, 23, 42, 0.05);
-    }
-
-    .nav-container {
-      width: min(100% - 32px, var(--zen-container));
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 18px;
-      align-items: center;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .brand img {
-      width: 210px;
-      height: auto;
-      display: block;
-    }
-
-    .nav-links {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a,
-    .nav-links button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 42px;
-      padding: 10px 18px;
-      border: 0;
-      border-radius: 999px;
-      background: rgba(102, 126, 234, 0.08);
-      color: var(--zen-primary-dark);
-      font: inherit;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: transform var(--zen-transition), box-shadow var(--zen-transition), background var(--zen-transition);
-    }
-
-    .nav-links a:hover,
-    .nav-links a:focus-visible,
-    .nav-links button:hover,
-    .nav-links button:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: var(--zen-shadow-md);
-      outline: none;
-    }
-
-    .nav-dropdown {
-      position: relative;
-    }
-
-    .dropdown-entry {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .dropdown-parent-link {
-      flex: 1 1 auto;
-    }
-
-    .dropdown-toggle-button {
-      min-width: 42px;
-      padding: 10px 12px;
-      flex: 0 0 auto;
-    }
-
-    .dropdown-caret {
-      width: 12px;
-      height: 12px;
-      display: inline-block;
-      background-color: currentColor;
-      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      -webkit-mask-position: center;
-      mask-position: center;
-      -webkit-mask-size: contain;
-      mask-size: contain;
-      transition: transform var(--zen-transition);
-    }
-
-    .nav-dropdown:hover .dropdown-caret,
-    .nav-dropdown:focus-within .dropdown-caret {
-      transform: rotate(180deg);
-    }
-
-    .dropdown-menu {
-      position: absolute;
-      top: calc(100% + 10px);
-      left: 0;
-      min-width: 220px;
-      margin: 0;
-      padding: 10px;
-      list-style: none;
-      display: grid;
-      gap: 4px;
-      border-radius: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: var(--zen-shadow-lg);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transform: translateY(8px);
-      transition: opacity var(--zen-transition), transform var(--zen-transition), visibility var(--zen-transition);
-    }
-
-    .nav-dropdown:hover .dropdown-menu,
-    .nav-dropdown:focus-within .dropdown-menu {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
-
-    .dropdown-menu a {
-      justify-content: flex-start;
-      min-height: 40px;
-      padding: 10px 14px;
-      border-radius: 16px;
-      background: transparent;
-      color: var(--zen-gray-700);
-      box-shadow: none;
-    }
-
-    .dropdown-menu a:hover,
-    .dropdown-menu a:focus-visible {
-      transform: none;
-      box-shadow: none;
-      background: rgba(102, 126, 234, 0.08);
-      color: var(--zen-primary-dark);
-    }
-
     .page-shell {
       width: min(100% - 32px, var(--zen-container));
       max-width: none;
@@ -223,187 +44,1535 @@
       gap: 24px;
     }
 
-    .panel {
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      border-radius: 28px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
-      box-shadow: var(--zen-shadow-md);
+    /* HERO SECTION - Modern Style */
+    .zen-hero {
+      padding: 48px 0 40px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .activity-hero,
-    .activity-main,
-    .inline-nav {
-      padding: 28px;
+    .zen-hero-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 16px;
     }
 
-    .activity-hero h1,
-    .content-block h2 {
-      font-family: var(--font-display);
-      color: var(--zen-gray-900);
+    .zen-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: center;
     }
 
-    .activity-hero::after {
-      opacity: 0.18;
-    }
-
-    .activity-link,
-    .objective-link,
-    .activity-nav-link {
-      border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      background: rgba(255, 255, 255, 0.94);
-    }
-
-    .objective-activity-list .activity-link {
-      padding: 16px 18px;
-      border-radius: 20px;
-    }
-
-    .activity-copy-box {
-      border-radius: 18px;
-      border: 1px dashed rgba(148, 163, 184, 0.28);
-      background: rgba(247, 250, 252, 0.96);
-    }
-
-    .btn {
-      min-height: 42px;
-      border-radius: 14px;
-      box-shadow: none;
-    }
-
-    .btn-primary {
-      background: var(--zen-gradient-primary);
-    }
-
-    .btn-secondary {
-      background: rgba(102, 126, 234, 0.08);
-      border-color: rgba(102, 126, 234, 0.18);
-      color: var(--zen-primary-dark);
-    }
-
-    .btn-ghost {
-      background: rgba(79, 172, 254, 0.08);
-      border-color: rgba(79, 172, 254, 0.18);
-      color: var(--zen-primary-dark);
-    }
-
-    @media (max-width: 980px) {
-      .nav-container {
-        grid-template-columns: 1fr;
+    @media (min-width: 1024px) {
+      .zen-hero-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
       }
+    }
 
-      .nav-links {
+    /* Left Column - Text */
+    .zen-hero-text {
+      text-align: center;
+    }
+
+    @media (min-width: 1024px) {
+      .zen-hero-text {
+        text-align: left;
+      }
+    }
+
+    .zen-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(102, 126, 234, 0.1);
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      margin-bottom: 20px;
+    }
+
+    .zen-hero-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--zen-primary);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.9); }
+    }
+
+    .zen-hero-badge-text {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--zen-primary);
+    }
+
+    .zen-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--zen-gray-900);
+      line-height: 1.1;
+      margin: 0 0 20px 0;
+    }
+
+    .zen-hero-title-accent {
+      background: var(--zen-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .zen-hero-desc {
+      font-size: 1.05rem;
+      color: var(--zen-gray-600);
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto 28px 0;
+    }
+
+    @media (min-width: 1024px) {
+      .zen-hero-desc {
+        margin: 0 0 28px 0;
+      }
+    }
+
+    .zen-hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    @media (min-width: 1024px) {
+      .zen-hero-meta {
         justify-content: flex-start;
       }
     }
 
+    .zen-hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: white;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      box-shadow: var(--zen-shadow-sm);
+    }
+
+    .zen-hero-meta-item svg {
+      width: 18px;
+      height: 18px;
+      color: var(--zen-primary);
+    }
+
+    .zen-hero-meta-item span {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--zen-gray-700);
+    }
+
+    .zen-hero-meta-item strong {
+      color: var(--zen-primary);
+      font-weight: 700;
+    }
+
+    /* Right Column - Visual */
+    .zen-hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Floating decorative elements */
+    .zen-deco {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .zen-deco-1 {
+      top: 0;
+      right: 20px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fbbf24;
+    }
+
+    .zen-deco-2 {
+      top: 30px;
+      right: 40px;
+      width: 10px;
+      height: 10px;
+      background: var(--zen-primary);
+      transform: rotate(45deg);
+    }
+
+    .zen-deco-3 {
+      top: 50px;
+      right: 15px;
+      width: 4px;
+      height: 24px;
+      background: var(--zen-secondary);
+    }
+
+    .zen-deco-4 {
+      top: 70px;
+      right: 30px;
+      width: 16px;
+      height: 4px;
+      background: #fbbf24;
+      border-radius: 2px;
+    }
+
+    .zen-deco-5 {
+      bottom: 60px;
+      left: 10px;
+      width: 10px;
+      height: 10px;
+      background: var(--zen-accent);
+      transform: rotate(45deg);
+    }
+
+    .zen-deco-6 {
+      bottom: 30px;
+      left: 30px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fbbf24;
+    }
+
+    /* AI Dashboard Card */
+    .zen-card {
+      position: relative;
+      background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+      transform: rotate(-2deg);
+      transition: transform 0.4s ease;
+      max-width: 380px;
+      width: 100%;
+    }
+
+    .zen-card:hover {
+      transform: rotate(0deg);
+    }
+
+    .zen-card-header {
+      margin-bottom: 20px;
+    }
+
+    .zen-card-title {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 0 4px 0;
+    }
+
+    .zen-card-subtitle {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.3);
+      margin: 0;
+    }
+
+    /* Pixel Grid */
+    .zen-pixel-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 4px;
+      margin-bottom: 24px;
+    }
+
+    .zen-pixel {
+      aspect-ratio: 1;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .zen-pixel.active-1 { background: var(--zen-primary); }
+    .zen-pixel.active-2 { background: #fbbf24; }
+    .zen-pixel.active-3 { background: var(--zen-accent); }
+    .zen-pixel.active-4 { background: var(--zen-secondary); }
+
+    .zen-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .zen-card-stat {
+      color: white;
+      font-size: 0.8rem;
+    }
+
+    .zen-card-stat-label {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.65rem;
+      margin-top: 2px;
+    }
+
+    .zen-card-stat-value {
+      color: var(--zen-primary);
+      font-weight: 700;
+    }
+
+    /* Progress bar in card */
+    .zen-card-progress {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .zen-card-progress-label {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 8px;
+    }
+
+    .zen-card-progress-track {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .zen-card-progress-fill {
+      height: 100%;
+      background: var(--zen-gradient);
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+
+    /* Trust bar */
+    .zen-trust {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .zen-trust-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px 40px;
+      opacity: 0.6;
+    }
+
+    .zen-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .zen-trust-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: var(--zen-gray-200);
+    }
+
+    .zen-trust-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--zen-gray-600);
+    }
+
+    .obj-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(102, 126, 234, 0.55) 0%,
+        rgba(118, 75, 162, 0.55) 50%,
+        rgba(79, 172, 254, 0.4) 100%
+      );
+      pointer-events: none;
+    }
+
+    .obj-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.15) 0%,
+        transparent 100%
+      );
+      pointer-events: none;
+    }
+
+    .obj-hero-top {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .obj-hero-badge {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .obj-badge-pill {
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .obj-badge-sep {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: white;
+      opacity: 0.6;
+    }
+
+    .obj-badge-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .obj-hero-pills {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .obj-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .obj-pill svg {
+      width: 14px;
+      height: 14px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .obj-pill strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .obj-hero-title {
+      position: relative;
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+      margin: 0 0 32px 0;
+      max-width: 700px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .obj-hero-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      border-radius: 2px;
+      background: white;
+      margin-top: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .obj-progress-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .obj-progress-bar-wrap {
+      flex: 1;
+      min-width: 200px;
+      max-width: 400px;
+    }
+
+    .obj-progress-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 8px;
+    }
+
+    .obj-progress-track {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.25);
+      overflow: hidden;
+      backdrop-filter: blur(4px);
+    }
+
+    .obj-progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.4);
+      transition: width 0.6s ease;
+    }
+
+    .obj-badge-pill {
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: var(--zen-gradient);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: var(--zen-shadow-glow);
+    }
+
+    .obj-badge-sep {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--zen-primary);
+      opacity: 0.5;
+    }
+
+    .obj-badge-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .obj-hero-pills {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .obj-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--zen-gray-700);
+      box-shadow: var(--zen-shadow-sm);
+    }
+
+    .obj-pill svg {
+      width: 14px;
+      height: 14px;
+      color: var(--zen-primary);
+    }
+
+    .obj-pill strong {
+      color: var(--zen-primary);
+      font-weight: 700;
+    }
+
+    .obj-hero-title {
+      position: relative;
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      color: var(--zen-gray-900);
+      line-height: 1.2;
+      margin: 0 0 32px 0;
+      max-width: 700px;
+    }
+
+    .obj-hero-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--zen-gradient);
+      margin-top: 16px;
+      box-shadow: var(--zen-shadow-glow);
+    }
+
+    .obj-progress-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .obj-progress-bar-wrap {
+      flex: 1;
+      min-width: 200px;
+      max-width: 400px;
+    }
+
+    .obj-progress-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--zen-gray-600);
+      margin-bottom: 8px;
+    }
+
+    .obj-progress-track {
+      height: 8px;
+      border-radius: 999px;
+      background: var(--zen-gray-200);
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+
+    .obj-progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--zen-gradient);
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+      transition: width 0.6s ease;
+    }
+
+    .obj-steps-nav {
+      display: flex;
+      gap: 8px;
+      margin-top: 28px;
+      position: relative;
+    }
+
+    .obj-steps-nav::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 24px;
+      right: 24px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+
+    .obj-step {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.7);
+      transition: color 0.2s ease;
+    }
+
+    .obj-step:hover {
+      color: white;
+    }
+
+    .obj-step-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(102, 126, 234, 0.85);
+      backdrop-filter: blur(8px);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      color: #ffffff;
+    }
+
+    .obj-step:hover .obj-step-circle {
+      border-color: white;
+      background: #ffffff;
+      color: var(--zen-primary);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+      transform: scale(1.08);
+    }
+
+    .obj-step.completed .obj-step-circle {
+      background: #ffffff;
+      border-color: white;
+      color: var(--zen-primary);
+    }
+
+    .obj-step-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-align: center;
+      max-width: 70px;
+      line-height: 1.3;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* FLIP SECTION */
+    .flip-section {
+      padding: 40px 0 20px;
+    }
+
+    .flip-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .flip-section-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--zen-gray-900);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .flip-section-title::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 24px;
+      border-radius: 2px;
+      background: var(--zen-gradient);
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .flip-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .flip-toggle {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 5px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      box-shadow: var(--zen-shadow-sm);
+      width: fit-content;
+    }
+
+    .flip-toggle-btn {
+      position: relative;
+      padding: 7px 16px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--zen-gray-600);
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .flip-toggle-btn:hover:not(.active) {
+      background: rgba(102, 126, 234, 0.07);
+      color: var(--zen-primary);
+    }
+
+    .flip-toggle-btn.active {
+      background: var(--zen-gradient);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .flip-toggle-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-left: 5px;
+      background: rgba(102, 126, 234, 0.12);
+      color: var(--zen-primary);
+      transition: all 0.2s ease;
+    }
+
+    .flip-toggle-btn.active .flip-toggle-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
+    }
+
+    .flip-toggle-btn:hover:not(.active) .flip-toggle-count {
+      background: rgba(102, 126, 234, 0.15);
+    }
+
+    .flip-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
     @media (max-width: 640px) {
-      .nav-links {
-        flex-direction: column;
-        align-items: stretch;
+      .flip-grid {
+        grid-template-columns: 1fr;
       }
 
-      .dropdown-entry {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
+      .obj-hero {
+        padding: 32px 24px;
       }
 
-      .dropdown-parent-link,
-      .nav-links a,
-      .nav-links button {
-        width: 100%;
+      .obj-steps-nav {
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+    }
+
+    .flip-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: white;
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      box-shadow: var(--zen-shadow-sm);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .flip-card:hover {
+      box-shadow: var(--zen-shadow-lg);
+    }
+
+    .flip-card:active {
+      transform: scale(0.97);
+    }
+
+    .flip-card.hidden {
+      display: none;
+    }
+
+    .flip-card-img-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flip-card-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .flip-card:hover .flip-card-img {
+      transform: scale(1.05);
+    }
+
+    .flip-card-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 40%,
+        rgba(15, 23, 42, 0.5) 100%
+      );
+      pointer-events: none;
+    }
+
+    .flip-card-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+    }
+
+    .flip-card-badge.fondations {
+      background: rgba(102, 126, 234, 0.85);
+      color: white;
+    }
+
+    .flip-card-badge.guided {
+      background: rgba(79, 172, 254, 0.85);
+      color: white;
+    }
+
+    .flip-card-badge.reflexif {
+      background: rgba(118, 75, 162, 0.85);
+      color: white;
+    }
+
+    .flip-card-badge.performance {
+      background: rgba(219, 39, 119, 0.85);
+      color: white;
+    }
+
+    .flip-card-num {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--zen-gray-900);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+    }
+
+    .flip-card-body {
+      padding: 18px 20px 20px;
+    }
+
+    .flip-card-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--zen-gray-900);
+      margin: 0 0 12px 0;
+      line-height: 1.35;
+    }
+
+    .flip-card-meta {
+      display: flex;
+      gap: 14px;
+      font-size: 0.78rem;
+      color: var(--zen-gray-600);
+    }
+
+    .flip-card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .flip-card-arrow {
+      position: absolute;
+      bottom: 18px;
+      right: 20px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--zen-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.8rem;
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.25s ease;
+      box-shadow: var(--zen-shadow-glow);
+    }
+
+    .flip-card:hover .flip-card-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .flip-card:hover .flip-card-body {
+      padding-bottom: 48px;
+    }
+
+    @media (max-width: 640px) {
+      .flip-section {
+        padding: 24px 0 20px;
       }
 
-      .dropdown-menu {
-        left: 0;
-        right: 0;
-        min-width: 0;
+      .flip-card-body {
+        padding: 14px 16px 16px;
       }
 
-      .activity-hero,
-      .activity-main,
-      .inline-nav {
-        padding: 22px;
+      .flip-card-arrow {
+        display: none;
       }
     }
   </style>
   <link rel="stylesheet" href="zenclass-header.css" />
   <link rel="stylesheet" href="zenclass-enhancements.css" />
+  <link rel="stylesheet" href="plateforme-etudiante/zenclass-nav.css" />
 </head>
-<body data-page="objective">
-  <nav class="navbar" aria-label="Navigation principale">
-    <div class="nav-container">
-      <a class="logo brand" href="plateforme-etudiante-zenclass.html#parcours" aria-label="Retour à ZenClass">
-        <img src="zenclass-logo.svg" alt="ZenClass" />
-      </a>
-
-      <ul class="nav-links">
-        <li class="nav-dropdown">
-          <div class="dropdown-entry">
-            <a class="nav-link-parcours dropdown-parent-link" href="plateforme-etudiante-zenclass.html#parcours">Parcours</a>
-            <button class="dropdown-toggle-button" type="button" aria-label="Sous-menu Parcours">
-              <span class="dropdown-caret" aria-hidden="true"></span>
-            </button>
-          </div>
-          <ul class="dropdown-menu">
-            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-1">Axe 1</a></li>
-            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-2">Axe 2</a></li>
-            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-3">Axe 3</a></li>
-            <li><a href="plateforme-etudiante-zenclass-axe.html?axe=axe-4">Axe 4</a></li>
-          </ul>
-        </li>
-        <li class="nav-dropdown">
-          <div class="dropdown-entry">
-            <a class="nav-link-interactif dropdown-parent-link" href="zenclass-modele/quiz.html">Interactif</a>
-            <button class="dropdown-toggle-button" type="button" aria-label="Sous-menu Interactif">
-              <span class="dropdown-caret" aria-hidden="true"></span>
-            </button>
-          </div>
-          <ul class="dropdown-menu">
-            <li><a href="zenclass-modele/quiz.html">Quiz</a></li>
-            <li><a href="zenclass-modele/auto-evaluation.html">Auto-évaluation</a></li>
-            <li><a href="zenclass-modele/respiration.html">Respiration 4-7-8</a></li>
-            <li><a href="zenclass-modele/classification.html">Classification</a></li>
-            <li><a href="zenclass-modele/jeu-roles.html">Jeu de rôles</a></li>
-          </ul>
-        </li>
-        <li class="nav-dropdown">
-          <div class="dropdown-entry">
-            <a class="nav-link-theory dropdown-parent-link" href="plateforme-etudiante-zenclass.html#ressources-theoriques">Ressources théoriques</a>
-            <button class="dropdown-toggle-button" type="button" aria-label="Sous-menu Ressources théoriques">
-              <span class="dropdown-caret" aria-hidden="true"></span>
-            </button>
-          </div>
-          <ul class="dropdown-menu">
-            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-1">Axe 1</a></li>
-            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2">Axe 2</a></li>
-            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3">Axe 3</a></li>
-            <li><a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-4">Axe 4</a></li>
-          </ul>
-        </li>
-        <li><a class="nav-link-class" href="ma-classe.html">Ressources pour ma classe</a></li>
-        <li><a class="nav-link-progress" href="plateforme-etudiante-zenclass-progression.html">Mon suivi de progression</a></li>
-        <li><a class="nav-link-team" href="plateforme-etudiante-zenclass.html#equipe">Équipe</a></li>
-        <li><a class="nav-link-forum" href="plateforme-etudiante-zenclass.html#forum">Forum</a></li>
-      </ul>
+<body data-page="objective" data-axe="axe-2">
+  <!-- NAV OVERLAY -->
+  <nav class="nav-overlay" id="navOverlay" aria-hidden="true">
+    <button class="nav-close" id="navClose" aria-label="Fermer">✕</button>
+    <div class="nav-links">
+    <a href="plateforme-etudiante-zenclass.html" class="nav-link" data-num="01" onclick="closeNav()">Accueil</a>
+    <a href="plateforme-etudiante-zenclass.html#parcours" class="nav-link" data-num="02" onclick="closeNav()">Parcours</a>
+    <a href="zenclass-modele/quiz.html" class="nav-link" data-num="03" onclick="closeNav()">Interactif</a>
+    <a href="plateforme-etudiante-zenclass.html#ressources-theoriques" class="nav-link" data-num="04" onclick="closeNav()">Ressources</a>
+    <a href="ma-classe.html" class="nav-link" data-num="05" onclick="closeNav()">Ressources classe</a>
+    <a href="plateforme-etudiante-zenclass-progression.html" class="nav-link" data-num="06" onclick="closeNav()">Mon suivi</a>
+    <a href="ma-classe.html" class="nav-link" data-num="07" onclick="closeNav()">Ma classe</a>
+    <a href="ma-classe.html#forum" class="nav-link" data-num="08" onclick="closeNav()">Forum</a>
+    <a href="ma-classe.html#equipe" class="nav-link" data-num="09" onclick="closeNav()">Equipe</a>
+  </div>
+    <div class="nav-social-row">
+      <a href="mailto:contact@zenclass.edu" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></a>
+      <a href="#" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42c-.27-1-.99-1.8-1.93-2.07C18.88 4 12 4 12 4s-6.88 0-8.61.35C2.45 4.62 1.73 5.42 1.46 6.42 1.11 8.18 1.11 12 1.11 12s0 3.82.35 5.58c.27 1 .99 1.8 1.93 2.07C5.12 20 12 20 12 20s6.88 0 8.61-.35c.94-.27 1.66-1.07 1.93-2.07C22.89 15.82 22.89 12 22.89 12s0-3.82-.35-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="currentColor"/></svg></a>
     </div>
   </nav>
 
-  <main class="page-shell">
-    <section class="panel activity-hero" id="objectiveHero"></section>
-
-    <section class="activity-grid">
-      <article class="panel activity-main">
-        <div class="content-block">
-          <h2>Activités</h2>
-          <div class="activity-links objective-activity-list" id="objectiveActivityList"></div>
+  <!-- ACE HEADER -->
+  <header class="ace-header" id="siteHeader">
+    <div class="ace-inner">
+      <a href="plateforme-etudiante-zenclass.html" class="ace-logo">
+        <img src="logo zenclasse reworked.png" alt="ZenClass" />
+      </a>
+      <nav class="ace-menu">
+        <!-- Parcours -->
+        <div class="ace-item" id="ai-parcours">
+          <div class="ace-ibg"></div>
+          <button class="ace-ibtn">Parcours</button>
+          <div class="ace-drop">
+            <div class="ace-drop-grid">
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-1" class="ace-dcard">
+                <div class="ace-dicon" style="background:#667eea33;color:#667eea">A1</div>
+                <div class="ace-dname">Axe 1</div>
+                <div class="ace-dsub">Émotions & Bien-être</div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-2" class="ace-dcard">
+                <div class="ace-dicon" style="background:#63b3ed33;color:#63b3ed">A2</div>
+                <div class="ace-dname">Axe 2</div>
+                <div class="ace-dsub">Détecter pour prévenir</div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-3" class="ace-dcard">
+                <div class="ace-dicon" style="background:#4facfe33;color:#4facfe">A3</div>
+                <div class="ace-dname">Axe 3</div>
+                <div class="ace-dsub">Communication soutenante</div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-4" class="ace-dcard">
+                <div class="ace-dicon" style="background:#9f7aea33;color:#9f7aea">A4</div>
+                <div class="ace-dname">Axe 4</div>
+                <div class="ace-dsub">Climat & Bien-être global</div>
+              </a>
+            </div>
+          </div>
         </div>
-      </article>
+              
+<!-- Ressources théoriques -->
+        <div class="ace-item" id="ai-ressources">
+          <div class="ace-ibg"></div>
+          <button class="ace-ibtn">Ressources</button>
+          <div class="ace-drop" style="min-width:320px">
+            <div class="ace-drop-list">
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-1" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#667eea33;color:#667eea">A1</div>
+                <div>
+                  <div class="ace-dname">Axe 1 — Ressources théoriques</div>
+                  <div class="ace-dsub">Émotions, bien-être et apprentissages</div>
+                </div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#63b3ed33;color:#63b3ed">A2</div>
+                <div>
+                  <div class="ace-dname">Axe 2 — Ressources théoriques</div>
+                  <div class="ace-dsub">Prévention du stress</div>
+                </div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#4facfe33;color:#4facfe">A3</div>
+                <div>
+                  <div class="ace-dname">Axe 3 — Ressources théoriques</div>
+                  <div class="ace-dsub">Communication soutenante</div>
+                </div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-4" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#9f7aea33;color:#9f7aea">A4</div>
+                <div>
+                  <div class="ace-dname">Axe 4 — Ressources théoriques</div>
+                  <div class="ace-dsub">Climat et bien-être global</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Ressources classe -->
+      </nav>
+      <div class="ace-right">
+        <a href="#parcours" class="ace-cta">Commencer →</a>
+        <button class="ace-hbg" id="menuToggle" aria-label="Menu" onclick="toggleNav()">
+          <span class="hbg-line"></span>
+          <span class="hbg-line"></span>
+          <span class="hbg-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="zen-hero" id="objHero">
+      <div style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);" id="objectiveHero"></div>
+
+      <div class="zen-hero-inner">
+        <div class="zen-hero-grid">
+          <!-- Left: Text -->
+          <div class="zen-hero-text">
+            <div class="zen-hero-badge">
+              <div class="zen-hero-badge-dot"></div>
+              <span class="zen-hero-badge-text" id="objAxeBadge">AXE 2</span>
+            </div>
+            <h1 class="zen-hero-title" id="objTitle">Reformuler les consignes stressantes en consignes neutres.</h1>
+            <p class="zen-hero-desc" id="objLabelBadge">Objectif 3 · Détecter pour prévenir le stress en classe</p>
+            <div class="zen-hero-meta">
+              <div class="zen-hero-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                <span id="objDurPill">1 h 30</span>
+              </div>
+              <div class="zen-hero-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+                <span id="objProgPill">Progression: <strong id="objProgValue">0%</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Visual Card -->
+          <div class="zen-hero-visual">
+            <div class="zen-deco zen-deco-1"></div>
+            <div class="zen-deco zen-deco-2"></div>
+            <div class="zen-deco zen-deco-3"></div>
+            <div class="zen-deco zen-deco-4"></div>
+            <div class="zen-deco zen-deco-5"></div>
+            <div class="zen-deco zen-deco-6"></div>
+
+            <div class="zen-card">
+              <div class="zen-card-header">
+                <p class="zen-card-title">ZenClass Platform</p>
+                <p class="zen-card-subtitle">AI-Powered Learning</p>
+              </div>
+
+              <div class="zen-pixel-grid" id="zenPixelGrid"></div>
+
+              <div class="zen-card-footer">
+                <div class="zen-card-stat">
+                  <div class="zen-card-stat-value" id="objCardStat1">4 Activités</div>
+                  <div class="zen-card-stat-label">Parcours</div>
+                </div>
+                <div class="zen-card-stat" style="text-align:right">
+                  <div class="zen-card-stat-value" id="objCardStat2">30 min+</div>
+                  <div class="zen-card-stat-label">Durée estimée</div>
+                </div>
+              </div>
+
+              <div class="zen-card-progress">
+                <div class="zen-card-progress-label">Progression globale</div>
+                <div class="zen-card-progress-track">
+                  <div class="zen-card-progress-fill" id="objProgressFill" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust bar -->
+        <div class="zen-trust">
+          <div class="zen-trust-items">
+            <div class="zen-trust-item">
+              <div class="zen-trust-icon"></div>
+              <span class="zen-trust-name">Émotions</span>
+            </div>
+            <div class="zen-trust-item">
+              <div class="zen-trust-icon"></div>
+              <span class="zen-trust-name">Bien-être</span>
+            </div>
+            <div class="zen-trust-item">
+              <div class="zen-trust-icon"></div>
+              <span class="zen-trust-name">Communication</span>
+            </div>
+            <div class="zen-trust-item">
+              <div class="zen-trust-icon"></div>
+              <span class="zen-trust-name">Climat</span>
+            </div>
+            <div class="zen-trust-item">
+              <div class="zen-trust-icon"></div>
+              <span class="zen-trust-name">Ressources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="flip-section">
+      <div class="flip-wrapper">
+        <div class="flip-section-header">
+          <h2 class="flip-section-title">Activités</h2>
+          <div class="flip-toggle" id="flipToggle" role="group" aria-label="Filtrer par niveau">
+            <button class="flip-toggle-btn active" data-filter="all">Tous <span class="flip-toggle-count">4</span></button>
+            <button class="flip-toggle-btn" data-filter="fondations">Fondations <span class="flip-toggle-count">1</span></button>
+            <button class="flip-toggle-btn" data-filter="guide">Guidé <span class="flip-toggle-count">1</span></button>
+            <button class="flip-toggle-btn" data-filter="reflexif">Réflexif <span class="flip-toggle-count">1</span></button>
+            <button class="flip-toggle-btn" data-filter="performance">Performance <span class="flip-toggle-count">1</span></button>
+          </div>
+        </div>
+        <div class="flip-grid" id="flipGrid">
+          <a class="flip-card" data-category="fondations" data-act-num="1" href="#">
+            <div class="flip-card-img-wrap">
+              <img class="flip-card-img" id="flipImg1" alt="Activité 1">
+              <div class="flip-card-img-overlay"></div>
+              <span class="flip-card-badge foundations" id="flipBadge1">Fondations</span>
+              <span class="flip-card-num">1</span>
+            </div>
+            <div class="flip-card-body">
+              <h3 class="flip-card-title" id="flipTitle1"></h3>
+              <div class="flip-card-meta">
+                <span id="flipTasks1">8 tâches</span>
+                <span id="flipDur1">20 min</span>
+              </div>
+              <div class="flip-card-arrow">→</div>
+            </div>
+          </a>
+          <a class="flip-card" data-category="guide" data-act-num="2" href="#">
+            <div class="flip-card-img-wrap">
+              <img class="flip-card-img" id="flipImg2" alt="Activité 2">
+              <div class="flip-card-img-overlay"></div>
+              <span class="flip-card-badge guided" id="flipBadge2">Guidé</span>
+              <span class="flip-card-num">2</span>
+            </div>
+            <div class="flip-card-body">
+              <h3 class="flip-card-title" id="flipTitle2"></h3>
+              <div class="flip-card-meta">
+                <span id="flipTasks2">7 tâches</span>
+                <span id="flipDur2">25 min</span>
+              </div>
+              <div class="flip-card-arrow">→</div>
+            </div>
+          </a>
+          <a class="flip-card" data-category="reflexif" data-act-num="3" href="#">
+            <div class="flip-card-img-wrap">
+              <img class="flip-card-img" id="flipImg3" alt="Activité 3">
+              <div class="flip-card-img-overlay"></div>
+              <span class="flip-card-badge reflexif" id="flipBadge3">Réflexif</span>
+              <span class="flip-card-num">3</span>
+            </div>
+            <div class="flip-card-body">
+              <h3 class="flip-card-title" id="flipTitle3"></h3>
+              <div class="flip-card-meta">
+                <span id="flipTasks3">7 tâches</span>
+                <span id="flipDur3">15 min</span>
+              </div>
+              <div class="flip-card-arrow">→</div>
+            </div>
+          </a>
+          <a class="flip-card" data-category="performance" data-act-num="4" href="#">
+            <div class="flip-card-img-wrap">
+              <img class="flip-card-img" id="flipImg4" alt="Activité 4">
+              <div class="flip-card-img-overlay"></div>
+              <span class="flip-card-badge performance" id="flipBadge4">Performance</span>
+              <span class="flip-card-num">4</span>
+            </div>
+            <div class="flip-card-body">
+              <h3 class="flip-card-title" id="flipTitle4"></h3>
+              <div class="flip-card-meta">
+                <span id="flipTasks4">8 tâches</span>
+                <span id="flipDur4">30 min</span>
+              </div>
+              <div class="flip-card-arrow">→</div>
+            </div>
+          </a>
+        </div>
+      </div>
     </section>
   </main>
 
   <script src="plateforme-etudiante/data.js"></script>
   <script src="plateforme-etudiante/app.js"></script>
   <script src="zenclass-enhancements.js"></script>
+
+  <script>
+  function toggleNav() {
+    const navOv = document.getElementById('navOverlay');
+    const menuTgl = document.getElementById('menuToggle');
+    if (!navOv || !menuTgl) return;
+    const isOpen = navOv.classList.toggle('open');
+    navOv.setAttribute('aria-hidden', !isOpen);
+    menuTgl.classList.toggle('open', isOpen);
+  }
+  function closeNav() {
+    const navOv = document.getElementById('navOverlay');
+    const menuTgl = document.getElementById('menuToggle');
+    if (!navOv) return;
+    navOv.classList.remove('open');
+    navOv.setAttribute('aria-hidden', 'true');
+    if (menuTgl) menuTgl.classList.remove('open');
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    var closeBtn = document.getElementById('navClose');
+    if (closeBtn) closeBtn.addEventListener('click', closeNav);
+    var navOv = document.getElementById('navOverlay');
+    if (navOv) {
+      navOv.addEventListener('click', function(e) { if (e.target === navOv) closeNav(); });
+    }
+    document.querySelectorAll('.ace-item').forEach(function(item) {
+      item.addEventListener('mouseenter', function() { this.classList.add('hov'); });
+      item.addEventListener('mouseleave', function() { this.classList.remove('hov'); });
+    });
+
+    const axe2Objective3Images = {
+      1: 'activit%C3%A9%201%20axe%202%20objectif%203.png',
+      2: 'activit%C3%A9%202%20axe%202%20objectif%203%20vrai.png',
+      3: 'activit%C3%A9%203%20axe%202%20objectif%203.png',
+      4: 'activit%C3%A9%204%20axe2%20objectif%203.png'
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentAxe = urlParams.get('axe');
+    const currentObj = urlParams.get('objectif');
+    const isAxe2Obj3 = currentAxe === 'axe-2' && currentObj === 'obj-3';
+
+    if (window.platformData && window.platformData.axes) {
+      var axeData = window.platformData.axes.find(function(a) { return a.id === currentAxe; });
+      if (axeData && axeData.objectives) {
+        var objData = axeData.objectives.find(function(o) { return o.id === currentObj; });
+
+        if (objData) {
+          var axeShort = axeData.shortLabel || axeData.label || 'Axe';
+          var objShort = objData.label || objData.title || '';
+          if (document.getElementById('objAxeBadge')) document.getElementById('objAxeBadge').textContent = axeShort;
+          if (document.getElementById('objLabelBadge')) document.getElementById('objLabelBadge').textContent = objShort;
+          if (document.getElementById('objTitle') && objData.title) document.getElementById('objTitle').textContent = objData.title;
+          if (document.getElementById('objDurPill') && objData.duration) document.getElementById('objDurPill').textContent = objData.duration;
+        }
+
+        if (objData && objData.activities) {
+          var catKey = { 'Fondations': 'fondations', 'Guidé': 'guide', 'Réflexif': 'reflexif', 'Performance': 'performance' };
+          var catCounts = { fondations: 0, guide: 0, reflexif: 0, performance: 0 };
+
+          objData.activities.forEach(function(act, idx) {
+            var num = idx + 1;
+            var titleEl = document.getElementById('flipTitle' + num);
+            var tasksEl = document.getElementById('flipTasks' + num);
+            var durEl = document.getElementById('flipDur' + num);
+            var imgEl = document.getElementById('flipImg' + num);
+            var badgeEl = document.getElementById('flipBadge' + num);
+            var cardEl = document.querySelector('[data-act-num="' + num + '"]');
+
+            if (titleEl) titleEl.textContent = act.title || ('Activité ' + num);
+            if (tasksEl) tasksEl.textContent = (act.taskCount || act.tasks || '--') + ' tâches';
+            if (durEl) durEl.textContent = act.duration || '--';
+
+            var difficulty = act.difficulty || '';
+            var badgeClass = catKey[difficulty] || 'fondations';
+            if (badgeEl) {
+              badgeEl.textContent = difficulty || badgeClass;
+              badgeEl.className = 'flip-card-badge ' + badgeClass;
+            }
+            if (cardEl) cardEl.setAttribute('data-category', badgeClass);
+
+            catCounts[badgeClass] = (catCounts[badgeClass] || 0) + 1;
+
+            if (isAxe2Obj3 && axe2Objective3Images[num]) {
+              if (imgEl) {
+                imgEl.src = axe2Objective3Images[num];
+                imgEl.onerror = function() {
+                  this.style.display = 'none';
+                };
+              }
+            } else {
+              if (imgEl) {
+                imgEl.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                imgEl.style.display = 'flex';
+                imgEl.style.alignItems = 'center';
+                imgEl.style.justifyContent = 'center';
+                imgEl.style.color = 'white';
+                imgEl.style.fontSize = '2rem';
+                imgEl.style.fontWeight = '700';
+                imgEl.alt = 'Activité ' + num;
+              }
+            }
+
+            if (cardEl) {
+              cardEl.href = 'activite.html?axe=' + currentAxe + '&objectif=' + currentObj + '&activite=' + num;
+            }
+          });
+
+          var stepsNav = document.getElementById('objStepsNav');
+          if (stepsNav) {
+            stepsNav.innerHTML = '';
+            objData.activities.forEach(function(act, idx) {
+              var num = idx + 1;
+              var step = document.createElement('a');
+              step.className = 'obj-step';
+              step.href = 'activite.html?axe=' + currentAxe + '&objectif=' + currentObj + '&activite=' + num;
+              step.innerHTML = '<div class="obj-step-circle">' + num + '</div><span class="obj-step-label">' + (act.title || ('Activité ' + num)).substring(0, 30) + (act.title && act.title.length > 30 ? '…' : '') + '</span>';
+              stepsNav.appendChild(step);
+            });
+          }
+
+          var counts = document.querySelectorAll('.flip-toggle-count');
+          var total = objData.activities.length;
+          if (counts.length === 5) {
+            counts[0].textContent = total;
+            counts[1].textContent = catCounts.fondations;
+            counts[2].textContent = catCounts.guide;
+            counts[3].textContent = catCounts.reflexif;
+            counts[4].textContent = catCounts.performance;
+          }
+        }
+      }
+    }
+
+    var cards = gsap.utils.toArray('.flip-card');
+    gsap.fromTo(cards,
+      { opacity: 0, y: 30, scale: 0.95 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'power3.out',
+        delay: 0.2
+      }
+    );
+
+    // Generate pixel grid dynamically
+    var pixelGrid = document.getElementById('zenPixelGrid');
+    if (pixelGrid) {
+      var pixelColors = ['active-1', 'active-2', 'active-3', 'active-4'];
+      var fragment = document.createDocumentFragment();
+      for (var pi = 0; pi < 48; pi++) {
+        var pixel = document.createElement('div');
+        pixel.className = 'zen-pixel';
+        var rand = Math.random();
+        if (rand > 0.65) {
+          pixel.classList.add(pixelColors[Math.floor(Math.random() * pixelColors.length)]);
+        }
+        fragment.appendChild(pixel);
+      }
+      pixelGrid.appendChild(fragment);
+    }
+
+    var flipToggle = document.getElementById('flipToggle');
+    var currentFilter = 'all';
+
+    if (flipToggle) {
+      flipToggle.addEventListener('click', function(e) {
+        var btn = e.target.closest('.flip-toggle-btn');
+        if (!btn) return;
+
+        var filter = btn.getAttribute('data-filter');
+        if (filter === currentFilter) return;
+        currentFilter = filter;
+
+        flipToggle.querySelectorAll('.flip-toggle-btn').forEach(function(b) {
+          b.classList.toggle('active', b === btn);
+        });
+
+        var cards = gsap.utils.toArray('.flip-card');
+        var toHide = [];
+        var toShow = [];
+
+        cards.forEach(function(card) {
+          var cat = card.getAttribute('data-category');
+          if (filter !== 'all' && cat !== filter) {
+            toHide.push(card);
+          } else {
+            if (card.classList.contains('hidden')) {
+              toShow.push(card);
+              card.classList.remove('hidden');
+            }
+          }
+        });
+
+        if (toHide.length) {
+          gsap.to(toHide, {
+            opacity: 0,
+            y: 10,
+            scale: 0.95,
+            duration: 0.22,
+            stagger: 0.03,
+            ease: 'power2.in',
+            onComplete: function() {
+              toHide.forEach(function(c) { c.classList.add('hidden'); });
+            }
+          });
+        }
+
+        if (toShow.length) {
+          gsap.fromTo(toShow,
+            { opacity: 0, y: 20, scale: 0.95 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.4,
+              stagger: 0.08,
+              ease: 'power3.out'
+            }
+          );
+        }
+      });
+    }
+  });
+  </script>
 </body>
 </html>

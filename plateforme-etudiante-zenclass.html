@@ -1754,13 +1754,16 @@
   <nav class="nav-overlay" id="navOverlay" aria-hidden="true">
     <button class="nav-close" id="navClose" aria-label="Fermer">✕</button>
     <div class="nav-links">
-      <a href="#hero" class="nav-link" data-num="01" onclick="closeNav()">Accueil</a>
-      <a href="#parcours" class="nav-link" data-num="02" onclick="closeNav()">Parcours</a>
-      <a href="#ressources-theoriques" class="nav-link" data-num="03" onclick="closeNav()">Ressources</a>
-      <a href="ma-classe.html" class="nav-link" data-num="04" onclick="closeNav()">Ma classe</a>
-      <a href="ma-classe.html#forum" class="nav-link" data-num="05" onclick="closeNav()">Forum</a>
-      <a href="ma-classe.html#equipe" class="nav-link" data-num="06" onclick="closeNav()">Équipe</a>
-    </div>
+    <a href="plateforme-etudiante-zenclass.html" class="nav-link" data-num="01" onclick="closeNav()">Accueil</a>
+    <a href="plateforme-etudiante-zenclass.html#parcours" class="nav-link" data-num="02" onclick="closeNav()">Parcours</a>
+    <a href="zenclass-modele/quiz.html" class="nav-link" data-num="03" onclick="closeNav()">Interactif</a>
+    <a href="plateforme-etudiante-zenclass.html#ressources-theoriques" class="nav-link" data-num="04" onclick="closeNav()">Ressources</a>
+    <a href="ma-classe.html" class="nav-link" data-num="05" onclick="closeNav()">Ressources classe</a>
+    <a href="plateforme-etudiante-zenclass-progression.html" class="nav-link" data-num="06" onclick="closeNav()">Mon suivi</a>
+    <a href="ma-classe.html" class="nav-link" data-num="07" onclick="closeNav()">Ma classe</a>
+    <a href="ma-classe.html#forum" class="nav-link" data-num="08" onclick="closeNav()">Forum</a>
+    <a href="ma-classe.html#equipe" class="nav-link" data-num="09" onclick="closeNav()">Equipe</a>
+  </div>
     <div class="nav-social-row">
       <a href="mailto:contact@zenclass.edu" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></a>
       <a href="#" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42c-.27-1-.99-1.8-1.93-2.07C18.88 4 12 4 12 4s-6.88 0-8.61.35C2.45 4.62 1.73 5.42 1.46 6.42 1.11 8.18 1.11 12 1.11 12s0 3.82.35 5.58c.27 1 .99 1.8 1.93 2.07C5.12 20 12 20 12 20s6.88 0 8.61-.35c.94-.27 1.66-1.07 1.93-2.07C22.89 15.82 22.89 12 22.89 12s0-3.82-.35-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="currentColor"/></svg></a>
@@ -1803,7 +1806,8 @@
             </div>
           </div>
         </div>
-        <!-- Ressources théoriques -->
+              
+<!-- Ressources théoriques -->
         <div class="ace-item" id="ai-ressources">
           <div class="ace-ibg"></div>
           <button class="ace-ibtn">Ressources</button>
@@ -1841,10 +1845,6 @@
           </div>
         </div>
         <!-- Ressources classe -->
-        <div class="ace-item" id="ai-classe">
-          <div class="ace-ibg"></div>
-          <a href="ma-classe.html" class="ace-ibtn" style="text-decoration:none">Ma classe</a>
-        </div>
       </nav>
       <div class="ace-right">
         <a href="#parcours" class="ace-cta">Commencer →</a>
@@ -1898,14 +1898,6 @@
   <main>
     <section class="axes-section" id="parcours">
       <div class="container">
-        <header class="section-header fade-in">
-          <span class="section-tag">Parcours</span>
-          <h2>Les 4 axes de la plateforme étudiante, rendus dans une architecture ZenClass</h2>
-          <p>
-            Chaque carte reprend un axe, ses objectifs complets et sa progression.
-          </p>
-        </header>
-
         <div id="interactiveSelector"></div>
       </div>
     </section>

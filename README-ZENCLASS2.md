@@ -79,6 +79,32 @@ Base de travail autonome pour compléter la plateforme ZenClass par axe, objecti
   - compteurs en direct, validation `3/4`, corrections possibles
   - les `4 consignes exactes` du document `AXE2 Activité 4.docx` sont branchées
 
+## Changements du 19 avril 2026 - Navigation
+
+### Navbar harmonisée sur TOUTES les pages
+- La barre de navigation `ace-header` de la page principale (`plateforme-etudiante-zenclass.html`) est maintenant copiée dans **toutes** les pages HTML
+- Fichiers concernés : toutes les pages racine, `plateforme-etudiante/`, et `zenclass-modele/`
+- Les chemins sont adaptés automatiquement selon le dossier
+
+### Structure de la navbar desktop
+- **Parcours** (dropdown avec les 4 axes)
+- **Ressources** (dropdown avec ressources théoriques par axe)
+- CTA "Commencer" + bouton hamburger
+
+### Menu overlay (mobile/burger)
+Contient 9 rubriques : Accueil, Parcours, Interactif, Ressources, Ressources classe, Mon suivi, Ma classe, Forum, Équipe
+
+### Logo uniformisé
+- `logo zenclasse reworked.png` est utilisé sur toutes les pages
+- Plus de `zenclass-logo.svg` mêlé
+
+### Corrections de bugs
+- Texte du menu overlay en blanc visible (correction du gradient qui changeait selon le thème)
+- Dropdowns qui s'affichaient horizontalement → corrigé en vertical
+- Halo lumineux sur le sélecteur orbital (couleur adaptée à l'axe survolé)
+- Glassmorphism sur le panneau d'info du sélecteur orbital
+- Suppression du titre "Les 4 axes..." sous le sélecteur (demande explicite)
+
 ## Fichiers modifiés pour cet objectif
 
 - `plateforme-etudiante/data.js`

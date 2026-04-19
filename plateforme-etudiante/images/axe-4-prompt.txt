@@ -1,0 +1,35 @@
+# PROMPT DALL-E - Axe 4 ZenClass
+
+## Prompt principal (copiez ceci):
+
+```
+Flat design 2.0 illustration of a warm, safe classroom scene for ZenClass platform. 5-7 stylized student silhouettes in soft pastel colors (sky blue #87CEEB, sage green #9DC183, solar yellow #F4E4A6, terracotta #C4A484, cloud white #F8F9FA) stand in a circle holding hands or shoulders, forming a "human sun" symbolizing emotional warmth. In the center of the circle, a stylized heart pulses gently with luminous particles floating around. Background shows a stylized classroom with large windows letting in golden morning light. Green plants in corners symbolizing growth and life. Above the group, a speech bubble with "Ça va ? Je t'aide !" in friendly rounded text. In the top right corner, the ZenClass logo in a semi-transparent sky blue rounded frame floating like a benevolent guardian. Small stars and luminous particles scattered around students symbolizing small moments of well-being. Very soft pastel tones, rounded lines, feeling of security and shared warmth. Clean vector style with soft shadows.
+```
+
+## Variations optionnelles:
+
+### Version plus courte:
+```
+Warm classroom scene flat illustration: circle of 6 diverse student silhouettes holding hands in pastel colors (sky blue, sage green, yellow, terracotta), glowing heart in center with light particles, golden window light, green plants, speech bubble "Ça va ? Je t'aide !", ZenClass logo top right, soft pastel palette, security atmosphere
+```
+
+### Version avec emphasis sur le "soleil humain":
+```
+ZenClass Axe 4 illustration: Stylized classroom interior. 6 student figures in a circle formation holding shoulders/hands, creating a "human sun" shape with arms extending outward like sun rays. Each student in different pastel color. Central glowing heart with sparkles. Windows with golden light streaming in. Potted plants in corners. Speech bubble above reading "Ça va ? Je t'aide !". ZenClass badge top right. Soft flat design, rounded shapes, warm and nurturing atmosphere.
+```
+
+---
+
+## Instructions:
+1. Ouvrez https://bing.com/images/create (Microsoft Copilot Image Creator)
+2. Connectez-vous avec votre compte Microsoft
+3. Collez le prompt ci-dessus
+4. Sélectionnez format 16:9 ou 1:1
+5. Générez et téléchargez
+
+## Couleurs exactes ZenClass:
+- Bleu ciel: #87CEEB
+- Vert sauge: #9DC183
+- Jaune solaire: #F4E6A6
+- Blanc nuage: #F8F9FA
+- Terracotta: #C4A484

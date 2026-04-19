@@ -353,6 +353,17 @@
     if (found !== hovIdx) {
       hovIdx = found;
       canvas.style.cursor = found >= 0 ? 'pointer' : 'default';
+      
+      // Mise à jour du halo selon l'axe survolé
+      if (found >= 0) {
+        const axeColor = AXES[found].color;
+        canvas.style.filter = `drop-shadow(0 0 50px ${withAlpha(axeColor, 0.45)}) drop-shadow(0 0 90px ${withAlpha(axeColor, 0.2)})`;
+        canvas.classList.add('halo-active');
+      } else {
+        canvas.style.filter = '';
+        canvas.classList.remove('halo-active');
+      }
+      
       updatePanel(found);
     }
   }
@@ -361,6 +372,8 @@
     hovIdx = -1;
     paused = false;
     canvas.style.cursor = 'default';
+    canvas.style.filter = '';
+    canvas.classList.remove('halo-active');
     updatePanel(-1);
   }
 
