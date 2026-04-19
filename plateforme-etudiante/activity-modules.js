@@ -1173,6 +1173,270 @@
     renderAll();
   }
 
+  function getPathwayTaskId(task, index) {
+    return task.id || String(index);
+  }
+
+  function sameIdSet(selectedIds, correctIds) {
+    const selected = (selectedIds || []).slice().sort();
+    const expected = (correctIds || []).slice().sort();
+
+    if (selected.length !== expected.length) {
+      return false;
+    }
+
+    return selected.every(function (id, index) {
+      return id === expected[index];
+    });
+  }
+
+  function pathwayMissingGroups(text, groups) {
+    return (groups || []).filter(function (group) {
+      return !textContainsAny(text, group);
+    });
+  }
+
+  function evaluatePathwayRewrite(task, value) {
+    const normalized = normalizeText(value);
+    const minLength = Math.max(12, Number(task.minLength || 18));
+    const missingGroups = pathwayMissingGroups(normalized, task.requiredGroups || []);
+    const blockedPhrases = (task.blockedPhrases || []).filter(function (phrase) {
+      return normalized.indexOf(normalizeText(phrase)) !== -1;
+    });
+
+    if (!normalized) {
+      return {
+        valid: false,
+        message: task.retryMessage || "Ajoutez une reformulation avant de vérifier cette tâche."
+      };
+    }
+
+    if (normalized.length < minLength) {
+      return {
+        valid: false,
+        message: task.retryMessage || "La reformulation est encore trop courte pour conserver l'information utile."
+      };
+    }
+
+    if (missingGroups.length || blockedPhrases.length) {
+      return {
+        valid: false,
+        message: task.retryMessage || "Conservez mieux l'information utile et retirez les formulations encore stressantes."
+      };
+    }
+
+    return {
+      valid: true,
+      message: task.successMessage || "La reformulation conserve l'essentiel tout en abaissant la pression."
+    };
+  }
+
+  function renderPathwayTaskContent(task, index) {
+    const taskId = getPathwayTaskId(task, index);
+
+    if (task.type === "multi-select") {
+      return (
+        '<div class="pathway-task-interaction">' +
+          '<p class="pathway-task-prompt">' + escapeHtml(task.prompt || "") + "</p>" +
+          '<div class="pathway-option-grid">' +
+            (task.options || []).map(function (option) {
+              return '<button class="pathway-option" type="button" data-pathway-option-task="' + escapeHtml(taskId) + '" data-pathway-option-id="' + escapeHtml(option.id) + '">' + escapeHtml(option.label || "") + "</button>";
+            }).join("") +
+          "</div>" +
+        "</div>"
+      );
+    }
+
+    if (task.type === "segment-select") {
+      return (
+        '<div class="pathway-task-interaction">' +
+          '<p class="pathway-task-prompt">' + escapeHtml(task.prompt || "") + "</p>" +
+          '<div class="pathway-case-grid">' +
+            (task.cases || []).map(function (caseItem) {
+              return (
+                '<article class="pathway-case-card">' +
+                  '<span class="rewrite-card-label">' + escapeHtml(caseItem.label || "Cas") + "</span>" +
+                  '<strong>' + escapeHtml(caseItem.description || "") + "</strong>" +
+                  '<div class="pathway-segment-row">' +
+                    (caseItem.segments || []).map(function (segment) {
+                      return '<button class="pathway-segment" type="button" data-pathway-segment-task="' + escapeHtml(taskId) + '" data-pathway-case-id="' + escapeHtml(caseItem.id || "") + '" data-pathway-segment-id="' + escapeHtml(segment.id || "") + '">' + escapeHtml(segment.text || "") + "</button>";
+                    }).join("") +
+                  "</div>" +
+                "</article>"
+              );
+            }).join("") +
+          "</div>" +
+        "</div>"
+      );
+    }
+
+    if (task.type === "categorize") {
+      return (
+        '<div class="pathway-task-interaction">' +
+          '<p class="pathway-task-prompt">' + escapeHtml(task.prompt || "") + "</p>" +
+          '<div class="pathway-select-list">' +
+            (task.items || []).map(function (item) {
+              return (
+                '<label class="pathway-select-row">' +
+                  '<span class="pathway-item-label">' + escapeHtml(item.label || "") + "</span>" +
+                  '<select data-pathway-category-task="' + escapeHtml(taskId) + '" data-pathway-item-id="' + escapeHtml(item.id || "") + '">' +
+                    '<option value="">Choisir une famille</option>' +
+                    (task.categories || []).map(function (category) {
+                      return '<option value="' + escapeHtml(category.id) + '">' + escapeHtml(category.label || "") + "</option>";
+                    }).join("") +
+                  "</select>" +
+                "</label>"
+              );
+            }).join("") +
+          "</div>" +
+        "</div>"
+      );
+    }
+
+    if (task.type === "mapping") {
+      return (
+        '<div class="pathway-task-interaction">' +
+          '<p class="pathway-task-prompt">' + escapeHtml(task.prompt || "") + "</p>" +
+          '<div class="pathway-select-list">' +
+            (task.items || []).map(function (item) {
+              return (
+                '<label class="pathway-select-row">' +
+                  '<span class="pathway-item-label">' + escapeHtml(item.label || "") + "</span>" +
+                  '<select data-pathway-category-task="' + escapeHtml(taskId) + '" data-pathway-item-id="' + escapeHtml(item.id || "") + '">' +
+                    '<option value="">Choisir une reformulation</option>' +
+                    (task.options || []).map(function (option) {
+                      return '<option value="' + escapeHtml(option.id) + '">' + escapeHtml(option.label || "") + "</option>";
+                    }).join("") +
+                  "</select>" +
+                "</label>"
+              );
+            }).join("") +
+          "</div>" +
+        "</div>"
+      );
+    }
+
+    if (task.type === "bucket-sort") {
+      return (
+        '<div class="pathway-task-interaction">' +
+          '<p class="pathway-task-prompt">' + escapeHtml(task.prompt || "") + "</p>" +
+          '<div class="pathway-bucket-list">' +
+            (task.items || []).map(function (item) {
+              return (
+                '<article class="pathway-bucket-row">' +
+                  '<p class="pathway-item-label">' + escapeHtml(item.label || "") + "</p>" +
+                  '<div class="pathway-bucket-actions">' +
+                    (task.buckets || []).map(function (bucket) {
+                      return '<button class="pathway-bucket-choice" type="button" data-pathway-bucket-task="' + escapeHtml(taskId) + '" data-pathway-item-id="' + escapeHtml(item.id || "") + '" data-pathway-bucket-id="' + escapeHtml(bucket.id || "") + '">' + escapeHtml(bucket.label || "") + "</button>";
+                    }).join("") +
+                  "</div>" +
+                "</article>"
+              );
+            }).join("") +
+          "</div>" +
+        "</div>"
+      );
+    }
+
+    if (task.type === "short-write") {
+      return (
+        '<div class="pathway-task-interaction">' +
+          '<p class="pathway-task-prompt">' + escapeHtml(task.prompt || "") + "</p>" +
+          '<div class="module-field">' +
+            '<textarea class="pathway-task-textarea" data-pathway-text-task="' + escapeHtml(taskId) + '" placeholder="' + escapeHtml(task.placeholder || "") + '"></textarea>' +
+          "</div>" +
+        "</div>"
+      );
+    }
+
+    if (task.type === "compare") {
+      return (
+        '<div class="pathway-task-interaction">' +
+          '<div class="pathway-case-grid">' +
+            (task.cases || []).map(function (caseItem) {
+              return (
+                '<article class="pathway-case-card">' +
+                  '<span class="rewrite-card-label">Comparaison</span>' +
+                  '<strong>' + escapeHtml(caseItem.prompt || "") + "</strong>" +
+                  '<div class="pathway-option-grid">' +
+                    (caseItem.options || []).map(function (option) {
+                      return '<button class="pathway-option" type="button" data-pathway-compare-task="' + escapeHtml(taskId) + '" data-pathway-case-id="' + escapeHtml(caseItem.id || "") + '" data-pathway-choice-id="' + escapeHtml(option.id || "") + '">' + escapeHtml(option.label || "") + "</button>";
+                    }).join("") +
+                  "</div>" +
+                  '<div class="module-field">' +
+                    '<label for="pathwayCompare-' + escapeHtml(taskId) + '-' + escapeHtml(caseItem.id || "") + '">' + escapeHtml(caseItem.noteLabel || "Justifiez votre choix") + "</label>" +
+                    '<textarea id="pathwayCompare-' + escapeHtml(taskId) + '-' + escapeHtml(caseItem.id || "") + '" data-pathway-compare-note-task="' + escapeHtml(taskId) + '" data-pathway-case-id="' + escapeHtml(caseItem.id || "") + '" placeholder="' + escapeHtml(caseItem.notePlaceholder || "") + '"></textarea>' +
+                  "</div>" +
+                "</article>"
+              );
+            }).join("") +
+          "</div>" +
+        "</div>"
+      );
+    }
+
+    if (task.type === "rewrite") {
+      return (
+        '<div class="pathway-task-interaction">' +
+          '<p class="pathway-task-prompt">' + escapeHtml(task.prompt || "") + "</p>" +
+          '<div class="rewrite-original-block">' +
+            '<span class="rewrite-card-label">Consigne de départ</span>' +
+            '<div class="activity-copy-box rewrite-original">' + escapeHtml(task.original || "") + "</div>" +
+          "</div>" +
+          '<div class="module-field">' +
+            '<label for="pathwayRewrite-' + escapeHtml(taskId) + '">Votre reformulation</label>' +
+            '<textarea id="pathwayRewrite-' + escapeHtml(taskId) + '" data-pathway-text-task="' + escapeHtml(taskId) + '" placeholder="' + escapeHtml(task.placeholder || "") + '"></textarea>' +
+          "</div>" +
+          (task.neutralExample
+            ? '<details class="rewrite-example" id="pathwayExample-' + escapeHtml(taskId) + '" hidden><summary>Voir un appui possible</summary><p>' + escapeHtml(task.neutralExample) + "</p></details>"
+            : "") +
+        "</div>"
+      );
+    }
+
+    if (task.type === "triple-note") {
+      return (
+        '<div class="pathway-task-interaction">' +
+          '<div class="pathway-field-grid">' +
+            (task.fields || []).map(function (field) {
+              return (
+                '<div class="module-field">' +
+                  '<label for="pathwayNote-' + escapeHtml(taskId) + '-' + escapeHtml(field.id || "") + '">' + escapeHtml(field.label || "") + "</label>" +
+                  '<textarea id="pathwayNote-' + escapeHtml(taskId) + '-' + escapeHtml(field.id || "") + '" data-pathway-note-task="' + escapeHtml(taskId) + '" data-pathway-field-id="' + escapeHtml(field.id || "") + '" placeholder="' + escapeHtml(field.placeholder || "") + '"></textarea>' +
+                "</div>"
+              );
+            }).join("") +
+          "</div>" +
+        "</div>"
+      );
+    }
+
+    return "";
+  }
+
+  function renderPathwayTaskCard(task, index) {
+    const taskId = getPathwayTaskId(task, index);
+
+    return (
+      '<article class="pathway-task-card" data-pathway-task="' + escapeHtml(taskId) + '">' +
+        '<div class="pathway-task-head">' +
+          '<span class="pathway-task-order">' + String(index + 1).padStart(2, "0") + "</span>" +
+          '<span class="rewrite-status" id="pathwayStatus-' + index + '">' + escapeHtml(task.level || ("Niveau " + (index + 1))) + "</span>" +
+        "</div>" +
+        '<div class="pathway-task-copy">' +
+          "<h3>" + escapeHtml(task.title || ("Tâche " + (index + 1))) + "</h3>" +
+          '<p>' + escapeHtml(task.description || "") + "</p>" +
+        "</div>" +
+        renderPathwayTaskContent(task, index) +
+        '<div class="rewrite-feedback" id="pathwayFeedback-' + index + '">' + escapeHtml(task.cue || task.prompt || "") + "</div>" +
+        '<div class="pathway-task-actions">' +
+          '<button class="btn btn-primary" type="button" data-pathway-validate="' + escapeHtml(taskId) + '">Vérifier la tâche</button>' +
+          '<button class="btn btn-ghost" type="button" data-pathway-reset-task="' + escapeHtml(taskId) + '">Effacer</button>' +
+        "</div>" +
+      "</article>"
+    );
+  }
+
   function renderPathwayModule(activity) {
     const path = activity.learningPath || {};
     const tasks = path.tasks || [];
@@ -1182,26 +1446,13 @@
     const supportCards = (path.supportCards || []).map(function (item) {
       return (
         '<article class="pathway-support-card">' +
-          '<span class="rewrite-card-label">' + escapeHtml(item.label || "Repere") + "</span>" +
+          '<span class="rewrite-card-label">' + escapeHtml(item.label || "Repère") + "</span>" +
           '<p>' + escapeHtml(item.text || "") + "</p>" +
         "</article>"
       );
     }).join("");
     const taskCards = tasks.map(function (task, index) {
-      return (
-        '<article class="pathway-task-card" data-pathway-task="' + escapeHtml(task.id || String(index)) + '">' +
-          '<div class="pathway-task-head">' +
-            '<span class="pathway-task-order">' + String(index + 1).padStart(2, "0") + "</span>" +
-            '<span class="rewrite-status">' + escapeHtml(task.level || ("Niveau " + (index + 1))) + "</span>" +
-          "</div>" +
-          '<div class="pathway-task-copy">' +
-            "<h3>" + escapeHtml(task.title || ("Tache " + (index + 1))) + "</h3>" +
-            '<p>' + escapeHtml(task.description || "") + "</p>" +
-            '<div class="rewrite-feedback">' + escapeHtml(task.cue || "") + "</div>" +
-          "</div>" +
-          '<button class="btn btn-secondary pathway-task-toggle" type="button" data-pathway-toggle="' + escapeHtml(task.id || String(index)) + '">Marquer comme fait</button>' +
-        "</article>"
-      );
+      return renderPathwayTaskCard(task, index);
     }).join("");
 
     return (
@@ -1223,7 +1474,7 @@
             '<div class="module-panel-head">' +
               "<div>" +
                 "<h2>Progression</h2>" +
-                "<p>Suivez les tâches dans l'ordre croissant de difficulté et gardez une trace finale de ce qui change dans votre pratique.</p>" +
+                "<p>Chaque tâche se réalise ici dans la plateforme : choisissez, classez, justifiez, puis vérifiez votre production.</p>" +
               "</div>" +
               '<span class="rewrite-chip" id="pathwayProgressPill">0 / ' + tasks.length + ' tâches</span>' +
             "</div>" +
@@ -1235,7 +1486,7 @@
                 "</div>" +
               "</div>" +
               '<div class="pathway-progress-copy">' +
-              '<span class="activity-timer-tag">' + escapeHtml(path.progressLabel || (tasks.length + ' tâches')) + "</span>" +
+                '<span class="activity-timer-tag">' + escapeHtml(path.progressLabel || (tasks.length + ' tâches')) + "</span>" +
                 '<p id="pathwayNextTaskText">Commencez par la première tâche du parcours.</p>' +
               "</div>" +
             "</div>" +
@@ -1246,7 +1497,7 @@
           '<div class="module-panel-head">' +
             "<div>" +
               "<h2>Feuille de route</h2>" +
-              "<p>Chaque carte correspond à une tâche explicite. Terminez-les dans l'ordre pour monter en exigence sans perdre le fil.</p>" +
+              "<p>Chaque carte contient une vraie manipulation à réaliser dans l'interface avant de passer à la suite.</p>" +
             "</div>" +
             '<span class="module-kpi">Ordre recommandé</span>' +
           "</div>" +
@@ -1280,9 +1531,11 @@
     const activity = context.activity || {};
     const path = activity.learningPath || {};
     const tasks = path.tasks || [];
+    const taskMap = {};
     const storageKey = makeKey(context);
     const defaultState = {
-      done: {},
+      responses: {},
+      results: {},
       reflection: ""
     };
     const state = readStorage(storageKey, defaultState);
@@ -1297,8 +1550,16 @@
     const resultNote = root.querySelector("#pathwayResultNote");
     const flashNote = root.querySelector("#pathwayFlashNote");
 
-    if (!state.done || typeof state.done !== "object") {
-      state.done = {};
+    tasks.forEach(function (task, index) {
+      taskMap[getPathwayTaskId(task, index)] = task;
+    });
+
+    if (!state.responses || typeof state.responses !== "object") {
+      state.responses = {};
+    }
+
+    if (!state.results || typeof state.results !== "object") {
+      state.results = {};
     }
 
     state.reflection = String(state.reflection || "");
@@ -1307,47 +1568,314 @@
       writeStorage(storageKey, state);
     }
 
+    function responseFor(taskId) {
+      if (!state.responses[taskId] || typeof state.responses[taskId] !== "object") {
+        state.responses[taskId] = {};
+      }
+      return state.responses[taskId];
+    }
+
+    function clearTaskResult(taskId) {
+      if (state.results[taskId]) {
+        delete state.results[taskId];
+      }
+    }
+
+    function taskTouched(task, response) {
+      if (!task || !response || typeof response !== "object") {
+        return false;
+      }
+
+      if (task.type === "multi-select") {
+        return Array.isArray(response.selected) && response.selected.length > 0;
+      }
+
+      if (task.type === "segment-select") {
+        return Object.keys(response.selectedByCase || {}).some(function (caseId) {
+          return Array.isArray(response.selectedByCase[caseId]) && response.selectedByCase[caseId].length > 0;
+        });
+      }
+
+      if (task.type === "categorize" || task.type === "mapping") {
+        return Object.keys(response.values || {}).some(function (itemId) {
+          return Boolean(response.values[itemId]);
+        });
+      }
+
+      if (task.type === "bucket-sort") {
+        return Object.keys(response.values || {}).some(function (itemId) {
+          return Boolean(response.values[itemId]);
+        });
+      }
+
+      if (task.type === "short-write" || task.type === "rewrite") {
+        return Boolean(String(response.text || "").trim());
+      }
+
+      if (task.type === "compare") {
+        return Object.keys(response.choices || {}).length > 0 || Object.keys(response.notes || {}).length > 0;
+      }
+
+      if (task.type === "triple-note") {
+        return Object.keys(response.fields || {}).some(function (fieldId) {
+          return Boolean(String(response.fields[fieldId] || "").trim());
+        });
+      }
+
+      return false;
+    }
+
+    function validateTask(task, response) {
+      if (!task) {
+        return { valid: false, message: "Cette tâche ne peut pas être vérifiée pour le moment." };
+      }
+
+      if (task.type === "multi-select") {
+        const selected = response.selected || [];
+        const valid = sameIdSet(selected, task.correctIds || []);
+        return {
+          valid: valid,
+          message: valid
+            ? (task.successMessage || "Les bons éléments ont été repérés.")
+            : (task.retryMessage || "Revenez aux propositions réellement alignées avec l'objectif de repérage.")
+        };
+      }
+
+      if (task.type === "segment-select") {
+        const valid = (task.cases || []).every(function (caseItem) {
+          const selected = (response.selectedByCase && response.selectedByCase[caseItem.id]) || [];
+          return sameIdSet(selected, caseItem.correctIds || []);
+        });
+        return {
+          valid: valid,
+          message: valid
+            ? (task.successMessage || "Les segments qui ajoutent réellement de la pression sont bien isolés.")
+            : (task.retryMessage || "Ne gardez que les segments qui ajoutent une menace, une injonction ou un jugement inutile.")
+        };
+      }
+
+      if (task.type === "categorize") {
+        const valid = (task.items || []).every(function (item) {
+          return response.values && response.values[item.id] === item.correctCategory;
+        });
+        return {
+          valid: valid,
+          message: valid
+            ? (task.successMessage || "Les formulations sont correctement classées.")
+            : (task.retryMessage || "Reprenez la famille dominante de chaque formulation.")
+        };
+      }
+
+      if (task.type === "mapping") {
+        const valid = (task.items || []).every(function (item) {
+          return response.values && response.values[item.id] === item.correctOption;
+        });
+        return {
+          valid: valid,
+          message: valid
+            ? (task.successMessage || "Les bonnes reformulations de départ sont choisies.")
+            : (task.retryMessage || "Associez chaque tournure stressante à la reformulation qui informe sans menacer.")
+        };
+      }
+
+      if (task.type === "bucket-sort") {
+        const valid = (task.items || []).every(function (item) {
+          return response.values && response.values[item.id] === item.correctBucket;
+        });
+        return {
+          valid: valid,
+          message: valid
+            ? (task.successMessage || "Le tri entre information utile et pression ajoutée est correct.")
+            : (task.retryMessage || "Revoyez ce qui doit rester pour agir et ce qui ajoute une pression évitable.")
+        };
+      }
+
+      if (task.type === "short-write") {
+        const text = String(response.text || "").trim();
+        const minLength = Math.max(20, Number(task.minLength || 50));
+        const missingGroups = pathwayMissingGroups(normalizeText(text), task.requiredGroups || []);
+        const valid = Boolean(text) && text.length >= minLength && !missingGroups.length;
+        return {
+          valid: valid,
+          message: valid
+            ? (task.successMessage || "La justification met clairement en lumière le mécanisme de pression.")
+            : (task.retryMessage || "Développez votre réponse en montrant mieux en quoi la formulation crée une menace ou une pression.")
+        };
+      }
+
+      if (task.type === "compare") {
+        const minNoteLength = Math.max(20, Number(task.minNoteLength || 25));
+        const valid = (task.cases || []).every(function (caseItem) {
+          const choice = response.choices && response.choices[caseItem.id];
+          const note = String(response.notes && response.notes[caseItem.id] || "").trim();
+          return choice === caseItem.correctId && note.length >= minNoteLength;
+        });
+        return {
+          valid: valid,
+          message: valid
+            ? (task.successMessage || "Vous choisissez désormais la version la plus contenante et vous savez l'expliquer.")
+            : (task.retryMessage || "Choisissez la version la plus neutre puis justifiez en quoi elle apaise la consigne.")
+        };
+      }
+
+      if (task.type === "rewrite") {
+        return evaluatePathwayRewrite(task, response.text || "");
+      }
+
+      if (task.type === "triple-note") {
+        const minLength = Math.max(4, Number(task.minLength || 8));
+        const valid = (task.fields || []).every(function (field) {
+          const value = String(response.fields && response.fields[field.id] || "").trim();
+          return value.length >= minLength;
+        });
+        return {
+          valid: valid,
+          message: valid
+            ? (task.successMessage || "Les repères de vigilance sont maintenant explicités.")
+            : (task.retryMessage || "Complétez chaque repère avec un contenu concret et réutilisable en classe.")
+        };
+      }
+
+      return { valid: false, message: "Type de tâche non pris en charge." };
+    }
+
     function completedCount() {
       return tasks.reduce(function (count, task, index) {
-        return count + (state.done[task.id || String(index)] ? 1 : 0);
+        const taskId = getPathwayTaskId(task, index);
+        return count + (state.results[taskId] && state.results[taskId].valid ? 1 : 0);
       }, 0);
     }
 
     function firstPendingTask() {
       return tasks.find(function (task, index) {
-        return !state.done[task.id || String(index)];
+        const taskId = getPathwayTaskId(task, index);
+        return !(state.results[taskId] && state.results[taskId].valid);
       }) || null;
+    }
+
+    function syncTaskControls(task, card, response) {
+      if (!card) {
+        return;
+      }
+
+      if (task.type === "multi-select") {
+        const selected = response.selected || [];
+        card.querySelectorAll("[data-pathway-option-task]").forEach(function (button) {
+          button.classList.toggle("is-active", selected.indexOf(button.dataset.pathwayOptionId) !== -1);
+        });
+      }
+
+      if (task.type === "segment-select") {
+        const selectedByCase = response.selectedByCase || {};
+        card.querySelectorAll("[data-pathway-segment-task]").forEach(function (button) {
+          const caseId = button.dataset.pathwayCaseId;
+          const selected = selectedByCase[caseId] || [];
+          button.classList.toggle("is-active", selected.indexOf(button.dataset.pathwaySegmentId) !== -1);
+        });
+      }
+
+      if (task.type === "categorize" || task.type === "mapping") {
+        const values = response.values || {};
+        card.querySelectorAll("[data-pathway-category-task]").forEach(function (select) {
+          select.value = values[select.dataset.pathwayItemId] || "";
+        });
+      }
+
+      if (task.type === "bucket-sort") {
+        const values = response.values || {};
+        card.querySelectorAll("[data-pathway-bucket-task]").forEach(function (button) {
+          button.classList.toggle("is-active", values[button.dataset.pathwayItemId] === button.dataset.pathwayBucketId);
+        });
+      }
+
+      if (task.type === "short-write" || task.type === "rewrite") {
+        const textarea = card.querySelector("[data-pathway-text-task]");
+        if (textarea) {
+          textarea.value = response.text || "";
+        }
+      }
+
+      if (task.type === "compare") {
+        const choices = response.choices || {};
+        const notes = response.notes || {};
+        card.querySelectorAll("[data-pathway-compare-task]").forEach(function (button) {
+          button.classList.toggle("is-active", choices[button.dataset.pathwayCaseId] === button.dataset.pathwayChoiceId);
+        });
+        card.querySelectorAll("[data-pathway-compare-note-task]").forEach(function (textarea) {
+          textarea.value = notes[textarea.dataset.pathwayCaseId] || "";
+        });
+      }
+
+      if (task.type === "triple-note") {
+        const fields = response.fields || {};
+        card.querySelectorAll("[data-pathway-note-task]").forEach(function (textarea) {
+          textarea.value = fields[textarea.dataset.pathwayFieldId] || "";
+        });
+      }
+    }
+
+    function renderTaskCard(task, index, isNext) {
+      const taskId = getPathwayTaskId(task, index);
+      const response = responseFor(taskId);
+      const result = state.results[taskId] || null;
+      const card = root.querySelector('[data-pathway-task="' + taskId + '"]');
+      const statusNode = root.querySelector("#pathwayStatus-" + index);
+      const feedbackNode = root.querySelector("#pathwayFeedback-" + index);
+      const validateButton = root.querySelector('[data-pathway-validate="' + taskId + '"]');
+      const exampleNode = root.querySelector("#pathwayExample-" + taskId);
+      const touched = taskTouched(task, response);
+
+      if (!card || !statusNode || !feedbackNode) {
+        return;
+      }
+
+      syncTaskControls(task, card, response);
+
+      card.classList.remove("is-done", "is-next", "is-warning");
+      statusNode.className = "rewrite-status";
+      feedbackNode.className = "rewrite-feedback";
+
+      if (result && result.valid) {
+        statusNode.textContent = "Validée";
+        statusNode.classList.add("is-success");
+        feedbackNode.classList.add("is-success");
+        feedbackNode.textContent = result.message;
+        card.classList.add("is-done");
+      } else if (result && !result.valid) {
+        statusNode.textContent = "À reprendre";
+        statusNode.classList.add("is-warning");
+        feedbackNode.classList.add("is-warning");
+        feedbackNode.textContent = result.message;
+        card.classList.add("is-warning");
+      } else if (touched) {
+        statusNode.textContent = "En cours";
+        statusNode.classList.add("is-progress");
+        feedbackNode.textContent = task.cue || task.prompt || "";
+      } else if (isNext) {
+        statusNode.textContent = "À faire";
+        statusNode.classList.add("is-progress");
+        feedbackNode.textContent = task.cue || task.prompt || "";
+        card.classList.add("is-next");
+      } else {
+        statusNode.textContent = task.level || ("Niveau " + (index + 1));
+        feedbackNode.textContent = task.cue || task.prompt || "";
+      }
+
+      if (validateButton) {
+        validateButton.textContent = result ? "Revérifier" : "Vérifier la tâche";
+      }
+
+      if (exampleNode) {
+        exampleNode.hidden = !(result && !result.valid);
+        exampleNode.open = Boolean(result && !result.valid);
+      }
     }
 
     function renderTasks() {
       const nextTask = firstPendingTask();
 
-      root.querySelectorAll("[data-pathway-task]").forEach(function (card, index) {
-        const task = tasks[index] || {};
-        const taskId = card.dataset.pathwayTask;
-        const isDone = Boolean(state.done[taskId]);
-        const isNext = !isDone && nextTask && (nextTask.id || String(index)) === taskId;
-        const statusNode = card.querySelector(".rewrite-status");
-        const toggleNode = card.querySelector("[data-pathway-toggle]");
-
-        card.classList.toggle("is-done", isDone);
-        card.classList.toggle("is-next", Boolean(isNext));
-
-        if (statusNode) {
-          statusNode.className = "rewrite-status";
-          statusNode.textContent = isDone
-            ? "Validée"
-            : (isNext ? "À faire" : (task.level || ("Niveau " + (index + 1))));
-          if (isDone) {
-            statusNode.classList.add("is-success");
-          } else if (isNext) {
-            statusNode.classList.add("is-progress");
-          }
-        }
-
-        if (toggleNode) {
-          toggleNode.textContent = isDone ? "Marquer à reprendre" : "Marquer comme fait";
-        }
+      tasks.forEach(function (task, index) {
+        renderTaskCard(task, index, nextTask && getPathwayTaskId(nextTask, tasks.indexOf(nextTask)) === getPathwayTaskId(task, index));
       });
     }
 
@@ -1380,7 +1908,7 @@
       if (nextTaskText) {
         nextTaskText.textContent = nextTask
           ? "Prochaine tâche : " + (nextTask.title || "Suite du parcours")
-          : "Toutes les tâches sont complétées. Vous pouvez consolider votre trace finale.";
+          : "Toutes les tâches sont validées. Vous pouvez consolider votre trace finale.";
       }
 
       if (resultBadge) {
@@ -1400,9 +1928,9 @@
         if (!completed) {
           resultText.textContent = "Commencez par la première tâche du parcours pour construire une progression stable.";
         } else if (completed < total) {
-          resultText.textContent = completed + " tâches sur " + total + " sont déjà bouclées. Continuez dans l'ordre pour aller jusqu'au niveau final.";
+          resultText.textContent = completed + " tâches sur " + total + " sont déjà validées. Continuez dans l'ordre pour aller jusqu'au niveau final.";
         } else if (!state.reflection.trim()) {
-          resultText.textContent = "Le parcours est complété. Ajoutez maintenant votre trace finale pour fixer ce que vous retenez.";
+          resultText.textContent = "Le parcours est validé. Ajoutez maintenant votre trace finale pour fixer ce que vous retenez.";
         } else {
           resultText.textContent = path.completionMessage || "Le parcours est terminé et votre trace finale est en place.";
         }
@@ -1425,13 +1953,151 @@
       });
     }
 
-    root.querySelectorAll("[data-pathway-toggle]").forEach(function (button) {
-      button.addEventListener("click", function () {
-        const taskId = button.dataset.pathwayToggle;
-        state.done[taskId] = !state.done[taskId];
+    root.addEventListener("click", function (event) {
+      const optionButton = event.target.closest("[data-pathway-option-task]");
+      const segmentButton = event.target.closest("[data-pathway-segment-task]");
+      const bucketButton = event.target.closest("[data-pathway-bucket-task]");
+      const compareButton = event.target.closest("[data-pathway-compare-task]");
+      const validateButton = event.target.closest("[data-pathway-validate]");
+      const resetButton = event.target.closest("[data-pathway-reset-task]");
+
+      if (optionButton) {
+        const taskId = optionButton.dataset.pathwayOptionTask;
+        const response = responseFor(taskId);
+        const selected = Array.isArray(response.selected) ? response.selected.slice() : [];
+        const optionId = optionButton.dataset.pathwayOptionId;
+        const position = selected.indexOf(optionId);
+
+        if (position === -1) {
+          selected.push(optionId);
+        } else {
+          selected.splice(position, 1);
+        }
+
+        response.selected = selected;
+        clearTaskResult(taskId);
         persist();
         renderProgress();
-      });
+        return;
+      }
+
+      if (segmentButton) {
+        const taskId = segmentButton.dataset.pathwaySegmentTask;
+        const caseId = segmentButton.dataset.pathwayCaseId;
+        const segmentId = segmentButton.dataset.pathwaySegmentId;
+        const response = responseFor(taskId);
+        const selectedByCase = response.selectedByCase && typeof response.selectedByCase === "object" ? response.selectedByCase : {};
+        const selected = Array.isArray(selectedByCase[caseId]) ? selectedByCase[caseId].slice() : [];
+        const position = selected.indexOf(segmentId);
+
+        if (position === -1) {
+          selected.push(segmentId);
+        } else {
+          selected.splice(position, 1);
+        }
+
+        selectedByCase[caseId] = selected;
+        response.selectedByCase = selectedByCase;
+        clearTaskResult(taskId);
+        persist();
+        renderProgress();
+        return;
+      }
+
+      if (bucketButton) {
+        const taskId = bucketButton.dataset.pathwayBucketTask;
+        const itemId = bucketButton.dataset.pathwayItemId;
+        const bucketId = bucketButton.dataset.pathwayBucketId;
+        const response = responseFor(taskId);
+        response.values = response.values && typeof response.values === "object" ? response.values : {};
+        response.values[itemId] = bucketId;
+        clearTaskResult(taskId);
+        persist();
+        renderProgress();
+        return;
+      }
+
+      if (compareButton) {
+        const taskId = compareButton.dataset.pathwayCompareTask;
+        const caseId = compareButton.dataset.pathwayCaseId;
+        const choiceId = compareButton.dataset.pathwayChoiceId;
+        const response = responseFor(taskId);
+        response.choices = response.choices && typeof response.choices === "object" ? response.choices : {};
+        response.choices[caseId] = choiceId;
+        clearTaskResult(taskId);
+        persist();
+        renderProgress();
+        return;
+      }
+
+      if (validateButton) {
+        const taskId = validateButton.dataset.pathwayValidate;
+        state.results[taskId] = validateTask(taskMap[taskId], responseFor(taskId));
+        persist();
+        renderProgress();
+        return;
+      }
+
+      if (resetButton) {
+        const taskId = resetButton.dataset.pathwayResetTask;
+        delete state.responses[taskId];
+        clearTaskResult(taskId);
+        persist();
+        renderProgress();
+      }
+    });
+
+    root.addEventListener("change", function (event) {
+      const select = event.target.closest("[data-pathway-category-task]");
+
+      if (!select) {
+        return;
+      }
+
+      const taskId = select.dataset.pathwayCategoryTask;
+      const response = responseFor(taskId);
+      response.values = response.values && typeof response.values === "object" ? response.values : {};
+      response.values[select.dataset.pathwayItemId] = select.value;
+      clearTaskResult(taskId);
+      persist();
+      renderProgress();
+    });
+
+    root.addEventListener("input", function (event) {
+      const textField = event.target.closest("[data-pathway-text-task]");
+      const compareNote = event.target.closest("[data-pathway-compare-note-task]");
+      const noteField = event.target.closest("[data-pathway-note-task]");
+
+      if (textField) {
+        const taskId = textField.dataset.pathwayTextTask;
+        const response = responseFor(taskId);
+        response.text = textField.value;
+        clearTaskResult(taskId);
+        persist();
+        renderProgress();
+        return;
+      }
+
+      if (compareNote) {
+        const taskId = compareNote.dataset.pathwayCompareNoteTask;
+        const response = responseFor(taskId);
+        response.notes = response.notes && typeof response.notes === "object" ? response.notes : {};
+        response.notes[compareNote.dataset.pathwayCaseId] = compareNote.value;
+        clearTaskResult(taskId);
+        persist();
+        renderProgress();
+        return;
+      }
+
+      if (noteField) {
+        const taskId = noteField.dataset.pathwayNoteTask;
+        const response = responseFor(taskId);
+        response.fields = response.fields && typeof response.fields === "object" ? response.fields : {};
+        response.fields[noteField.dataset.pathwayFieldId] = noteField.value;
+        clearTaskResult(taskId);
+        persist();
+        renderProgress();
+      }
     });
 
     root.querySelector("#pathwayResetBtn").addEventListener("click", function () {
@@ -1439,7 +2105,8 @@
         return;
       }
 
-      state.done = {};
+      state.responses = {};
+      state.results = {};
       state.reflection = "";
       persist();
       renderProgress();

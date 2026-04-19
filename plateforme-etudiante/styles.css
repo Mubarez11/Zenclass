@@ -1257,7 +1257,7 @@ body[data-page="activity"] .activity-hero .progress-track {
 }
 
 .pathway-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
 }
 
 .rewrite-roadmap {
@@ -1347,6 +1347,127 @@ body[data-page="activity"] .activity-hero .progress-track {
   line-height: 1.6;
 }
 
+.pathway-task-interaction,
+.pathway-option-grid,
+.pathway-case-grid,
+.pathway-segment-row,
+.pathway-select-list,
+.pathway-bucket-list,
+.pathway-bucket-actions,
+.pathway-field-grid,
+.pathway-task-actions {
+  display: grid;
+  gap: 12px;
+}
+
+.pathway-task-interaction {
+  gap: 14px;
+}
+
+.pathway-task-prompt {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.pathway-option-grid,
+.pathway-segment-row {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.pathway-option,
+.pathway-segment,
+.pathway-bucket-choice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 12px 14px;
+  border: 1px solid rgba(102, 126, 234, 0.16);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.5;
+  text-align: left;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.pathway-option:hover,
+.pathway-option:focus-visible,
+.pathway-segment:hover,
+.pathway-segment:focus-visible,
+.pathway-bucket-choice:hover,
+.pathway-bucket-choice:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+  outline: none;
+}
+
+.pathway-option.is-active,
+.pathway-segment.is-active,
+.pathway-bucket-choice.is-active {
+  border-color: rgba(102, 126, 234, 0.28);
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.pathway-case-grid,
+.pathway-field-grid {
+  grid-template-columns: 1fr;
+}
+
+.pathway-case-card,
+.pathway-bucket-row {
+  display: grid;
+  gap: 12px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.pathway-case-card strong,
+.pathway-item-label {
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+.pathway-select-row {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.pathway-select-row select {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  background: #ffffff;
+  color: var(--ink);
+  font: inherit;
+}
+
+.pathway-bucket-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pathway-field-grid .module-field textarea,
+.pathway-task-textarea,
+.pathway-case-card textarea {
+  min-height: 112px;
+}
+
+.pathway-task-actions {
+  grid-template-columns: repeat(auto-fit, minmax(180px, max-content));
+  align-items: center;
+}
+
 .pathway-support-card,
 .rewrite-roadmap-step {
   padding: 16px 18px;
@@ -1375,6 +1496,11 @@ body[data-page="activity"] .activity-hero .progress-track {
 .pathway-task-card.is-next {
   border-color: rgba(255, 159, 67, 0.28);
   box-shadow: 0 18px 34px rgba(255, 159, 67, 0.16);
+}
+
+.pathway-task-card.is-warning {
+  border-color: rgba(102, 126, 234, 0.24);
+  box-shadow: 0 16px 30px rgba(102, 126, 234, 0.1);
 }
 
 .pathway-task-card.is-done {
@@ -1418,10 +1544,6 @@ body[data-page="activity"] .activity-hero .progress-track {
   margin: 0;
   font-size: 1rem;
   line-height: 1.35;
-}
-
-.pathway-task-toggle {
-  width: fit-content;
 }
 
 .rewrite-roadmap-step {

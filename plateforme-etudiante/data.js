@@ -106,59 +106,314 @@ const axe2Objective3Activities = [
       tasks: [
         {
           id: "obj3-a1-t1",
+          type: "multi-select",
           level: "Niveau 1",
-          title: "Se mettre en posture d'observation",
-          description: "Relisez l'objectif de l'atelier et adoptez une posture de repérage : on n'améliore pas encore, on observe l'effet produit.",
-          cue: "Question-guide : qu'est-ce qui serre le climat émotionnel avant même que l'élève commence ?"
+          title: "Cadrer son regard avant d'analyser",
+          description: "Sélectionnez les trois repères qui cadrent correctement cette activité de sensibilisation.",
+          cue: "Avant de réécrire, on observe ce qui ajoute de la pression au message.",
+          prompt: "Cochez uniquement les trois affirmations justes pour lancer le parcours.",
+          options: [
+            {
+              id: "observe",
+              label: "J'observe d'abord l'effet émotionnel produit par la consigne."
+            },
+            {
+              id: "keep",
+              label: "Je garde en tête l'information utile que l'élève doit recevoir."
+            },
+            {
+              id: "rewrite-now",
+              label: "Je réécris immédiatement chaque phrase avant de l'analyser."
+            },
+            {
+              id: "pressure",
+              label: "Je cherche les mots qui ajoutent une menace, une urgence ou un jugement."
+            },
+            {
+              id: "blame",
+              label: "Je juge d'abord la personnalité de l'enseignant qui parle."
+            }
+          ],
+          correctIds: ["observe", "keep", "pressure"],
+          successMessage: "Le cadre d'observation est posé : vous pouvez maintenant repérer la pression dans des consignes concrètes.",
+          retryMessage: "Revenez au but de l'activité : observer, conserver l'information utile et repérer la pression ajoutée."
         },
         {
           id: "obj3-a1-t2",
+          type: "multi-select",
           level: "Niveau 1",
-          title: "Lire 8 consignes de classe brutes",
-          description: "Parcourez un lot de formulations typiques liées aux notes, aux contrôles, aux copies et au temps restant.",
-          cue: "Repérez les formulations qui vous semblent les plus dures à entendre pour un élève anxieux."
+          title: "Repérer les annonces qui ajoutent de la pression",
+          description: "Lisez huit consignes de classe et cochez uniquement celles qui ajoutent une menace, une injonction ou un jugement évitable.",
+          cue: "Toutes les phrases parlent d'école, mais seules certaines ajoutent une pression inutile.",
+          prompt: "Sélectionnez les quatre formulations qui risquent d'augmenter la tension chez un élève anxieux.",
+          options: [
+            {
+              id: "n1",
+              label: "Cette activité est notée et comptera pour votre bulletin."
+            },
+            {
+              id: "n2",
+              label: "Vous aurez un contrôle vendredi sur le chapitre 3."
+            },
+            {
+              id: "n3",
+              label: "Il vous reste 5 minutes pour terminer l'essentiel de l'exercice."
+            },
+            {
+              id: "n4",
+              label: "Je vous rends les copies et nous regarderons les points à renforcer."
+            },
+            {
+              id: "r1",
+              label: "Attention, c'est noté et ça compte pour votre bulletin."
+            },
+            {
+              id: "r2",
+              label: "Ceux qui n'ont pas travaillé vont le sentir."
+            },
+            {
+              id: "r3",
+              label: "Dépêchez-vous, après je ramasse tout."
+            },
+            {
+              id: "r4",
+              label: "Certains d'entre vous ont beaucoup à améliorer, c'est décevant."
+            }
+          ],
+          correctIds: ["r1", "r2", "r3", "r4"],
+          successMessage: "Vous avez isolé les formulations qui ajoutent une pression évitable.",
+          retryMessage: "Revoyez les phrases : certaines informent seulement, tandis que d'autres ajoutent une alerte, une menace ou un jugement."
         },
         {
           id: "obj3-a1-t3",
+          type: "segment-select",
           level: "Niveau 2",
           title: "Surligner les mots de pression",
-          description: "Isolez les mots ou segments qui évoquent la faute, l'urgence, la déception ou la sanction.",
-          cue: "Ex. attention, ne faites pas d'erreurs, dépêchez-vous, vont le sentir."
+          description: "Dans chaque phrase, cliquez uniquement sur les segments qui ajoutent de la pression au-delà de l'information utile.",
+          cue: "Ne cliquez pas sur ce qui informe simplement l'élève ; ciblez ce qui menace, presse ou juge.",
+          prompt: "Sélectionnez uniquement les segments qui augmentent la pression émotionnelle.",
+          cases: [
+            {
+              id: "case1",
+              label: "Phrase 1",
+              description: "Annonce d'une activité notée",
+              segments: [
+                { id: "c1s1", text: "Attention," },
+                { id: "c1s2", text: "c'est noté" },
+                { id: "c1s3", text: "et cela comptera pour votre bulletin." },
+                { id: "c1s4", text: "Ne faites pas d'erreurs." }
+              ],
+              correctIds: ["c1s1", "c1s4"]
+            },
+            {
+              id: "case2",
+              label: "Phrase 2",
+              description: "Annonce d'un contrôle",
+              segments: [
+                { id: "c2s1", text: "Vous aurez un contrôle vendredi." },
+                { id: "c2s2", text: "Ceux qui n'ont pas travaillé" },
+                { id: "c2s3", text: "vont le sentir." }
+              ],
+              correctIds: ["c2s2", "c2s3"]
+            }
+          ],
+          successMessage: "Vous distinguez mieux ce qui informe de ce qui met sous pression.",
+          retryMessage: "Ciblez seulement les segments qui ajoutent une alerte, un jugement ou une menace ; laissez l'information utile intacte."
         },
         {
           id: "obj3-a1-t4",
+          type: "categorize",
           level: "Niveau 2",
           title: "Classer les stresseurs par famille",
-          description: "Rangez les formulations relevées dans quatre familles : note, temps, menace implicite, comparaison sociale.",
-          cue: "L'idée n'est pas de juger la personne, mais de comprendre le mécanisme linguistique."
+          description: "Associez chaque formulation stressante à sa famille dominante pour comprendre le mécanisme en jeu.",
+          cue: "Cherchez la source principale de pression : note, temps, menace implicite ou comparaison sociale.",
+          prompt: "Attribuez à chaque formulation la bonne famille de stresseur.",
+          categories: [
+            { id: "evaluation", label: "Pression évaluative" },
+            { id: "temps", label: "Urgence temporelle" },
+            { id: "menace", label: "Menace implicite" },
+            { id: "comparaison", label: "Comparaison sociale" }
+          ],
+          items: [
+            {
+              id: "cat1",
+              label: "Ça comptera pour votre bulletin.",
+              correctCategory: "evaluation"
+            },
+            {
+              id: "cat2",
+              label: "Dépêchez-vous.",
+              correctCategory: "temps"
+            },
+            {
+              id: "cat3",
+              label: "Ceux qui n'ont pas travaillé vont le sentir.",
+              correctCategory: "menace"
+            },
+            {
+              id: "cat4",
+              label: "Les autres ont déjà presque fini.",
+              correctCategory: "comparaison"
+            },
+            {
+              id: "cat5",
+              label: "C'est noté.",
+              correctCategory: "evaluation"
+            },
+            {
+              id: "cat6",
+              label: "Tout le monde vous regarde déjà.",
+              correctCategory: "comparaison"
+            }
+          ],
+          successMessage: "Les grandes familles de stresseurs sont maintenant repérées.",
+          retryMessage: "Reprenez la logique dominante de chaque phrase : évaluer, presser, menacer ou comparer."
         },
         {
           id: "obj3-a1-t5",
+          type: "bucket-sort",
           level: "Niveau 3",
           title: "Isoler le noyau pédagogique utile",
-          description: "Dans deux consignes repérées, séparez l'information utile à conserver du surplus anxiogène.",
-          cue: "Gardez seulement ce que l'élève a objectivement besoin de savoir pour agir."
+          description: "Répartissez chaque fragment dans la bonne colonne : information utile à conserver ou pression ajoutée à alléger.",
+          cue: "Gardez seulement ce dont l'élève a objectivement besoin pour agir dans la tâche.",
+          prompt: "Classez chaque fragment dans la bonne colonne.",
+          buckets: [
+            { id: "utile", label: "Information utile" },
+            { id: "pression", label: "Pression ajoutée" }
+          ],
+          items: [
+            {
+              id: "bucket1",
+              label: "contrôle vendredi",
+              correctBucket: "utile"
+            },
+            {
+              id: "bucket2",
+              label: "activité notée",
+              correctBucket: "utile"
+            },
+            {
+              id: "bucket3",
+              label: "5 minutes restantes",
+              correctBucket: "utile"
+            },
+            {
+              id: "bucket4",
+              label: "je ramasse ensuite les feuilles",
+              correctBucket: "utile"
+            },
+            {
+              id: "bucket5",
+              label: "attention",
+              correctBucket: "pression"
+            },
+            {
+              id: "bucket6",
+              label: "ne faites pas d'erreurs",
+              correctBucket: "pression"
+            },
+            {
+              id: "bucket7",
+              label: "vont le sentir",
+              correctBucket: "pression"
+            },
+            {
+              id: "bucket8",
+              label: "c'est décevant",
+              correctBucket: "pression"
+            }
+          ],
+          successMessage: "Vous savez maintenant séparer le cadre utile du surplus anxiogène.",
+          retryMessage: "Revenez à la question centrale : qu'est-ce que l'élève doit vraiment savoir pour agir ?"
         },
         {
           id: "obj3-a1-t6",
+          type: "short-write",
           level: "Niveau 3",
           title: "Justifier un diagnostic de stress",
-          description: "Formulez en une phrase pourquoi une tournure peut augmenter la tension émotionnelle chez certains élèves.",
-          cue: "Appuyez-vous sur le ton, la syntaxe ou le type de rappel effectué."
+          description: "Expliquez pourquoi une tournure précise peut augmenter la tension émotionnelle chez certains élèves.",
+          cue: "Appuyez-vous sur l'idée de menace, de jugement ou de sanction implicite.",
+          prompt: "Expliquez en quelques phrases pourquoi la formulation « Ceux qui n'ont pas travaillé vont le sentir » peut augmenter la tension émotionnelle.",
+          placeholder: "Décrivez ce que cette phrase laisse entendre pour l'élève et pourquoi cela peut être vécu comme une menace.",
+          minLength: 55,
+          requiredGroups: [["menace", "pression", "sanction", "peur", "stress"]],
+          successMessage: "Votre justification rend explicite le mécanisme de pression émotionnelle.",
+          retryMessage: "Votre réponse doit montrer en quoi cette formulation peut être vécue comme une menace ou une pression."
         },
         {
           id: "obj3-a1-t7",
+          type: "compare",
           level: "Niveau 4",
           title: "Comparer deux versions d'une même annonce",
-          description: "Choisissez la version la plus neutre entre deux propositions et explicitez ce qui change dans le ressenti possible.",
-          cue: "Cherchez la version qui informe sans ajouter de pression de performance."
+          description: "Choisissez, pour chaque situation, la version la plus neutre puis expliquez ce qui change dans le ressenti possible.",
+          cue: "La meilleure version informe clairement sans menace, sans urgence brutale et sans jugement.",
+          cases: [
+            {
+              id: "cmp1",
+              prompt: "Quelle version annonce un contrôle sans ajouter de pression inutile ?",
+              options: [
+                {
+                  id: "a",
+                  label: "Vendredi, vous avez un contrôle. Ceux qui n'ont pas travaillé vont le sentir."
+                },
+                {
+                  id: "b",
+                  label: "Vendredi, vous aurez un contrôle. Vous pouvez revoir les points essentiels avant la séance."
+                }
+              ],
+              correctId: "b",
+              noteLabel: "Expliquez ce qui rend cette version plus contenante.",
+              notePlaceholder: "Ex. elle informe l'élève sans menace ni projection négative."
+            },
+            {
+              id: "cmp2",
+              prompt: "Quelle version annonce le temps restant de manière plus sécurisante ?",
+              options: [
+                {
+                  id: "a",
+                  label: "Dépêchez-vous, vous avez 5 minutes pour finir."
+                },
+                {
+                  id: "b",
+                  label: "Il vous reste 5 minutes pour terminer l'essentiel de votre travail."
+                }
+              ],
+              correctId: "b",
+              noteLabel: "Expliquez ce qui change pour l'élève dans cette formulation.",
+              notePlaceholder: "Ex. le cadre temporel reste clair, mais sans injonction brutale."
+            }
+          ],
+          minNoteLength: 28,
+          successMessage: "Vous distinguez maintenant plus finement une formulation informative d'une formulation stressante.",
+          retryMessage: "Choisissez la version la plus neutre et justifiez ce choix en montrant ce qui apaise la consigne."
         },
         {
           id: "obj3-a1-t8",
+          type: "triple-note",
           level: "Niveau 4",
           title: "Formaliser trois repères de vigilance",
-          description: "Synthétisez trois marqueurs linguistiques à surveiller avant une note, un contrôle ou une reprise de copies.",
-          cue: "Cette liste vous servira de filtre rapide dans les activités suivantes."
+          description: "Complétez trois repères concrets que vous pourrez réutiliser immédiatement dans les activités suivantes.",
+          cue: "Cette liste doit devenir votre filtre rapide avant une note, un contrôle ou une reprise de copies.",
+          fields: [
+            {
+              id: "mot",
+              label: "1. Un mot à surveiller",
+              placeholder: "Ex. attention, dépêchez-vous..."
+            },
+            {
+              id: "tournure",
+              label: "2. Une tournure à reformuler",
+              placeholder: "Ex. ne faites pas d'erreurs, vont le sentir..."
+            },
+            {
+              id: "reflexe",
+              label: "3. Un réflexe professionnel à adopter",
+              placeholder: "Ex. annoncer d'abord l'information utile, puis proposer une marche à suivre."
+            }
+          ],
+          minLength: 8,
+          successMessage: "Vos trois repères de vigilance sont prêts pour la suite du parcours.",
+          retryMessage: "Complétez les trois champs avec des repères concrets et directement réutilisables en classe."
         }
       ]
     }
@@ -194,6 +449,10 @@ const axe2Objective3Activities = [
         {
           label: "Critère clé",
           text: "Une reformulation réussie reste précise, courte et exploitable immédiatement par l'élève."
+        },
+        {
+          label: "Repère de validation",
+          text: "La plateforme vérifie que vous conservez le cadre utile (date, contrôle, note, temps) tout en retirant les formulations stressantes."
         }
       ],
       reflectionLabel: "Déclic de l'atelier",
@@ -203,52 +462,206 @@ const axe2Objective3Activities = [
       tasks: [
         {
           id: "obj3-a2-t1",
+          type: "bucket-sort",
           level: "Niveau 1",
           title: "Repérer l'information non négociable",
-          description: "Dans chaque consigne, relevez ce qui doit absolument rester : date, type d'épreuve, rendu, temps disponible.",
-          cue: "Tout le reste peut potentiellement être déplacé, allégé ou reformulé."
+          description: "Classez chaque fragment dans la bonne colonne : à conserver tel quel ou à alléger / reformuler.",
+          cue: "L'objectif est de garder le cadre pédagogique, pas la pression qui l'enveloppe.",
+          prompt: "Triez les fragments pour isoler le noyau non négociable de la consigne.",
+          buckets: [
+            { id: "keep", label: "À conserver" },
+            { id: "rework", label: "À alléger ou reformuler" }
+          ],
+          items: [
+            {
+              id: "keep1",
+              label: "activité notée",
+              correctBucket: "keep"
+            },
+            {
+              id: "keep2",
+              label: "contrôle vendredi",
+              correctBucket: "keep"
+            },
+            {
+              id: "keep3",
+              label: "5 minutes pour terminer",
+              correctBucket: "keep"
+            },
+            {
+              id: "keep4",
+              label: "je ramasserai les feuilles ensuite",
+              correctBucket: "keep"
+            },
+            {
+              id: "keep5",
+              label: "points à renforcer",
+              correctBucket: "keep"
+            },
+            {
+              id: "rew1",
+              label: "attention",
+              correctBucket: "rework"
+            },
+            {
+              id: "rew2",
+              label: "ne faites pas d'erreurs",
+              correctBucket: "rework"
+            },
+            {
+              id: "rew3",
+              label: "vont le sentir",
+              correctBucket: "rework"
+            },
+            {
+              id: "rew4",
+              label: "dépêchez-vous",
+              correctBucket: "rework"
+            },
+            {
+              id: "rew5",
+              label: "c'est décevant",
+              correctBucket: "rework"
+            }
+          ],
+          successMessage: "Vous isolez correctement ce qu'il faut conserver dans la consigne.",
+          retryMessage: "Revenez à l'objectif : garder le cadre utile, puis reformuler ce qui ajoute une pression évitable."
         },
         {
           id: "obj3-a2-t2",
+          type: "mapping",
           level: "Niveau 2",
-          title: "Retirer la menace explicite",
-          description: "Supprimez les segments qui annoncent une sanction, une déception ou une conséquence brutale.",
-          cue: "L'élève a besoin d'une information d'action, pas d'une projection menaçante."
+          title: "Associer une tournure stressante à une reformulation de départ",
+          description: "Pour chaque formulation à risque, choisissez la reformulation de départ la plus utile pour baisser la pression.",
+          cue: "Cherchez la version qui garde une information ou une action possible, sans menace ni injonction brutale.",
+          prompt: "Associez chaque tournure stressante à la reformulation la plus soutenante.",
+          options: [
+            {
+              id: "m1",
+              label: "Prenez le temps de relire avant de rendre votre travail."
+            },
+            {
+              id: "m2",
+              label: "Il vous reste 5 minutes pour terminer l'essentiel."
+            },
+            {
+              id: "m3",
+              label: "Vous aurez un contrôle vendredi ; vous pouvez revoir les points importants avant la séance."
+            },
+            {
+              id: "m4",
+              label: "Nous regarderons ensemble les points à renforcer pour la suite."
+            }
+          ],
+          items: [
+            {
+              id: "map1",
+              label: "Ne faites pas d'erreurs.",
+              correctOption: "m1"
+            },
+            {
+              id: "map2",
+              label: "Dépêchez-vous.",
+              correctOption: "m2"
+            },
+            {
+              id: "map3",
+              label: "Ceux qui n'ont pas travaillé vont le sentir.",
+              correctOption: "m3"
+            },
+            {
+              id: "map4",
+              label: "C'est décevant.",
+              correctOption: "m4"
+            }
+          ],
+          successMessage: "Vous commencez à remplacer une pression brute par une information ou une aide concrète.",
+          retryMessage: "Pour chaque phrase, choisissez la reformulation qui donne un appui à l'élève au lieu de l'intimider."
         },
         {
           id: "obj3-a2-t3",
+          type: "rewrite",
           level: "Niveau 2",
           title: "Assouplir l'injonction de performance",
-          description: "Remplacez les ordres liés à l'erreur ou à la réussite parfaite par des formulations plus contenantes.",
-          cue: "Ex. 'Prenez le temps de relire' vaut mieux que 'Ne faites pas d'erreurs'."
+          description: "Réécrivez une consigne courte pour retirer l'injonction de performance tout en gardant l'information sur la notation.",
+          cue: "Remplacez l'ordre centré sur l'erreur par une indication de démarche plus contenante.",
+          prompt: "Réécrivez cette consigne avec un ton neutre et informatif.",
+          original: "Cette activité est notée. Ne faites pas d'erreurs.",
+          placeholder: "Réécrivez ici la consigne de manière plus contenante.",
+          minLength: 18,
+          requiredGroups: [["noté", "notée", "évalué", "évaluée", "évaluation"]],
+          blockedPhrases: ["ne faites pas d'erreurs", "pas d'erreurs"],
+          neutralExample: "Cette activité est notée. Prenez le temps de relire avant de rendre votre travail.",
+          successMessage: "La consigne garde l'information de notation sans injonction de performance.",
+          retryMessage: "Conservez l'idée d'activité notée, mais retirez toute formulation centrée sur la faute parfaite."
         },
         {
           id: "obj3-a2-t4",
+          type: "rewrite",
           level: "Niveau 3",
           title: "Calmer la pression temporelle",
           description: "Transformez une annonce pressante du temps en rappel clair, prévisible et moins brutal.",
-          cue: "Conservez le cadre temporel, mais retirez le sentiment de menace immédiate."
+          cue: "Le cadre temporel doit rester présent, mais sans injonction abrupte.",
+          prompt: "Réécrivez cette consigne de temps avec un ton plus sécurisant.",
+          original: "Dépêchez-vous, vous avez 5 minutes pour finir.",
+          placeholder: "Formulez une annonce du temps restant sans brusquer l'élève.",
+          minLength: 18,
+          requiredGroups: [["5 minutes", "cinq minutes", "5 min"]],
+          blockedPhrases: ["dépêchez-vous", "depechez-vous", "dépêchez vous", "depechez vous"],
+          neutralExample: "Il vous reste 5 minutes pour terminer l'essentiel de votre travail.",
+          successMessage: "Le temps restant est annoncé clairement, sans injonction brutale.",
+          retryMessage: "Gardez le repère temporel, mais retirez la formule qui met immédiatement les élèves sous pression."
         },
         {
           id: "obj3-a2-t5",
+          type: "rewrite",
           level: "Niveau 3",
           title: "Réécrire une annonce de contrôle",
-          description: "Reformulez une consigne qui annonce une évaluation en gardant la date et l'enjeu, sans comparaison ni avertissement inutile.",
-          cue: "Cherchez un ton factuel, stable et prévisible."
+          description: "Reformulez une annonce d'évaluation en gardant la date et le contrôle, sans menace adressée aux élèves.",
+          cue: "Cherchez un ton factuel, stable et prévisible.",
+          prompt: "Réécrivez cette annonce de contrôle.",
+          original: "Vous avez un contrôle vendredi. Ceux qui n'ont pas travaillé vont le sentir.",
+          placeholder: "Conservez la date et le contrôle, puis reformulez la seconde partie.",
+          minLength: 20,
+          requiredGroups: [["contrôle", "controle", "évaluation", "épreuve"], ["vendredi"]],
+          blockedPhrases: ["vont le sentir", "ceux qui n'ont pas travaillé", "ceux qui n ont pas travaillé"],
+          neutralExample: "Vous aurez un contrôle vendredi. Vous pouvez revoir les points essentiels avant la séance.",
+          successMessage: "L'annonce du contrôle reste claire, mais sans menace implicite.",
+          retryMessage: "Gardez la date et le contrôle, puis remplacez la projection menaçante par une indication utile."
         },
         {
           id: "obj3-a2-t6",
+          type: "rewrite",
           level: "Niveau 4",
           title: "Réécrire un retour sur copies",
           description: "Travaillez une formulation sensible au moment de rendre des copies, en retirant les jugements dévalorisants.",
-          cue: "Parlez du travail et des pistes de suite, pas de la valeur des élèves."
+          cue: "Parlez du travail et des pistes de suite, pas de la valeur des élèves.",
+          prompt: "Réécrivez ce retour sur copies.",
+          original: "Je rends les copies. Certains d'entre vous ont beaucoup à améliorer, c'est décevant.",
+          placeholder: "Transformez cette annonce en retour clair et soutenant.",
+          minLength: 22,
+          requiredGroups: [["copies", "copie", "travaux"], ["améliorer", "ameliorer", "renforcer", "progression", "progresser"]],
+          blockedPhrases: ["décevant", "decevant", "c'est décevant", "c est décevant"],
+          neutralExample: "Je vous rends les copies. Nous regarderons ensemble les points à renforcer pour la suite.",
+          successMessage: "Le retour parle du travail à poursuivre plutôt que de juger les élèves.",
+          retryMessage: "Conservez l'idée de restitution des copies, mais retirez le jugement global et dévalorisant."
         },
         {
           id: "obj3-a2-t7",
+          type: "rewrite",
           level: "Niveau 5",
           title: "Boucler une consigne hybride en autonomie",
-          description: "Terminez en réécrivant une consigne qui mélange note, délai et pression sociale, avec un ton neutre et complet.",
-          cue: "C'est votre répétition générale avant le studio final."
+          description: "Terminez par une consigne qui mélange note, délai et pression sociale : à vous de tout rééquilibrer dans une seule reformulation.",
+          cue: "C'est votre répétition générale avant le studio final.",
+          prompt: "Réécrivez cette consigne hybride avec un ton neutre et complet.",
+          original: "Vendredi, le contrôle est noté. Les autres sont déjà prêts, alors ne vous laissez pas déborder au dernier moment.",
+          placeholder: "Conservez la date et le fait que le contrôle est noté, sans comparaison ni pression sociale.",
+          minLength: 24,
+          requiredGroups: [["vendredi"], ["contrôle", "controle", "évaluation"], ["noté", "notée", "évalué", "évaluée"]],
+          blockedPhrases: ["les autres sont déjà prêts", "les autres sont deja prets", "ne vous laissez pas déborder", "ne vous laissez pas deborder"],
+          neutralExample: "Vendredi, vous aurez un contrôle noté. Vous pouvez vous appuyer sur les points travaillés en classe pour vous préparer sereinement.",
+          successMessage: "Vous tenez maintenant une reformulation complète et transférable à la tâche finale.",
+          retryMessage: "Gardez la date et le cadre évaluatif, puis retirez la comparaison et la pression sociale."
         }
       ]
     }
