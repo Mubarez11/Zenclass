@@ -49,6 +49,37 @@ Nouvelle section hero inspirée du composant 21st.dev "A Modern Hero Section" :
 - `activité 3 axe 2 objectif 3.png`
 - `activité 4 axe2 objectif 3.png`
 
+## Handoff 2026-04-21
+
+### activite.html - Hero globe 3D (axe-2, obj-3, activite-1)
+
+Refonte du hero de la page activite pour remplacer la sphere surchargee par un globe 3D plus lisible et plus proche de l'intention 21st.dev.
+
+**Hero Activity (nouveau design):**
+- Titre conserve hors du globe, dans une colonne a gauche
+- Globe `cobe` charge dynamiquement via CDN ESM
+- Globe large, draggable, avec rendu plus 3D et lueur legere
+- Suppression du faux fond/cercle blanc derriere le globe
+- Labels derives du contenu reel de la page : `Axe 2`, `Objectif 3`, `Activité 1`, `Durée 20 min`, `Niveau Fondations`, `8 tâches`
+- Labels repositionnes autour et partiellement dans le globe selon l'espace disponible
+- Ajustements responsive verifies sur desktop et mobile
+
+**Fonctions importantes:**
+- `enhanceHero(meta)` : reconstruit le hero activite
+- `buildHeroGlobeData(meta)` : prepare les labels du globe
+- `mountHeroGlobe(hero, globeData)` : initialise `cobe`, drag et resize
+
+**Fichiers modifiés:**
+- `activite.html` : CSS inline du hero globe + JS de construction/rendu du globe
+- `README.md` : point d'entree rapide pour la reprise
+- `HANDOFF-2026-04-21.md` : resume detaille de la session
+
+**Vérifications faites:**
+- `1280x900`
+- `1280x533`
+- `390x844`
+- Console OK hors `favicon.ico` manquant
+
 ## Règle de travail pour le prochain agent
 
 - Si l'utilisateur demande de travailler sur une section précise, ne modifier que cette section et les liens ou scripts strictement nécessaires à son fonctionnement
@@ -58,12 +89,14 @@ Nouvelle section hero inspirée du composant 21st.dev "A Modern Hero Section" :
 
 ## Pour reprendre demain
 
-1. Ouvrir `objectif.html?axe=axe-2&objectif=obj-3`
-   - Vérifier que le hero s'affiche correctement
-   - Tester les filtres d'activités
-   - Vérifier que les images des activités chargent
-2. Tester d'autres objectifs/axes pour vérifier la rétrocompatibilité
-3. Si demandé : étendre le design hero aux autres pages objectif
+1. Ouvrir `README.md`
+2. Ouvrir `HANDOFF-2026-04-21.md`
+3. Ouvrir `activite.html?axe=axe-2&objectif=obj-3&activite=1`
+   - Vérifier le hero globe sur desktop
+   - Vérifier le hero globe sur mobile
+   - Ajuster la position des labels si l'utilisateur le demande
+4. Tester d'autres objectifs/axes pour vérifier la rétrocompatibilité
+5. Si demandé : étendre le design hero aux autres pages activité ou objectif
 
 ## Pense-bête technique
 
