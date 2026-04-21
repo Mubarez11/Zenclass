@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZenClass | Activité</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="plateforme-etudiante/styles.css" />
+  <style>
+    /* ===== RADICAL FLAT REDESIGN - NO BOXES, NO SHADOWS ===== */
+    :root {
+      --primary: #5B52D4;
+      --primary-light: #7C6FF7;
+      --maroon: #667eea;
+      --terracotta: #764ba2;
+      --apricot: #c8d4ff;
+      --turquoise: #4facfe;
+      --teal: #5a67d8;
+      --ink: #1a202c;
+      --muted: #718096;
+      --line: rgba(148, 163, 184, 0.25);
+      --line-strong: rgba(100, 116, 139, 0.35);
+      --surface: transparent;
+      --surface-strong: transparent;
+      --surface-soft: transparent;
+      --shadow: none;
+      --shadow-soft: none;
+      --radius-xl: 0;
+      --radius-lg: 0;
+      --radius-md: 0;
+      --radius-sm: 0;
+      --font-body: "Poppins", "Aptos", "Avenir Next", "Segoe UI Variable", "Segoe UI", sans-serif;
+      --zen-primary: #667eea;
+      --zen-primary-dark: #5a67d8;
+      --zen-gray-900: #1a202c;
+      --zen-gray-800: #2d3748;
+      --zen-gray-700: #4a5568;
+      --zen-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --zen-shadow-md: none;
+      --zen-shadow-lg: none;
+      --zen-transition: 0.3s ease;
+      --zen-container: 1160px;
+      --font-display: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    body {
+      color: var(--zen-gray-800);
+      background: linear-gradient(180deg, #f5f3ff 0%, #faf9ff 30%, #ffffff 100%);
+      overflow-x: hidden;
+      font-family: var(--font-body);
+    }
+
+    body::before {
+      display: none;
+    }
+
+    /* ===== SLAT BUTTONS - ALL SIZES ===== */
+    .hover-slat-btn {
+      display: inline-flex;
+      height: 48px;
+      border-radius: 0;
+      overflow: hidden;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      border: none;
+      cursor: pointer;
+      align-items: center;
+      padding: 0;
+      box-shadow: none;
+    }
+    .hover-slat-btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+      box-shadow: none;
+    }
+    .hover-slat-btn .group {
+      display: flex;
+    }
+    .slat-char {
+      width: 32px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      position: relative;
+      overflow: hidden;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+    .slat-char-bg {
+      position: absolute;
+      inset: 0;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hover-slat-btn:hover .slat-char:nth-child(odd) .slat-char-bg {
+      transform: translateY(-100%);
+    }
+    .hover-slat-btn:hover .slat-char:nth-child(even) .slat-char-bg {
+      transform: translateY(100%);
+    }
+
+    /* Small slat buttons */
+    .hover-slat-btn.slat-sm {
+      height: 38px;
+      font-size: 0.82rem;
+    }
+    .hover-slat-btn.slat-sm .slat-char {
+      width: 26px;
+      height: 30px;
+      font-size: 0.82rem;
+    }
+
+    /* Large slat buttons */
+    .hover-slat-btn.slat-lg {
+      height: 56px;
+      font-size: 1.05rem;
+    }
+    .hover-slat-btn.slat-lg .slat-char {
+      width: 36px;
+      height: 40px;
+      font-size: 1.05rem;
+    }
+
+    /* ===== HEADER OVERRIDES - FLAT ===== */
+    .ace-header {
+      box-shadow: none !important;
+      border-bottom: 1px solid var(--line);
+    }
+    .ace-drop {
+      box-shadow: none !important;
+      border: 1px solid var(--line);
+      border-radius: 0;
+    }
+    .ace-dcard {
+      box-shadow: none !important;
+      border: 1px solid var(--line);
+      border-radius: 0;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 40;
+      padding: 14px 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: none;
+    }
+
+    .nav-container {
+      width: min(100% - 32px, var(--zen-container));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .brand img {
+      width: 210px;
+      height: auto;
+      display: block;
+    }
+
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a,
+    .nav-links button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--zen-primary-dark);
+      font: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color var(--zen-transition), background var(--zen-transition);
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible,
+    .nav-links button:hover,
+    .nav-links button:focus-visible {
+      transform: none;
+      box-shadow: none;
+      background: rgba(102, 126, 234, 0.06);
+      outline: none;
+    }
+
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .dropdown-entry {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dropdown-parent-link {
+      flex: 1 1 auto;
+    }
+
+    .dropdown-toggle-button {
+      min-width: 42px;
+      padding: 10px 12px;
+      flex: 0 0 auto;
+    }
+
+    .dropdown-caret {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      background-color: currentColor;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      transition: transform var(--zen-transition);
+    }
+
+    .nav-dropdown:hover .dropdown-caret,
+    .nav-dropdown:focus-within .dropdown-caret {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      min-width: 220px;
+      margin: 0;
+      padding: 10px;
+      list-style: none;
+      display: grid;
+      gap: 4px;
+      border-radius: 0;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: none;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity var(--zen-transition), transform var(--zen-transition), visibility var(--zen-transition);
+    }
+
+    .nav-dropdown:hover .dropdown-menu,
+    .nav-dropdown:focus-within .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .dropdown-menu a {
+      justify-content: flex-start;
+      min-height: 40px;
+      padding: 10px 14px;
+      border-radius: 0;
+      background: transparent;
+      color: var(--zen-gray-700);
+      box-shadow: none;
+    }
+
+    .dropdown-menu a:hover,
+    .dropdown-menu a:focus-visible {
+      transform: none;
+      box-shadow: none;
+      background: rgba(102, 126, 234, 0.06);
+      color: var(--zen-primary-dark);
+    }
+
+    /* ===== PAGE SHELL ===== */
+    .page-shell {
+      width: min(100% - 32px, var(--zen-container));
+      max-width: none;
+      padding: 120px 0 72px;
+      gap: 0;
+    }
+
+    /* Spacer between major sections */
+    .page-shell > * + * {
+      margin-top: 16px;
+    }
+
+    /* ===== REMOVE ALL PANELS ===== */
+    .panel {
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    /* Activity sections with fine lines - INCREASED SPACING */
+    .activity-hero {
+      padding: 48px 0;
+    }
+    
+    .activity-main {
+      padding: 40px 0;
+    }
+    
+    .inline-nav {
+      padding: 32px 0;
+    }
+
+    .activity-hero {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .activity-main {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .inline-nav {
+      border-top: 1px solid var(--line);
+      margin-top: 24px;
+    }
+
+    /* Typography */
+    .activity-hero h1,
+    .content-block h2,
+    .content-block h3,
+    .module-note h2,
+    .module-panel h2,
+    .sort-zone h3 {
+      font-family: var(--font-display);
+      color: var(--zen-gray-900);
+    }
+
+    /* ===== REMOVE BOX STYLES FROM MODULE ELEMENTS ===== */
+    .activity-copy-box,
+    .module-note,
+    .module-panel,
+    .sort-zone,
+    .evaluation-evidence-card,
+    .evaluation-criterion,
+    .module-feedback-item,
+    .sort-current-card,
+    .sort-empty-card,
+    .sort-drop-list,
+    .sort-placed-card,
+    .module-kpi,
+    .module-status-badge {
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    /* Form fields - line style only */
+    .module-field input,
+    .module-field textarea,
+    .module-field select,
+    .module-inline-actions input[type="file"] {
+      border-radius: 0;
+      border: none;
+      border-bottom: 1px solid var(--line-strong);
+      background: transparent;
+      padding: 12px 0;
+      transition: border-color var(--zen-transition);
+    }
+    .module-field input:focus,
+    .module-field textarea:focus,
+    .module-field select:focus {
+      outline: none;
+      border-bottom-color: var(--zen-primary);
+    }
+
+    /* Standard buttons - clean and simple */
+    .btn-standard,
+    .activity-nav-link,
+    .btn:not(.hover-slat-btn) {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: 1.5px solid var(--line-strong);
+      background: #fff;
+      color: var(--zen-primary-dark);
+    }
+
+    .btn-standard:hover,
+    .activity-nav-link:hover,
+    .btn:not(.hover-slat-btn):hover {
+      background: var(--zen-primary);
+      color: #fff;
+      border-color: var(--zen-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:not(.hover-slat-btn) {
+      background: var(--zen-primary);
+      color: #fff;
+      border-color: var(--zen-primary);
+    }
+
+    .btn-primary:not(.hover-slat-btn):hover {
+      background: var(--zen-primary-dark);
+      border-color: var(--zen-primary-dark);
+    }
+
+    .btn-secondary:not(.hover-slat-btn) {
+      background: #fff;
+      color: var(--zen-primary-dark);
+      border-color: var(--line-strong);
+    }
+
+    .btn-ghost:not(.hover-slat-btn) {
+      background: transparent;
+      color: var(--muted);
+      border-color: transparent;
+    }
+
+    .btn-ghost:not(.hover-slat-btn):hover {
+      background: rgba(102, 126, 234, 0.08);
+      color: var(--zen-primary-dark);
+      border-color: transparent;
+    }
+
+    .inline-nav,
+    .action-row {
+      justify-content: flex-start;
+      gap: 12px;
+    }
+
+    /* ===== HERO REDESIGN - HORIZONTAL - CLEANER ===== */
+    #activityHero {
+      position: relative;
+      overflow: hidden;
+      padding: 56px 0;
+      min-height: 240px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--line);
+      gap: 48px;
+    }
+
+    #activityHero .header-layout {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 32px;
+    }
+
+    #activityHero .header-copy {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #activityHero h1 {
+      font-family: var(--font-display);
+      background: var(--zen-gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    /* Minimalist badge */
+    .zen-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 0 4px 0;
+      background: transparent;
+      color: var(--zen-primary) !important;
+      border-radius: 0;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: none;
+      width: fit-content;
+      border-bottom: 2px solid var(--zen-primary);
+    }
+
+    /* Pills without background - just colored text */
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--zen-primary-dark);
+    }
+    .hero-pill + .hero-pill::before {
+      content: "·";
+      margin: 0 8px;
+      color: var(--muted);
+    }
+
+    /* Hero image */
+    .zen-hero-image {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      flex-shrink: 0;
+      opacity: 0.85;
+      transition: opacity 0.3s ease;
+    }
+    #activityHero:hover .zen-hero-image {
+      opacity: 1;
+    }
+
+    /* Watermark logo - more subtle */
+    .zen-hero-logo {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+      opacity: 0.04;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #activityHero:hover .zen-hero-logo {
+      opacity: 0.08;
+    }
+
+    /* Progress bar */
+    #activityHero .progress-track {
+      height: 3px;
+      border-radius: 0;
+      background: var(--line);
+      border: none;
+      overflow: hidden;
+      box-shadow: none;
+      margin-top: 16px;
+    }
+
+    #activityHero .progress-fill {
+      height: 100%;
+      background: var(--zen-gradient-primary);
+      border-radius: 0;
+      box-shadow: none;
+      transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ===== TIMELINE SELECTOR - ENHANCED ===== */
+    .zen-timeline-container {
+      display: none;
+      padding: 32px 0;
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--line);
+    }
+    .zen-timeline-container.is-visible {
+      display: block;
+      animation: fadeInUp 0.5s ease both;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .zen-timeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid var(--line);
+    }
+
+    .zen-timeline-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--zen-primary-dark);
+      cursor: pointer;
+      font-size: 1.3rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .zen-timeline-nav:hover:not(:disabled) {
+      background: var(--zen-primary);
+      color: #fff;
+      border-color: var(--zen-primary);
+      transform: scale(1.1);
+    }
+    .zen-timeline-nav:disabled {
+      color: var(--line-strong);
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.5);
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .zen-timeline-track {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    .zen-timeline-track::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      right: 20px;
+      height: 3px;
+      background: var(--line);
+      border-radius: 2px;
+      z-index: 0;
+    }
+
+    .zen-timeline-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+      background: linear-gradient(180deg, #f5f3ff 0%, #faf9ff 30%, #ffffff 100%);
+      padding: 4px 10px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .zen-timeline-step:hover {
+      transform: translateY(-3px);
+      background: rgba(102, 126, 234, 0.08);
+    }
+
+    .zen-timeline-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: #fff;
+      border: 3px solid var(--line);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .zen-timeline-step.is-active .zen-timeline-dot {
+      background: var(--zen-gradient-primary);
+      color: #fff;
+      border-color: var(--zen-primary);
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+      transform: scale(1.15);
+    }
+
+    .zen-timeline-step.is-completed .zen-timeline-dot {
+      background: var(--zen-primary);
+      color: #fff;
+      border-color: var(--zen-primary);
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .zen-timeline-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-align: center;
+      max-width: 140px;
+      line-height: 1.4;
+      transition: all 0.3s ease;
+    }
+
+    .zen-timeline-step.is-active .zen-timeline-label {
+      color: var(--zen-primary-dark);
+      font-weight: 700;
+    }
+
+    /* Step content wrapper */
+    .zen-step-content {
+      display: none;
+      padding: 32px 0;
+    }
+    .zen-step-content.is-active {
+      display: block;
+      animation: stepFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+
+    @keyframes stepFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== CONTENT AREA ===== */
+    #activityContent {
+      padding: 0;
+    }
+
+    /* Module sections with fine separators */
+    .activity-module section,
+    .activity-module .module-section {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .activity-module section:last-child,
+    .activity-module .module-section:last-child {
+      border-bottom: none;
+    }
+
+    /* ===== BRANDING SECTION ===== */
+    .zen-branding-section {
+      padding: 48px 0;
+      margin-top: 32px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .zen-branding-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .zen-branding-image {
+      max-width: 280px;
+      height: auto;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .zen-branding-image:hover {
+      opacity: 1;
+    }
+
+    .zen-branding-text {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: italic;
+      letter-spacing: 0.02em;
+    }
+
+    /* ===== PAGER ===== */
+    #activityPager {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px 0;
+    }
+
+    #activityPager .hover-slat-btn {
+      height: 44px;
+      font-size: 0.9rem;
+    }
+    #activityPager .hover-slat-btn .slat-char {
+      width: 28px;
+      height: 34px;
+      font-size: 0.9rem;
+    }
+
+    /* Action row */
+    .action-row {
+      display: flex;
+      gap: 12px;
+      padding: 24px 0;
+      border-top: 1px solid var(--line);
+      margin-top: 24px;
+    }
+
+    /* ===== GLOBAL SHADOW/BORDER/BG REMOVAL ===== */
+    .page-shell .panel,
+    .activity-hero,
+    .activity-main,
+    .inline-nav,
+    .activity-copy-box,
+    .module-note,
+    .module-panel,
+    .sort-zone,
+    .evaluation-evidence-card,
+    .evaluation-criterion,
+    .module-feedback-item,
+    .sort-current-card,
+    .sort-empty-card,
+    .sort-drop-list,
+    .sort-placed-card,
+    .module-kpi,
+    .module-status-badge,
+    .module-field input,
+    .module-field textarea,
+    .module-field select,
+    .dropdown-menu,
+    .ace-drop,
+    .ace-dcard {
+      box-shadow: none !important;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 980px) {
+      .nav-container {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        justify-content: flex-start;
+      }
+      #activityHero {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      #activityHero .header-layout {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .zen-hero-image {
+        width: 160px;
+        height: 160px;
+        align-self: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links,
+      .action-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .dropdown-entry {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+      .dropdown-parent-link,
+      .nav-links a,
+      .nav-links button,
+      .btn {
+        width: 100%;
+      }
+      .dropdown-menu {
+        left: 0;
+        right: 0;
+        min-width: 0;
+      }
+      .activity-hero,
+      .activity-main,
+      .inline-nav {
+        padding: 24px 0;
+      }
+      #activityHero {
+        padding: 24px 0;
+        min-height: 0;
+      }
+      .zen-timeline-label {
+        display: none;
+      }
+      .zen-timeline {
+        padding: 12px;
+      }
+      .zen-timeline-dot {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+      }
+      .zen-branding-image {
+        max-width: 200px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="zenclass-header.css" />
+  <link rel="stylesheet" href="zenclass-enhancements.css" />
+  <link rel="stylesheet" href="plateforme-etudiante/zenclass-nav.css" />
+</head>
+<body data-page="activity">
+  <!-- NAV OVERLAY -->
+  <nav class="nav-overlay" id="navOverlay" aria-hidden="true">
+    <button class="nav-close" id="navClose" aria-label="Fermer">✕</button>
+    <div class="nav-links">
+      <a href="plateforme-etudiante-zenclass.html" class="nav-link" data-num="01" onclick="closeNav()">Accueil</a>
+      <a href="plateforme-etudiante-zenclass.html#parcours" class="nav-link" data-num="02" onclick="closeNav()">Parcours</a>
+      <a href="zenclass-modele/quiz.html" class="nav-link" data-num="03" onclick="closeNav()">Interactif</a>
+      <a href="plateforme-etudiante-zenclass.html#ressources-theoriques" class="nav-link" data-num="04" onclick="closeNav()">Ressources</a>
+      <a href="ma-classe.html" class="nav-link" data-num="05" onclick="closeNav()">Ressources classe</a>
+      <a href="plateforme-etudiante-zenclass-progression.html" class="nav-link" data-num="06" onclick="closeNav()">Mon suivi</a>
+      <a href="ma-classe.html" class="nav-link" data-num="07" onclick="closeNav()">Ma classe</a>
+      <a href="ma-classe.html#forum" class="nav-link" data-num="08" onclick="closeNav()">Forum</a>
+      <a href="ma-classe.html#equipe" class="nav-link" data-num="09" onclick="closeNav()">Equipe</a>
+    </div>
+    <div class="nav-social-row">
+      <a href="mailto:contact@zenclass.edu" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></a>
+      <a href="#" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42c-.27-1-.99-1.8-1.93-2.07C18.88 4 12 4 12 4s-6.88 0-8.61.35C2.45 4.62 1.73 5.42 1.46 6.42 1.11 8.18 1.11 12 1.11 12s0 3.82.35 5.58c.27 1 .99 1.8 1.93 2.07C5.12 20 12 20 12 20s6.88 0 8.61-.35c.94-.27 1.66-1.07 1.93-2.07C22.89 15.82 22.89 12 22.89 12s0-3.82-.35-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="currentColor"/></svg></a>
+    </div>
+  </nav>
+
+  <!-- ACE HEADER -->
+  <header class="ace-header" id="siteHeader">
+    <div class="ace-inner">
+      <a href="plateforme-etudiante-zenclass.html" class="ace-logo">
+        <img src="logo zenclasse reworked.png" alt="ZenClass" />
+      </a>
+      <nav class="ace-menu">
+        <div class="ace-item" id="ai-parcours">
+          <div class="ace-ibg"></div>
+          <button class="ace-ibtn">Parcours</button>
+          <div class="ace-drop">
+            <div class="ace-drop-grid">
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-1" class="ace-dcard">
+                <div class="ace-dicon" style="background:#667eea33;color:#667eea">A1</div>
+                <div class="ace-dname">Axe 1</div>
+                <div class="ace-dsub">Émotions & Bien-être</div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-2" class="ace-dcard">
+                <div class="ace-dicon" style="background:#63b3ed33;color:#63b3ed">A2</div>
+                <div class="ace-dname">Axe 2</div>
+                <div class="ace-dsub">Détecter pour prévenir</div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-3" class="ace-dcard">
+                <div class="ace-dicon" style="background:#4facfe33;color:#4facfe">A3</div>
+                <div class="ace-dname">Axe 3</div>
+                <div class="ace-dsub">Communication soutenante</div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-4" class="ace-dcard">
+                <div class="ace-dicon" style="background:#9f7aea33;color:#9f7aea">A4</div>
+                <div class="ace-dname">Axe 4</div>
+                <div class="ace-dsub">Climat & Bien-être global</div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="ace-item" id="ai-ressources">
+          <div class="ace-ibg"></div>
+          <button class="ace-ibtn">Ressources</button>
+          <div class="ace-drop" style="min-width:320px">
+            <div class="ace-drop-list">
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-1" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#667eea33;color:#667eea">A1</div>
+                <div>
+                  <div class="ace-dname">Axe 1 — Ressources théoriques</div>
+                  <div class="ace-dsub">Émotions, bien-être et apprentissages</div>
+                </div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#63b3ed33;color:#63b3ed">A2</div>
+                <div>
+                  <div class="ace-dname">Axe 2 — Ressources théoriques</div>
+                  <div class="ace-dsub">Prévention du stress</div>
+                </div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#4facfe33;color:#4facfe">A3</div>
+                <div>
+                  <div class="ace-dname">Axe 3 — Ressources théoriques</div>
+                  <div class="ace-dsub">Communication soutenante</div>
+                </div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-4" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#9f7aea33;color:#9f7aea">A4</div>
+                <div>
+                  <div class="ace-dname">Axe 4 — Ressources théoriques</div>
+                  <div class="ace-dsub">Climat et bien-être global</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="ace-right">
+        <a href="#parcours" class="ace-cta">Commencer →</a>
+        <button class="ace-hbg" id="menuToggle" aria-label="Menu" onclick="toggleNav()">
+          <span class="hbg-line"></span>
+          <span class="hbg-line"></span>
+          <span class="hbg-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="activity-hero" id="activityHero"></section>
+
+    <section class="activity-grid">
+      <article class="activity-main">
+        <!-- NEW: Timeline Task Selector -->
+        <div id="activityTimeline" class="zen-timeline-container"></div>
+        <!-- Legacy stepper (hidden, kept for compatibility) -->
+        <div id="activityStepper" class="zen-stepper" style="display:none"></div>
+        <div id="activityContent"></div>
+
+        <div class="action-row">
+          <button class="btn btn-primary" id="saveButton" type="button">Enregistrer</button>
+          <button class="btn btn-secondary" id="shareButton" type="button">Partager</button>
+          <button class="btn btn-ghost" id="printButton" type="button">Imprimer</button>
+        </div>
+      </article>
+    </section>
+
+    <!-- Branding Section -->
+    <section class="zen-branding-section" id="zenBranding">
+      <div class="zen-branding-content">
+        <img src="zenclasse prémium.png" alt="ZenClass Premium" class="zen-branding-image" />
+        <p class="zen-branding-text">Une expérience d'apprentissage pensée pour vous</p>
+      </div>
+    </section>
+
+    <section class="inline-nav" id="activityPager" aria-label="Navigation dans l'axe"></section>
+  </main>
+
+  <script src="plateforme-etudiante/data.js"></script>
+  <script src="plateforme-etudiante/activity-modules.js"></script>
+  <script src="plateforme-etudiante/app.js"></script>
+  <script src="zenclass-enhancements.js"></script>
+
+  <script>
+  function toggleNav() {
+    const navOv = document.getElementById('navOverlay');
+    const menuTgl = document.getElementById('menuToggle');
+    if (!navOv || !menuTgl) return;
+    const isOpen = navOv.classList.toggle('open');
+    navOv.setAttribute('aria-hidden', !isOpen);
+    menuTgl.classList.toggle('open', isOpen);
+  }
+  function closeNav() {
+    const navOv = document.getElementById('navOverlay');
+    const menuTgl = document.getElementById('menuToggle');
+    if (!navOv) return;
+    navOv.classList.remove('open');
+    navOv.setAttribute('aria-hidden', 'true');
+    if (menuTgl) menuTgl.classList.remove('open');
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    var closeBtn = document.getElementById('navClose');
+    if (closeBtn) closeBtn.addEventListener('click', closeNav);
+    var navOv = document.getElementById('navOverlay');
+    if (navOv) {
+      navOv.addEventListener('click', function(e) { if (e.target === navOv) closeNav(); });
+    }
+    document.querySelectorAll('.ace-item').forEach(function(item) {
+      item.addEventListener('mouseenter', function() { this.classList.add('hov'); });
+      item.addEventListener('mouseleave', function() { this.classList.remove('hov'); });
+    });
+  });
+  </script>
+
+  <script>
+  (function() {
+    function ready(fn) {
+      if (document.readyState !== 'loading') fn();
+      else document.addEventListener('DOMContentLoaded', fn);
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    /* ===== SLAT BUTTON BUILDER ===== */
+    function makeSlatButton(text, href, tagName, size) {
+      var chars = text.split('').map(function(ch) {
+        var safe = ch === ' ' ? '\u00A0' : escapeHtml(ch);
+        return '<span class="slat-char">' + safe + '<span class="slat-char-bg">' + safe + '</span></span>';
+      }).join('');
+      var sizeClass = size ? ' ' + size : '';
+      if (tagName === 'a') {
+        return '<a href="' + (href || '#') + '" class="hover-slat-btn' + sizeClass + '"><span class="group">' + chars + '</span></a>';
+      }
+      return '<button type="button" class="hover-slat-btn' + sizeClass + '"><span class="group">' + chars + '</span></button>';
+    }
+
+    function getActivityMeta() {
+      var params = new URLSearchParams(window.location.search);
+      var data = window.platformData;
+      if (!data) return {};
+      var axis = data.axes.find(function(a) { return a.id === params.get('axe'); });
+      var objective = axis && axis.objectives.find(function(o) { return o.id === params.get('objectif'); });
+      var activity = objective && objective.activities.find(function(a) { return a.number === Number(params.get('activite')); });
+      return { axis: axis, objective: objective, activity: activity, moduleType: (activity && activity.moduleType) || '' };
+    }
+
+    /* ===== STANDARD BUTTON BUILDER ===== */
+    function makeStandardButton(text, href, tagName, classes) {
+      var cls = 'btn-standard';
+      if (classes) {
+        cls += ' ' + classes.replace('hover-slat-btn', '').trim();
+      }
+      if (tagName === 'a') {
+        return '<a href="' + (href || '#') + '" class="' + cls + '">' + escapeHtml(text) + '</a>';
+      }
+      return '<button type="button" class="' + cls + '">' + escapeHtml(text) + '</button>';
+    }
+
+    /* ===== SLATIFY ONLY LAST BUTTON IN EACH GROUP ===== */
+    function slatifyButtons() {
+      // Process action-rows: only slatify the last button
+      document.querySelectorAll('.action-row').forEach(function(row) {
+        var buttons = row.querySelectorAll('.btn, button[type="button"], input[type="button"], .activity-nav-link');
+        if (buttons.length === 0) return;
+        
+        buttons.forEach(function(btn, index) {
+          if (btn.classList.contains('hover-slat-btn') || btn.closest('.hover-slat-btn')) return;
+          if (btn.classList.contains('zen-timeline-nav')) return;
+          if (btn.id === 'menuToggle') return;
+          if (btn.id === 'navClose') return;
+          
+          var text = (btn.textContent || btn.value || '').trim();
+          if (!text) return;
+
+          var isLast = index === buttons.length - 1;
+          var tagName = btn.tagName.toLowerCase();
+          var href = btn.getAttribute('href') || '#';
+          var onclick = btn.getAttribute('onclick');
+          var id = btn.id;
+          var className = btn.className;
+
+          var newBtn;
+          if (isLast) {
+            // Slatify the last button
+            var size = '';
+            if (btn.id === 'saveButton' || btn.classList.contains('btn-lg')) {
+              size = 'slat-lg';
+            } else if (btn.classList.contains('btn-sm') || text.length < 6) {
+              size = 'slat-sm';
+            }
+            var slatHtml = makeSlatButton(text, href, tagName === 'a' ? 'a' : 'button', size);
+            var temp = document.createElement('div');
+            temp.innerHTML = slatHtml;
+            newBtn = temp.firstChild;
+          } else {
+            // Standard button for others
+            var stdHtml = makeStandardButton(text, href, tagName, className);
+            var temp = document.createElement('div');
+            temp.innerHTML = stdHtml;
+            newBtn = temp.firstChild;
+          }
+
+          if (id) newBtn.id = id;
+          if (onclick) newBtn.setAttribute('onclick', onclick);
+          
+          // Copy data attributes
+          Array.from(btn.attributes).forEach(function(attr) {
+            if (attr.name.startsWith('data-')) {
+              newBtn.setAttribute(attr.name, attr.value);
+            }
+          });
+
+          btn.parentNode.replaceChild(newBtn, btn);
+        });
+      });
+
+      // Process pager: only slatify the last link/button
+      var pager = document.getElementById('activityPager');
+      if (pager) {
+        var pagerButtons = pager.querySelectorAll('.btn, button[type="button"], input[type="button"], .activity-nav-link, a');
+        pagerButtons.forEach(function(btn, index) {
+          if (btn.classList.contains('hover-slat-btn') || btn.closest('.hover-slat-btn')) return;
+          
+          var text = (btn.textContent || btn.value || '').trim();
+          if (!text) return;
+
+          var isLast = index === pagerButtons.length - 1;
+          var tagName = btn.tagName.toLowerCase();
+          var href = btn.getAttribute('href') || '#';
+          var onclick = btn.getAttribute('onclick');
+          var id = btn.id;
+          var className = btn.className;
+
+          var newBtn;
+          if (isLast) {
+            var size = text.length > 15 ? '' : 'slat-sm';
+            var slatHtml = makeSlatButton(text, href, tagName === 'a' ? 'a' : 'button', size);
+            var temp = document.createElement('div');
+            temp.innerHTML = slatHtml;
+            newBtn = temp.firstChild;
+          } else {
+            var stdHtml = makeStandardButton(text, href, tagName, className);
+            var temp = document.createElement('div');
+            temp.innerHTML = stdHtml;
+            newBtn = temp.firstChild;
+          }
+
+          if (id) newBtn.id = id;
+          if (onclick) newBtn.setAttribute('onclick', onclick);
+          
+          Array.from(btn.attributes).forEach(function(attr) {
+            if (attr.name.startsWith('data-')) {
+              newBtn.setAttribute(attr.name, attr.value);
+            }
+          });
+
+          btn.parentNode.replaceChild(newBtn, btn);
+        });
+      }
+    }
+
+    /* ===== HERO ENHANCEMENT ===== */
+    function enhanceHero(meta) {
+      var hero = document.getElementById('activityHero');
+      if (!hero) return;
+
+      // Add axis image to the right
+      var axisImages = {
+        'axe-1': 'axe 1 image.png',
+        'axe-2': 'axe 2 image.png',
+        'axe-3': 'axe 3 image.png',
+        'axe-4': 'axe 4 image.png'
+      };
+      var axisId = meta.axis && meta.axis.id;
+      if (axisId && axisImages[axisId]) {
+        var img = document.createElement('img');
+        img.className = 'zen-hero-image';
+        img.src = axisImages[axisId];
+        img.alt = meta.axis.name || 'Axe';
+        if (!hero.querySelector('.zen-hero-image')) {
+          hero.appendChild(img);
+        }
+      }
+
+      // Add watermark logo
+      if (!hero.querySelector('.zen-hero-logo')) {
+        var logo = document.createElement('img');
+        logo.className = 'zen-hero-logo';
+        logo.src = 'zenclasse solo logo.png';
+        logo.alt = '';
+        hero.appendChild(logo);
+      }
+
+      // Style subtitle pills
+      var subtitle = hero.querySelector('.hero-subtitle');
+      if (subtitle) {
+        var parts = subtitle.textContent.split('·').map(function(s){ return s.trim(); }).filter(Boolean);
+        if (parts.length > 1) {
+          subtitle.innerHTML = parts.map(function(p){ return '<span class="hero-pill">' + escapeHtml(p) + '</span>'; }).join('');
+        }
+      }
+
+      // Style badge
+      var badge = hero.querySelector('.activity-head p');
+      if (badge) badge.classList.add('zen-hero-badge');
+    }
+
+    /* ===== TIMELINE SELECTOR ===== */
+    function setupTimeline(meta) {
+      var timeline = document.getElementById('activityTimeline');
+      var content = document.getElementById('activityContent');
+      if (!timeline || !content) return;
+
+      var type = meta.moduleType;
+      var moduleRoot = content.querySelector('.activity-module');
+
+      if (!moduleRoot) {
+        timeline.style.display = 'none';
+        return;
+      }
+
+      // Determine steps
+      var steps = [];
+      var stepLabels = [];
+
+      if (type === 'verbatim') {
+        setupVerbatimTimeline(timeline, content, meta);
+        return;
+      }
+
+      // For modules with clear sections
+      var sections = Array.from(moduleRoot.children).filter(function(el) {
+        return (el.tagName === 'SECTION' || el.classList.contains('module-section')) && !el.hasAttribute('hidden');
+      });
+
+      if (sections.length > 1) {
+        steps = sections;
+        stepLabels = sections.map(function(s, i) {
+          var heading = s.querySelector('h2, h3, .module-title, .section-title');
+          return heading ? heading.textContent.trim() : 'Étape ' + (i + 1);
+        });
+      } else {
+        // Create artificial steps for simple modules
+        var allChildren = Array.from(moduleRoot.children).filter(function(el) {
+          return !el.hasAttribute('hidden') && el.tagName !== 'STYLE';
+        });
+        
+        if (allChildren.length === 0) {
+          timeline.style.display = 'none';
+          return;
+        }
+
+        // Split into 3-4 steps
+        var stepCount = Math.min(4, Math.max(3, Math.ceil(allChildren.length / 2)));
+        var chunkSize = Math.ceil(allChildren.length / stepCount);
+        
+        for (var i = 0; i < stepCount; i++) {
+          var wrapper = document.createElement('div');
+          wrapper.className = 'zen-step-content';
+          var chunk = allChildren.slice(i * chunkSize, (i + 1) * chunkSize);
+          chunk.forEach(function(c) { wrapper.appendChild(c); });
+          moduleRoot.appendChild(wrapper);
+          steps.push(wrapper);
+          
+          // Try to find a label from first heading
+          var firstHeading = wrapper.querySelector('h2, h3, .module-title, .section-title, p');
+          if (firstHeading) {
+            stepLabels.push(firstHeading.textContent.trim().substring(0, 30));
+          } else {
+            stepLabels.push('Étape ' + (i + 1));
+          }
+        }
+      }
+
+      if (steps.length <= 1) {
+        timeline.style.display = 'none';
+        return;
+      }
+
+      timeline.classList.add('is-visible');
+      buildTimeline(timeline, steps, stepLabels, 0);
+      showStep(steps, 0);
+    }
+
+    function buildTimeline(container, steps, labels, current) {
+      var total = steps.length;
+      var dotsHtml = steps.map(function(s, i) {
+        var isActive = i === current ? 'is-active' : (i < current ? 'is-completed' : '');
+        return '<div class="zen-timeline-step ' + isActive + '" data-step="' + i + '">' +
+          '<div class="zen-timeline-dot">' + (i + 1) + '</div>' +
+          '<div class="zen-timeline-label">' + escapeHtml(labels[i] || ('Étape ' + (i + 1))) + '</div>' +
+          '</div>';
+      }).join('');
+
+      container.innerHTML =
+        '<div class="zen-timeline">' +
+        '<button class="zen-timeline-nav" data-dir="prev" ' + (current === 0 ? 'disabled' : '') + '>‹</button>' +
+        '<div class="zen-timeline-track">' + dotsHtml + '</div>' +
+        '<button class="zen-timeline-nav" data-dir="next" ' + (current === total - 1 ? 'disabled' : '') + '>›</button>' +
+        '</div>';
+
+      // Event delegation
+      container.addEventListener('click', function(e) {
+        var stepEl = e.target.closest('.zen-timeline-step');
+        var navEl = e.target.closest('.zen-timeline-nav');
+        
+        if (stepEl) {
+          var idx = parseInt(stepEl.getAttribute('data-step'), 10);
+          showStep(steps, idx);
+          buildTimeline(container, steps, labels, idx);
+        } else if (navEl) {
+          var dir = navEl.getAttribute('data-dir');
+          var newIdx = dir === 'prev' ? current - 1 : current + 1;
+          if (newIdx >= 0 && newIdx < total) {
+            showStep(steps, newIdx);
+            buildTimeline(container, steps, labels, newIdx);
+          }
+        }
+      });
+    }
+
+    function showStep(steps, index) {
+      steps.forEach(function(s, i) {
+        s.classList.toggle('is-active', i === index);
+      });
+    }
+
+    function setupVerbatimTimeline(timeline, content, meta) {
+      var counter = document.getElementById('verbatimExerciseCounter');
+      if (!counter) {
+        timeline.style.display = 'none';
+        return;
+      }
+
+      function parseTotal() {
+        var m = counter.textContent.match(/\/\s*(\d+)/);
+        return m ? parseInt(m[1], 10) : 4;
+      }
+
+      var total = parseTotal();
+      var steps = [];
+      var labels = [];
+      
+      for (var i = 0; i < total; i++) {
+        labels.push('Exercice ' + (i + 1));
+      }
+
+      // Create placeholder steps for verbatim (content managed by module)
+      var moduleRoot = content.querySelector('.activity-module');
+      if (moduleRoot) {
+        for (var j = 0; j < total; j++) {
+          var wrapper = document.createElement('div');
+          wrapper.className = 'zen-step-content';
+          wrapper.setAttribute('data-verbatim-step', j);
+          moduleRoot.appendChild(wrapper);
+          steps.push(wrapper);
+        }
+      }
+
+      if (steps.length <= 1) {
+        timeline.style.display = 'none';
+        return;
+      }
+
+      timeline.classList.add('is-visible');
+      buildTimeline(timeline, steps, labels, 0);
+      showStep(steps, 0);
+
+      // Sync with verbatim counter
+      var observer = new MutationObserver(function() {
+        var m = counter.textContent.match(/(\d+)\s*\//);
+        var current = m ? parseInt(m[1], 10) - 1 : 0;
+        showStep(steps, current);
+        buildTimeline(timeline, steps, labels, current);
+      });
+      observer.observe(counter, { childList: true, subtree: true, characterData: true });
+    }
+
+    /* ===== PAGER TRANSFORM ===== */
+    function transformPager() {
+      // Pager buttons are now handled by slatifyButtons()
+      // This function is kept for backward compatibility
+      var pager = document.getElementById('activityPager');
+      if (!pager) return;
+      
+      // Only process links that haven't been processed yet
+      pager.querySelectorAll('a:not(.hover-slat-btn):not(.btn-standard)').forEach(function(link, index, all) {
+        var text = link.textContent.trim();
+        var href = link.getAttribute('href') || '#';
+        var isLast = index === all.length - 1;
+        
+        if (isLast) {
+          var size = text.length > 15 ? '' : 'slat-sm';
+          link.outerHTML = makeSlatButton(text, href, 'a', size);
+        } else {
+          link.classList.add('btn-standard');
+        }
+      });
+    }
+
+    /* ===== MAIN INIT ===== */
+    ready(function() {
+      var meta = getActivityMeta();
+      if (meta.moduleType) {
+        document.body.classList.add('zen-module-' + meta.moduleType);
+      }
+      enhanceHero(meta);
+      
+      // Wait for module to render
+      setTimeout(function() {
+        setupTimeline(meta);
+        slatifyButtons();
+        transformPager();
+      }, 100);
+
+      // Watch for dynamically added content
+      var contentObserver = new MutationObserver(function() {
+        slatifyButtons();
+        transformPager();
+      });
+      var contentEl = document.getElementById('activityContent');
+      if (contentEl) {
+        contentObserver.observe(contentEl, { childList: true, subtree: true });
+      }
+    });
+  })();
+  </script>
+</body>
+</html>

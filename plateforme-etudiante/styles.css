@@ -2158,6 +2158,17 @@ body[data-page="activity"] .activity-hero .progress-track {
   color: var(--maroon);
 }
 
+.sort-workspace {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.sort-workspace .module-panel {
+  margin: 0;
+}
+
 .module-progress-inline .progress-track {
   background: rgba(203, 213, 224, 0.52);
 }
@@ -3110,6 +3121,10 @@ body[data-page="team"] .page-shell {
 
   body[data-page="resources-class"] .resources-grid,
   body[data-page="resources-class"] .activities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sort-workspace {
     grid-template-columns: 1fr;
   }
 }

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZenClass | Activité</title>
+  <link rel="stylesheet" href="plateforme-etudiante/styles.css" />
+  <style>
+    :root {
+      --maroon: #667eea;
+      --terracotta: #764ba2;
+      --apricot: #c8d4ff;
+      --turquoise: #4facfe;
+      --teal: #5a67d8;
+      --ink: #1a202c;
+      --muted: #718096;
+      --line: rgba(148, 163, 184, 0.18);
+      --line-strong: rgba(100, 116, 139, 0.28);
+      --surface: rgba(255, 255, 255, 0.96);
+      --surface-strong: rgba(255, 255, 255, 0.98);
+      --surface-soft: rgba(247, 250, 252, 0.96);
+      --shadow: 0 18px 46px rgba(15, 23, 42, 0.08);
+      --shadow-soft: 0 12px 28px rgba(15, 23, 42, 0.05);
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --font-body: "Poppins", "Aptos", "Avenir Next", "Segoe UI Variable", "Segoe UI", sans-serif;
+      --zen-primary: #667eea;
+      --zen-primary-dark: #5a67d8;
+      --zen-gray-900: #1a202c;
+      --zen-gray-800: #2d3748;
+      --zen-gray-700: #4a5568;
+      --zen-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --zen-shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --zen-shadow-lg: 0 18px 48px rgba(15, 23, 42, 0.12);
+      --zen-transition: 0.3s ease;
+      --zen-container: 1160px;
+      --font-display: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    body {
+      color: var(--zen-gray-800);
+      background:
+        radial-gradient(circle at 10% 15%, rgba(102, 126, 234, 0.12), transparent 28%),
+        radial-gradient(circle at 88% 12%, rgba(79, 172, 254, 0.1), transparent 24%),
+        linear-gradient(180deg, #f6f8fc 0%, #ffffff 34%, #f8fbff 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      display: none;
+    }
+
+    .navbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 40;
+      padding: 14px 0;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04), 0 12px 24px rgba(15, 23, 42, 0.05);
+    }
+
+    .nav-container {
+      width: min(100% - 32px, var(--zen-container));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .brand img {
+      width: 210px;
+      height: auto;
+      display: block;
+    }
+
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a,
+    .nav-links button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(102, 126, 234, 0.08);
+      color: var(--zen-primary-dark);
+      font: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform var(--zen-transition), box-shadow var(--zen-transition), background var(--zen-transition);
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible,
+    .nav-links button:hover,
+    .nav-links button:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: var(--zen-shadow-md);
+      outline: none;
+    }
+
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .dropdown-entry {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dropdown-parent-link {
+      flex: 1 1 auto;
+    }
+
+    .dropdown-toggle-button {
+      min-width: 42px;
+      padding: 10px 12px;
+      flex: 0 0 auto;
+    }
+
+    .dropdown-caret {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      background-color: currentColor;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      transition: transform var(--zen-transition);
+    }
+
+    .nav-dropdown:hover .dropdown-caret,
+    .nav-dropdown:focus-within .dropdown-caret {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      min-width: 220px;
+      margin: 0;
+      padding: 10px;
+      list-style: none;
+      display: grid;
+      gap: 4px;
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: var(--zen-shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity var(--zen-transition), transform var(--zen-transition), visibility var(--zen-transition);
+    }
+
+    .nav-dropdown:hover .dropdown-menu,
+    .nav-dropdown:focus-within .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .dropdown-menu a {
+      justify-content: flex-start;
+      min-height: 40px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: transparent;
+      color: var(--zen-gray-700);
+      box-shadow: none;
+    }
+
+    .dropdown-menu a:hover,
+    .dropdown-menu a:focus-visible {
+      transform: none;
+      box-shadow: none;
+      background: rgba(102, 126, 234, 0.08);
+      color: var(--zen-primary-dark);
+    }
+
+    .page-shell {
+      width: min(100% - 32px, var(--zen-container));
+      max-width: none;
+      padding: 120px 0 72px;
+      gap: 24px;
+    }
+
+    .panel {
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 28px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      box-shadow: var(--zen-shadow-md);
+    }
+
+    .activity-hero,
+    .activity-main,
+    .inline-nav {
+      padding: 28px;
+    }
+
+    .activity-hero h1,
+    .content-block h2,
+    .content-block h3,
+    .module-note h2,
+    .module-panel h2,
+    .sort-zone h3 {
+      font-family: var(--font-display);
+      color: var(--zen-gray-900);
+    }
+
+    .activity-hero::after {
+      opacity: 0.18;
+    }
+
+    .activity-copy-box,
+    .module-note,
+    .module-panel,
+    .sort-zone,
+    .evaluation-evidence-card,
+    .evaluation-criterion,
+    .module-feedback-item,
+    .sort-current-card,
+    .sort-empty-card,
+    .sort-drop-list,
+    .sort-placed-card,
+    .module-kpi,
+    .module-status-badge,
+    .module-field input,
+    .module-field textarea,
+    .module-field select,
+    .module-inline-actions input[type="file"] {
+      border-radius: 18px;
+      border-color: rgba(148, 163, 184, 0.22);
+    }
+
+    .activity-copy-box {
+      background: rgba(247, 250, 252, 0.96);
+    }
+
+    .activity-nav-link,
+    .btn {
+      border-radius: 14px;
+    }
+
+    .btn-primary {
+      background: var(--zen-gradient-primary);
+    }
+
+    .btn-secondary {
+      background: rgba(102, 126, 234, 0.08);
+      border-color: rgba(102, 126, 234, 0.18);
+      color: var(--zen-primary-dark);
+    }
+
+    .btn-ghost {
+      background: rgba(79, 172, 254, 0.08);
+      border-color: rgba(79, 172, 254, 0.18);
+      color: var(--zen-primary-dark);
+    }
+
+    .inline-nav,
+    .action-row {
+      justify-content: flex-start;
+    }
+
+    @media (max-width: 980px) {
+      .nav-container {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links,
+      .action-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .dropdown-entry {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .dropdown-parent-link,
+      .nav-links a,
+      .nav-links button,
+      .btn {
+        width: 100%;
+      }
+
+      .dropdown-menu {
+        left: 0;
+        right: 0;
+        min-width: 0;
+      }
+
+      .activity-hero,
+      .activity-main,
+      .inline-nav {
+        padding: 22px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="zenclass-header.css" />
+  <link rel="stylesheet" href="zenclass-enhancements.css" />
+  <link rel="stylesheet" href="plateforme-etudiante/zenclass-nav.css" />
+</head>
+<body data-page="activity">
+  <!-- NAV OVERLAY -->
+  <nav class="nav-overlay" id="navOverlay" aria-hidden="true">
+    <button class="nav-close" id="navClose" aria-label="Fermer">✕</button>
+    <div class="nav-links">
+    <a href="plateforme-etudiante-zenclass.html" class="nav-link" data-num="01" onclick="closeNav()">Accueil</a>
+    <a href="plateforme-etudiante-zenclass.html#parcours" class="nav-link" data-num="02" onclick="closeNav()">Parcours</a>
+    <a href="zenclass-modele/quiz.html" class="nav-link" data-num="03" onclick="closeNav()">Interactif</a>
+    <a href="plateforme-etudiante-zenclass.html#ressources-theoriques" class="nav-link" data-num="04" onclick="closeNav()">Ressources</a>
+    <a href="ma-classe.html" class="nav-link" data-num="05" onclick="closeNav()">Ressources classe</a>
+    <a href="plateforme-etudiante-zenclass-progression.html" class="nav-link" data-num="06" onclick="closeNav()">Mon suivi</a>
+    <a href="ma-classe.html" class="nav-link" data-num="07" onclick="closeNav()">Ma classe</a>
+    <a href="ma-classe.html#forum" class="nav-link" data-num="08" onclick="closeNav()">Forum</a>
+    <a href="ma-classe.html#equipe" class="nav-link" data-num="09" onclick="closeNav()">Equipe</a>
+  </div>
+    <div class="nav-social-row">
+      <a href="mailto:contact@zenclass.edu" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></a>
+      <a href="#" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42c-.27-1-.99-1.8-1.93-2.07C18.88 4 12 4 12 4s-6.88 0-8.61.35C2.45 4.62 1.73 5.42 1.46 6.42 1.11 8.18 1.11 12 1.11 12s0 3.82.35 5.58c.27 1 .99 1.8 1.93 2.07C5.12 20 12 20 12 20s6.88 0 8.61-.35c.94-.27 1.66-1.07 1.93-2.07C22.89 15.82 22.89 12 22.89 12s0-3.82-.35-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="currentColor"/></svg></a>
+    </div>
+  </nav>
+
+  <!-- ACE HEADER -->
+  <header class="ace-header" id="siteHeader">
+    <div class="ace-inner">
+      <a href="plateforme-etudiante-zenclass.html" class="ace-logo">
+        <img src="logo zenclasse reworked.png" alt="ZenClass" />
+      </a>
+      <nav class="ace-menu">
+        <!-- Parcours -->
+        <div class="ace-item" id="ai-parcours">
+          <div class="ace-ibg"></div>
+          <button class="ace-ibtn">Parcours</button>
+          <div class="ace-drop">
+            <div class="ace-drop-grid">
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-1" class="ace-dcard">
+                <div class="ace-dicon" style="background:#667eea33;color:#667eea">A1</div>
+                <div class="ace-dname">Axe 1</div>
+                <div class="ace-dsub">Émotions & Bien-être</div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-2" class="ace-dcard">
+                <div class="ace-dicon" style="background:#63b3ed33;color:#63b3ed">A2</div>
+                <div class="ace-dname">Axe 2</div>
+                <div class="ace-dsub">Détecter pour prévenir</div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-3" class="ace-dcard">
+                <div class="ace-dicon" style="background:#4facfe33;color:#4facfe">A3</div>
+                <div class="ace-dname">Axe 3</div>
+                <div class="ace-dsub">Communication soutenante</div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-axe.html?axe=axe-4" class="ace-dcard">
+                <div class="ace-dicon" style="background:#9f7aea33;color:#9f7aea">A4</div>
+                <div class="ace-dname">Axe 4</div>
+                <div class="ace-dsub">Climat & Bien-être global</div>
+              </a>
+            </div>
+          </div>
+        </div>
+              
+<!-- Ressources théoriques -->
+        <div class="ace-item" id="ai-ressources">
+          <div class="ace-ibg"></div>
+          <button class="ace-ibtn">Ressources</button>
+          <div class="ace-drop" style="min-width:320px">
+            <div class="ace-drop-list">
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-1" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#667eea33;color:#667eea">A1</div>
+                <div>
+                  <div class="ace-dname">Axe 1 — Ressources théoriques</div>
+                  <div class="ace-dsub">Émotions, bien-être et apprentissages</div>
+                </div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#63b3ed33;color:#63b3ed">A2</div>
+                <div>
+                  <div class="ace-dname">Axe 2 — Ressources théoriques</div>
+                  <div class="ace-dsub">Prévention du stress</div>
+                </div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#4facfe33;color:#4facfe">A3</div>
+                <div>
+                  <div class="ace-dname">Axe 3 — Ressources théoriques</div>
+                  <div class="ace-dsub">Communication soutenante</div>
+                </div>
+              </a>
+              <a href="plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-4" class="ace-dlist-item">
+                <div class="ace-dicon" style="background:#9f7aea33;color:#9f7aea">A4</div>
+                <div>
+                  <div class="ace-dname">Axe 4 — Ressources théoriques</div>
+                  <div class="ace-dsub">Climat et bien-être global</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Ressources classe -->
+      </nav>
+      <div class="ace-right">
+        <a href="#parcours" class="ace-cta">Commencer →</a>
+        <button class="ace-hbg" id="menuToggle" aria-label="Menu" onclick="toggleNav()">
+          <span class="hbg-line"></span>
+          <span class="hbg-line"></span>
+          <span class="hbg-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="panel activity-hero" id="activityHero"></section>
+
+    <section class="activity-grid">
+      <article class="panel activity-main">
+        <div id="activityContent"></div>
+
+        <div class="action-row">
+          <button class="btn btn-primary" id="saveButton" type="button">Enregistrer</button>
+          <button class="btn btn-secondary" id="shareButton" type="button">Partager</button>
+          <button class="btn btn-ghost" id="printButton" type="button">Imprimer</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel inline-nav" id="activityPager" aria-label="Navigation dans l'axe"></section>
+  </main>
+
+  <script src="plateforme-etudiante/data.js"></script>
+  <script src="plateforme-etudiante/activity-modules.js"></script>
+  <script src="plateforme-etudiante/app.js"></script>
+  <script src="zenclass-enhancements.js"></script>
+
+  <script>
+  function toggleNav() {
+    const navOv = document.getElementById('navOverlay');
+    const menuTgl = document.getElementById('menuToggle');
+    if (!navOv || !menuTgl) return;
+    const isOpen = navOv.classList.toggle('open');
+    navOv.setAttribute('aria-hidden', !isOpen);
+    menuTgl.classList.toggle('open', isOpen);
+  }
+  function closeNav() {
+    const navOv = document.getElementById('navOverlay');
+    const menuTgl = document.getElementById('menuToggle');
+    if (!navOv) return;
+    navOv.classList.remove('open');
+    navOv.setAttribute('aria-hidden', 'true');
+    if (menuTgl) menuTgl.classList.remove('open');
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    var closeBtn = document.getElementById('navClose');
+    if (closeBtn) closeBtn.addEventListener('click', closeNav);
+    var navOv = document.getElementById('navOverlay');
+    if (navOv) {
+      navOv.addEventListener('click', function(e) { if (e.target === navOv) closeNav(); });
+    }
+    document.querySelectorAll('.ace-item').forEach(function(item) {
+      item.addEventListener('mouseenter', function() { this.classList.add('hov'); });
+      item.addEventListener('mouseleave', function() { this.classList.remove('hov'); });
+    });
+  });
+  </script>
+</body>
+</html>

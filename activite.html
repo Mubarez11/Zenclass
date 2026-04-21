@@ -2165,6 +2165,39 @@
         font-size: clamp(1.4rem, 5vw, 2rem) !important;
       }
     }
+
+    /* ===== SORT WORKSPACE - Force side-by-side on all screens ===== */
+    .sort-workspace {
+      display: grid !important;
+      grid-template-columns: minmax(280px, 380px) 1fr !important;
+      gap: 16px;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .sort-workspace {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px;
+      }
+      .sort-zone-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sort-workspace {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        gap: 12px;
+        padding-bottom: 8px;
+      }
+      .sort-workspace .module-panel {
+        flex: 0 0 85vw !important;
+        min-width: 280px !important;
+      }
+    }
   </style>
   <link rel="stylesheet" href="zenclass-header.css" />
   <link rel="stylesheet" href="zenclass-enhancements.css" />

@@ -378,38 +378,40 @@
             "</ul>" +
           "</article>" +
         "</section>" +
-        '<section class="module-panel">' +
-          '<div class="module-panel-head">' +
-            "<div>" +
-              "<h2>Carte à classer</h2>" +
-              "<p>Une carte à la fois pour garder l’attention sur l’item en cours.</p>" +
+        '<div class="sort-workspace">' +
+          '<section class="module-panel">' +
+            '<div class="module-panel-head">' +
+              "<div>" +
+                "<h2>Carte à classer</h2>" +
+                "<p>Une carte à la fois pour garder l’attention sur l’item en cours.</p>" +
+              "</div>" +
+              '<strong class="module-kpi" id="sortRemainingPill">16 cartes restantes</strong>' +
             "</div>" +
-            '<strong class="module-kpi" id="sortRemainingPill">16 cartes restantes</strong>' +
-          "</div>" +
-          '<div class="sort-current-wrap" id="sortCurrentCardWrap"></div>' +
-          '<div class="module-inline-actions">' +
-            '<button class="btn btn-secondary" type="button" id="sortSkipBtn">Passer cette carte</button>' +
-            '<button class="btn btn-ghost" type="button" id="sortShuffleBtn">Mélanger les cartes restantes</button>' +
-          "</div>" +
-        "</section>" +
-        '<section class="module-panel">' +
-          '<div class="module-panel-head">' +
-            "<div>" +
-              "<h2>Tableau de classement</h2>" +
-              "<p>Les quatre catégories restent visibles en même temps.</p>" +
+            '<div class="sort-current-wrap" id="sortCurrentCardWrap"></div>' +
+            '<div class="module-inline-actions">' +
+              '<button class="btn btn-secondary" type="button" id="sortSkipBtn">Passer cette carte</button>' +
+              '<button class="btn btn-ghost" type="button" id="sortShuffleBtn">Mélanger les cartes restantes</button>' +
             "</div>" +
-            '<div class="module-progress-inline">' +
-              '<strong id="sortProgressText">0 / 16 placés</strong>' +
-              '<div class="progress-track" aria-hidden="true"><div class="progress-fill" id="sortProgressBar"></div></div>' +
+          "</section>" +
+          '<section class="module-panel">' +
+            '<div class="module-panel-head">' +
+              "<div>" +
+                "<h2>Tableau de classement</h2>" +
+                "<p>Les quatre catégories restent visibles en même temps.</p>" +
+              "</div>" +
+              '<div class="module-progress-inline">' +
+                '<strong id="sortProgressText">0 / 16 placés</strong>' +
+                '<div class="progress-track" aria-hidden="true"><div class="progress-fill" id="sortProgressBar"></div></div>' +
+              "</div>" +
             "</div>" +
-          "</div>" +
-          '<div class="sort-zone-grid">' + zonesMarkup + "</div>" +
-          '<div class="module-actions">' +
-            '<button class="btn btn-primary" type="button" id="sortValidateBtn">Valider mes réponses</button>' +
-            '<button class="btn btn-secondary" type="button" id="sortCorrectionBtn">Afficher la correction</button>' +
-            '<button class="btn btn-ghost" type="button" id="sortResetBtn">Réinitialiser</button>' +
-          "</div>" +
-        "</section>" +
+            '<div class="sort-zone-grid">' + zonesMarkup + "</div>" +
+            '<div class="module-actions">' +
+              '<button class="btn btn-primary" type="button" id="sortValidateBtn">Valider mes réponses</button>' +
+              '<button class="btn btn-secondary" type="button" id="sortCorrectionBtn">Afficher la correction</button>' +
+              '<button class="btn btn-ghost" type="button" id="sortResetBtn">Réinitialiser</button>' +
+            "</div>" +
+          "</section>" +
+        "</div>" +
         '<section class="module-panel module-result-panel">' +
           '<div class="module-panel-head">' +
             "<div>" +
