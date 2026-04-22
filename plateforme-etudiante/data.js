@@ -923,8 +923,16 @@ const axe2Objective3Activities = [
         usage: "Support central de réécriture, utilisable sur la plateforme ou en version papier."
       },
       {
+        label: "Article PDF",
+        usage: "Version PDF de Prokofieva et al. (2017), en lecture d'appui pour comprendre le stress de l'évaluation.",
+        href: "Stress de l’évaluation scolaire _ un nouveau regard sur un problème ancien.pdf",
+        actionLabel: "Ouvrir le PDF"
+      },
+      {
         label: "Article scientifique",
-        usage: "Prokofieva et al. (2017), en lecture d'appui pour comprendre le stress de l'évaluation."
+        usage: "Version DOI de Prokofieva et al. (2017), pour citer ou consulter la référence académique.",
+        href: "https://doi.org/10.4000/rechercheseducations.4657",
+        actionLabel: "Lire l'article"
       },
       {
         label: "Grille de correction formateur",
@@ -942,6 +950,232 @@ const axe2Objective3Activities = [
     reference: {
       href: "https://doi.org/10.4000/rechercheseducations.4657",
       label: "Prokofieva et al. (2017) - Stress de l'évaluation scolaire"
+    }
+  }
+];
+
+const axe3Objective2Activities = [
+  {
+    number: 1,
+    moduleType: "observe",
+    title: "Visionnage d'une vidéo simulée + repérage",
+    duration: "15 min",
+    difficulty: "Fondations",
+    taskCount: 4,
+    instruction:
+      "Visionnez la scène une première fois sans interruption, puis une seconde fois en prenant des notes pour repérer le moment où une intervention devient nécessaire.",
+    feedbacks: [
+      "Repérez l'augmentation du bruit, les interruptions et l'agitation corporelle avant de conclure qu'une intervention s'impose.",
+      "Cherchez le point de bascule : le moment où ne rien faire risque d'aggraver la situation.",
+      "Avant d'agir, considérez la situation comme un moment où l'enseignant peut soutenir la régulation émotionnelle."
+    ],
+    observeTask: {
+      subtitle: "Distance avant le présentiel",
+      objective: "Repérer le moment où une intervention devient nécessaire et identifier les signes qu'une tension émotionnelle est en train de monter.",
+      videoTitle: "Vidéo simulée de classe",
+      videoDescription: "Le lien vidéo est un lien modèle à remplacer. En attendant, utilisez cette fiche pour guider votre observation et votre prise de notes.",
+      videoNote: "Lien modèle à remplacer sur la plateforme.",
+      watchSteps: [
+        "Visionnez une première fois sans interruption pour saisir la dynamique globale de la scène.",
+        "Visionnez une seconde fois avec prise de notes pour repérer le point précis où vous interviendriez.",
+        "Justifiez votre choix à partir d'indices observables, sans partir d'une simple impression générale."
+      ],
+      cues: [
+        "augmentation du bruit ou des interruptions",
+        "agitation corporelle visible",
+        "changement de ton ou accélération du rythme",
+        "propagation de la tension à plusieurs élèves"
+      ],
+      prompts: [
+        {
+          id: "interventionMoment",
+          label: "1. À quel moment précis j'interviendrais ?",
+          placeholder: "Situez le moment choisi dans la scène et expliquez ce qui vous fait dire que l'intervention devient nécessaire."
+        },
+        {
+          id: "justBefore",
+          label: "2. Qu'ai-je vu juste avant ce moment ?",
+          placeholder: "Relevez les indices observables qui montrent une montée de tension."
+        },
+        {
+          id: "noInterventionRisk",
+          label: "3. Que risque-t-il de se passer si personne n'intervient ?",
+          placeholder: "Expliquez ce que l'absence d'intervention pourrait provoquer pour le groupe ou l'élève."
+        },
+        {
+          id: "avoidResponse",
+          label: "4. Quel type de réponse faudrait-il éviter ?",
+          placeholder: "Précisez une réponse qui augmenterait la pression au lieu d'apaiser la situation."
+        }
+      ],
+      tiksNote: "Repère TIK-S utile : avant d'agir, il s'agit d'abord de repérer la montée de tension et de considérer la situation comme un moment où l'enseignant peut soutenir la régulation émotionnelle.",
+      supportResources: [
+        {
+          type: "PDF",
+          label: "Fiche ressource - Tâche 8",
+          description: "Repérez rapidement les 5 appuis TIK-S pour valider, apaiser et cadrer une situation de classe.",
+          href: "1.PDF à part tout au début_Fiche_ressource_Tache8_Intervenir_pour_apaiser.pdf",
+          actionLabel: "Ouvrir le PDF"
+        },
+        {
+          type: "Article scientifique",
+          label: "Bølstad et al. (2023)",
+          description: "Référence scientifique mobilisée dans l'axe 3 pour relier intervention rapide, accompagnement émotionnel et climat de classe.",
+          href: "https://doi.org/10.1016/j.mhp.2023.200273",
+          actionLabel: "Consulter la référence"
+        }
+      ]
+    }
+  },
+  {
+    number: 2,
+    moduleType: "checklist",
+    title: "Checklist du point de bascule",
+    duration: "10 min",
+    difficulty: "Guidé",
+    taskCount: 5,
+    instruction:
+      "Décidez si la situation observée a atteint le point de bascule, c'est-à-dire le moment où une intervention n'est plus seulement utile mais nécessaire.",
+    feedbacks: [
+      "Cochez chaque item en vous appuyant sur des faits observables dans la scène ou dans une situation réelle comparable.",
+      "Si plusieurs items passent au vert, l'intervention devient pertinente : la question devient surtout comment intervenir sans augmenter la pression.",
+      "L'objectif n'est pas de réagir vite à tout prix, mais d'identifier le moment juste pour valider, apaiser et cadrer."
+    ],
+    checklistTask: {
+      subtitle: "Distance avant le présentiel",
+      objective: "Décider si la situation observée a atteint le point de bascule et préparer une intervention brève et soutenante.",
+      intro: "Ouvrez la checklist interactive et répondez à chaque item par Oui ou Non en fonction de la scène observée.",
+      items: [
+        {
+          id: "noiseRise",
+          label: "Le bruit ou la tension augmentent de manière visible."
+        },
+        {
+          id: "frameFragile",
+          label: "Le cadre de travail commence à se fragiliser."
+        },
+        {
+          id: "visibleAgitation",
+          label: "Un élève ou plusieurs élèves montrent des signes manifestes d'agitation."
+        },
+        {
+          id: "riskEscalation",
+          label: "Une absence d'intervention risquerait d'aggraver la situation."
+        },
+        {
+          id: "justifyTiming",
+          label: "Je suis capable d'expliquer pourquoi j'interviens à ce moment-là."
+        }
+      ],
+      yesThreshold: 3,
+      interpretation:
+        "Si plusieurs items sont cochés oui, l'intervention devient pertinente. La question n'est pas seulement : faut-il intervenir ?, mais comment intervenir sans augmenter la pression ?",
+      closingPrompt: "Notez en une phrase ce qui vous fait dire que le point de bascule est atteint ou non.",
+      closingPlaceholder: "Ex. Le cadre commence à se fragiliser et l'absence d'intervention ferait monter la tension chez plusieurs élèves."
+    }
+  },
+  {
+    number: 3,
+    moduleType: "reflect",
+    title: "Retour réflexif sur sa pratique",
+    duration: "10 min",
+    difficulty: "Réflexif",
+    taskCount: 4,
+    instruction:
+      "Stabilisez vos apprentissages après l'entraînement en présence et préparez le transfert vers votre propre classe.",
+    feedbacks: [
+      "Montrez que vous avez identifié le bon moment d'intervention et retenu une formulation brève.",
+      "Reliez toujours votre analyse à une situation réelle de votre classe pour préparer le transfert.",
+      "Évitez les formulations trop générales : précisez ce que vous gardez, ce que vous ajustez et ce que vous testerez ensuite."
+    ],
+    reflectionTask: {
+      objective: "Stabiliser les apprentissages après le présentiel et préparer une réutilisation réaliste dans sa pratique de classe.",
+      timerMinutes: 10,
+      timerLabel: "Retour réflexif",
+      timerDescription: "Un temps court pour fixer le bon moment d'intervention, la formulation choisie et le transfert vers votre classe.",
+      quickSituations: [
+        "Montée de bruit",
+        "Transition agitée",
+        "Consigne reprise",
+        "Tension diffuse",
+        "Débordement d'un élève"
+      ],
+      roadmap: [
+        "Revenir sur le moment choisi",
+        "Nommer la formulation la plus efficace",
+        "Pointer ce qu'il reste à ajuster",
+        "Préparer un transfert dans sa classe"
+      ],
+      prompts: [
+        {
+          id: "chosenMoment",
+          label: "1. À quel moment ai-je choisi d'intervenir, et pourquoi ?",
+          placeholder: "Expliquez le moment retenu et les indices qui justifient votre choix."
+        },
+        {
+          id: "effectivePhrase",
+          label: "2. Quelle formulation a été la plus efficace pour moi ?",
+          placeholder: "Notez la phrase ou l'appui verbal qui vous a semblé le plus juste pour valider, apaiser et cadrer."
+        },
+        {
+          id: "improveNext",
+          label: "3. Qu'est-ce que je dois encore améliorer ?",
+          placeholder: "Soyez précis : ton, brièveté, timing, clarté de la relance, posture..."
+        },
+        {
+          id: "realTransfer",
+          label: "4. Dans quelle situation réelle de ma classe pourrais-je réutiliser cette intervention ?",
+          placeholder: "Décrivez un contexte de classe concret où cette intervention pourrait être transférée."
+        }
+      ],
+      summaryFields: [
+        { id: "chosenMoment", label: "Moment d'intervention retenu" },
+        { id: "effectivePhrase", label: "Formulation la plus efficace" },
+        { id: "improveNext", label: "Point à améliorer" },
+        { id: "realTransfer", label: "Situation de transfert" }
+      ]
+    }
+  },
+  {
+    number: 4,
+    moduleType: "forum",
+    title: "Forum - ma phrase d'apaisement",
+    duration: "10 min",
+    difficulty: "Performance",
+    taskCount: 2,
+    instruction:
+      "Postez une phrase d'intervention courte, réaliste et soutenante, puis commentez la proposition d'au moins un pair.",
+    feedbacks: [
+      "Votre phrase doit rester courte, transférable et utilisable telle quelle en classe.",
+      "Votre commentaire doit expliciter ce qui valide, apaise ou cadre efficacement la situation.",
+      "Gardez le critère simple du parcours : la formulation aide-t-elle à valider, apaiser et cadrer en une ou deux phrases maximum ?"
+    ],
+    forumTask: {
+      objective: "Mutualiser des formulations courtes et transférables, puis bénéficier d'un retour des pairs sur leur clarté et leur potentiel d'apaisement.",
+      intro: "Postez votre phrase d'apaisement, puis commentez au moins une proposition de pair en indiquant ce qui, selon vous, valide, apaise ou cadre efficacement la situation.",
+      phraseLabel: "Ma phrase d'apaisement",
+      phrasePlaceholder: "Ex. Je vois que ça monte. On s'arrête une minute et on reprend plus calmement.",
+      phraseHint: "Une ou deux phrases maximum, courtes, réalistes et soutenantes.",
+      commentLabel: "Mon commentaire",
+      commentPlaceholder: "Expliquez ce qui valide, apaise ou cadre efficacement la situation.",
+      criterion: "Critère simple pour commenter un pair : la formulation aide-t-elle à valider, apaiser et cadrer en une ou deux phrases maximum ?",
+      peerPosts: [
+        {
+          id: "peer-1",
+          author: "Pair 1",
+          phrase: "Je vois que ça monte. On s'arrête une minute et on reprend plus calmement."
+        },
+        {
+          id: "peer-2",
+          author: "Pair 2",
+          phrase: "Je vois que c'est difficile. Viens près de moi deux minutes, puis on continue."
+        },
+        {
+          id: "peer-3",
+          author: "Pair 3",
+          phrase: "Là, la tension augmente. On reprend une consigne à la fois."
+        }
+      ]
     }
   }
 ];
@@ -1024,7 +1258,7 @@ window.platformData = {
           label: "Objectif 2",
           title: "Intervenir rapidement et de manière adaptée lorsque le contexte de classe le demande afin d'apaiser les élèves.",
           duration: "--",
-          activities: makeActivities(4)
+          activities: axe3Objective2Activities
         },
         {
           id: "obj-3",
@@ -1248,12 +1482,20 @@ window.platformData = {
         actionLabel: "Ouvrir le PDF"
       },
       {
+        type: "Article PDF",
+        title: "Stress de l'évaluation scolaire : un nouveau regard sur un problème ancien",
+        description: "Version PDF du texte de Prokofieva et al. (2017) à mobiliser directement dans le parcours axe 2 / objectif 3.",
+        meta: "Article utilisé comme ressource d'appui pour les consignes stressantes et la pression évaluative.",
+        href: "Stress de l’évaluation scolaire _ un nouveau regard sur un problème ancien.pdf",
+        actionLabel: "Ouvrir le PDF"
+      },
+      {
         type: "Article scientifique",
         title: "Stress de l'évaluation scolaire : un nouveau regard sur un problème ancien",
-        description: "Référence centrale pour comprendre pourquoi certaines annonces évaluatives agissent comme des stresseurs contextuels prévisibles.",
-        meta: "Prokofieva, Brandt-Pomares, Velay, Hérold et Kostromina (2017).",
+        description: "Référence centrale pour l'objectif 3 de l'axe 2 : comprendre pourquoi certaines annonces évaluatives agissent comme des stresseurs contextuels prévisibles.",
+        meta: "Prokofieva, Brandt-Pomares, Velay, Hérold et Kostromina (2017). Recherches & éducations, 18.",
         href: "https://doi.org/10.4000/rechercheseducations.4657",
-        actionLabel: "Consulter la référence"
+        actionLabel: "Lire l'article"
       },
       {
         type: "Site web",
@@ -1277,6 +1519,32 @@ window.platformData = {
         href: "https://www.youtube.com/watch?v=GkVZhFl6Wtk",
         embed: "https://www.youtube.com/embed/GkVZhFl6Wtk",
         actionLabel: "Ouvrir sur YouTube"
+      }
+    ],
+    "axe-3": [
+      {
+        type: "Article PDF",
+        title: "Fiche ressource - Intervenir pour apaiser une situation de classe",
+        description: "Support d'appui pour la tâche 8 : repérer le bon moment d'intervention, formuler une réponse brève et soutenir un cadre sécurisant.",
+        meta: "Axe 3, tâche 8. Repère TIK-S en ouverture d'activité.",
+        href: "1.PDF à part tout au début_Fiche_ressource_Tache8_Intervenir_pour_apaiser.pdf",
+        actionLabel: "Ouvrir le PDF"
+      },
+      {
+        type: "Article PDF",
+        title: "Parcours numérique - Apaiser la classe",
+        description: "Document de parcours regroupant les activités A.1, A.2, A.7 et A.8 à consulter avant et après le présentiel.",
+        meta: "Axe 3, tâche 8. Ordre conseillé de consultation inclus.",
+        href: "2.Apprenant_Axe3_Tache8_Parcours_numerique_apaiser_la_classe.pdf",
+        actionLabel: "Ouvrir le PDF"
+      },
+      {
+        type: "Article scientifique",
+        title: "Emotional competence training promotes teachers' emotion socialization and classroom environment",
+        description: "Référence scientifique mobilisée dans l'axe 3 pour relier intervention rapide, accompagnement émotionnel et climat positif de classe.",
+        meta: "Bølstad, Koleini, Skoe, Kehoe, Nygaard & Havighurst (2023). Mental Health & Prevention, 30, 200273.",
+        href: "https://doi.org/10.1016/j.mhp.2023.200273",
+        actionLabel: "Lire l'article"
       }
     ]
   }

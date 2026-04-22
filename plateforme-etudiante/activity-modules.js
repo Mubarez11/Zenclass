@@ -161,6 +161,22 @@
     return "adid-activity-module::" + context.moduleKey;
   }
 
+  function resolveModuleHref(href) {
+    const value = String(href || "").trim();
+    const pathname = String(window.location.pathname || "").replace(/\\/g, "/");
+    const inSubfolder = pathname.indexOf("/plateforme-etudiante/") !== -1;
+
+    if (!value || /^(?:[a-z]+:|#|\/)/i.test(value)) {
+      return value;
+    }
+
+    if (inSubfolder) {
+      return value.indexOf("../") === 0 ? value : "../" + value;
+    }
+
+    return value.indexOf("../") === 0 ? value.slice(3) : value;
+  }
+
   function pluralize(count, singular, plural) {
     return count > 1 ? plural : singular;
   }
@@ -2499,10 +2515,17 @@
       );
     }).join("");
     const resourcesRows = (activity.resources || []).map(function (resource) {
+      const href = resolveModuleHref(resource.href || "");
+      const external = /^https?:/i.test(href);
+      const target = external ? ' target="_blank" rel="noopener noreferrer"' : "";
+      const action = href
+        ? '<div class="module-inline-actions"><a class="btn btn-ghost" href="' + escapeHtml(href) + '"' + target + ">" + escapeHtml(resource.actionLabel || "Ouvrir") + "</a></div>"
+        : "";
+
       return (
         "<tr>" +
           "<td>" + escapeHtml(resource.label || "") + "</td>" +
-          "<td>" + escapeHtml(resource.usage || "") + "</td>" +
+          "<td>" + escapeHtml(resource.usage || "") + action + "</td>" +
         "</tr>"
       );
     }).join("");
@@ -3196,10 +3219,685 @@
     video.load();
   }
 
+  function renderObserveModule(activity) {
+    const task = activity.observeTask || {};
+    const prompts = task.prompts || [];
+    const cuesMarkup = (task.cues || []).map(function (item) {
+      return "<li>" + escapeHtml(item) + "</li>";
+    }).join("");
+    const watchStepsMarkup = (task.watchSteps || []).map(function (item) {
+      return "<li>" + escapeHtml(item) + "</li>";
+    }).join("");
+    const supportCards = (task.supportResources || []).map(function (resource) {
+      const href = resolveModuleHref(resource.href || "");
+      const external = /^https?:/i.test(href);
+      const target = external ? ' target="_blank" rel="noopener noreferrer"' : "";
+      const action = href
+        ? '<div class="module-inline-actions"><a class="btn btn-ghost" href="' + escapeHtml(href) + '"' + target + ">" + escapeHtml(resource.actionLabel || "Ouvrir") + "</a></div>"
+        : "";
+
+      return (
+        '<article class="pathway-support-card">' +
+          '<span class="rewrite-card-label">' + escapeHtml(resource.type || "Ressource") + "</span>" +
+          '<strong>' + escapeHtml(resource.label || "") + "</strong>" +
+          '<p>' + escapeHtml(resource.description || "") + "</p>" +
+          action +
+        "</article>"
+      );
+    }).join("");
+    const promptCards = prompts.map(function (prompt, index) {
+      return (
+        '<article class="rewrite-card reflect-card">' +
+          '<div class="module-field">' +
+            '<label for="observeAnswer-' + index + '">' + escapeHtml(prompt.label || ("Question " + (index + 1))) + "</label>" +
+            '<textarea id="observeAnswer-' + index + '" data-observe-answer="' + escapeHtml(prompt.id || String(index)) + '" placeholder="' + escapeHtml(prompt.placeholder || "") + '"></textarea>' +
+          "</div>" +
+        "</article>"
+      );
+    }).join("");
+
+    return (
+      '<div class="activity-module">' +
+        '<section class="module-note-grid">' +
+          '<article class="module-note">' +
+            "<h2>Consigne</h2>" +
+            "<p>" + escapeHtml(task.objective || activity.instruction || "") + "</p>" +
+            '<div class="activity-copy-box">' + escapeHtml(activity.instruction || "") + "</div>" +
+          "</article>" +
+          '<article class="module-note">' +
+            "<h2>Repère</h2>" +
+            "<p>" + escapeHtml(task.tiksNote || "") + "</p>" +
+            '<span class="module-kpi">' + escapeHtml(task.subtitle || "Préparation") + "</span>" +
+          "</article>" +
+        "</section>" +
+        (supportCards
+          ? '<section class="module-panel module-panel-soft">' +
+              '<div class="module-panel-head">' +
+                "<div><h2>Encadré d'appui</h2><p>Gardez ces ressources ouvertes pendant votre observation.</p></div>" +
+                '<span class="module-kpi">' + pluralize((task.supportResources || []).length, "1 ressource", (task.supportResources || []).length + " ressources") + "</span>" +
+              "</div>" +
+              '<div class="pathway-support-grid">' + supportCards + "</div>" +
+            "</section>"
+          : "") +
+        '<section class="module-panel">' +
+          '<div class="module-panel-head">' +
+            '<div><h2>' + escapeHtml(task.videoTitle || "Vidéo simulée") + "</h2><p>" + escapeHtml(task.videoDescription || "") + "</p></div>" +
+            '<span class="module-kpi">Observation guidée</span>' +
+          "</div>" +
+          '<div class="activity-copy-box">' + escapeHtml(task.videoNote || "Lien à remplacer sur la plateforme.") + "</div>" +
+          '<div class="module-note-grid">' +
+            '<article class="module-note">' +
+              "<h3>Ordre de travail</h3>" +
+              '<ul class="module-note-list">' + watchStepsMarkup + "</ul>" +
+            "</article>" +
+            '<article class="module-note">' +
+              "<h3>À repérer pendant la vidéo</h3>" +
+              '<ul class="module-note-list">' + cuesMarkup + "</ul>" +
+            "</article>" +
+          "</div>" +
+        "</section>" +
+        '<section class="module-panel">' +
+          '<div class="module-panel-head">' +
+            "<div><h2>Prise de notes</h2><p>Répondez aux questions pour justifier votre choix d'intervention.</p></div>" +
+            '<span class="module-kpi" id="observeCompletionPill">0 / ' + prompts.length + ' réponses</span>' +
+          "</div>" +
+          '<div class="reflect-grid">' + promptCards + "</div>" +
+        "</section>" +
+        '<section class="module-panel module-result-panel">' +
+          '<div class="module-panel-head">' +
+            "<div><h2>Synthèse d'observation</h2><p>Conservez une trace claire avant le présentiel.</p></div>" +
+            '<span class="module-status-badge" id="observeResultBadge">En attente</span>' +
+          "</div>" +
+          '<p class="module-result-text" id="observeResultText">Renseignez vos repères puis générez votre synthèse.</p>' +
+          "<div class=\"reflect-summary-box\" id=\"observeSummaryBox\">Votre synthèse apparaîtra ici pour préparer l'activité suivante.</div>" +
+          '<div class="module-actions">' +
+            '<button class="btn btn-primary" type="button" id="observeGenerateBtn">Générer ma synthèse</button>' +
+            '<button class="btn btn-ghost" type="button" id="observeResetBtn">Réinitialiser</button>' +
+            '<span class="module-inline-note" id="observeFlashNote"></span>' +
+          "</div>" +
+        "</section>" +
+      "</div>"
+    );
+  }
+
+  function initObserveModule(root, context) {
+    const activity = context.activity || {};
+    const task = activity.observeTask || {};
+    const prompts = task.prompts || [];
+    const storageKey = makeKey(context);
+    const defaultState = { answers: {}, generated: false };
+    const state = readStorage(storageKey, defaultState);
+    const textareas = Array.from(root.querySelectorAll("[data-observe-answer]"));
+    const completionPill = root.querySelector("#observeCompletionPill");
+    const resultBadge = root.querySelector("#observeResultBadge");
+    const resultText = root.querySelector("#observeResultText");
+    const summaryBox = root.querySelector("#observeSummaryBox");
+    const flashNote = root.querySelector("#observeFlashNote");
+
+    if (!state.answers || typeof state.answers !== "object") {
+      state.answers = {};
+    }
+
+    state.generated = Boolean(state.generated);
+
+    function persist() {
+      writeStorage(storageKey, state);
+    }
+
+    function answeredTotal() {
+      return prompts.reduce(function (count, prompt, index) {
+        const promptId = prompt.id || String(index);
+        return count + (String(state.answers[promptId] || "").trim() ? 1 : 0);
+      }, 0);
+    }
+
+    function buildSummaryMarkup() {
+      return '<div class="reflect-summary-stack">' + prompts.map(function (prompt, index) {
+        const promptId = prompt.id || String(index);
+        return '<p><strong>' + escapeHtml(prompt.label || ("Question " + (index + 1))) + ' :</strong> ' + escapeHtml(state.answers[promptId] || "--") + "</p>";
+      }).join("") + "</div>";
+    }
+
+    function syncInputs() {
+      textareas.forEach(function (field) {
+        field.value = state.answers[field.dataset.observeAnswer] || "";
+      });
+    }
+
+    function renderAll() {
+      const completed = answeredTotal();
+
+      if (completionPill) {
+        completionPill.textContent = completed + " / " + prompts.length + " réponses";
+      }
+
+      if (resultBadge && resultText && summaryBox) {
+        if (!completed) {
+          resultBadge.textContent = "En attente";
+          resultBadge.className = "module-status-badge";
+          resultText.textContent = "Commencez par noter les indices observables et le moment choisi pour intervenir.";
+        } else if (completed < prompts.length) {
+          resultBadge.textContent = "En cours";
+          resultBadge.className = "module-status-badge is-warning";
+          resultText.textContent = completed + " repères sur " + prompts.length + " sont déjà formulés. Complétez votre lecture pour stabiliser votre diagnostic.";
+        } else {
+          resultBadge.textContent = "Prêt";
+          resultBadge.className = "module-status-badge is-success";
+          resultText.textContent = "Votre lecture de la scène est complète. Vous pouvez conserver cette synthèse pour l'étape suivante.";
+        }
+
+        summaryBox.innerHTML = state.generated
+          ? buildSummaryMarkup()
+          : "Votre synthèse apparaîtra ici pour préparer l'activité suivante.";
+      }
+    }
+
+    textareas.forEach(function (field) {
+      field.addEventListener("input", function () {
+        state.answers[field.dataset.observeAnswer] = field.value;
+        state.generated = false;
+        persist();
+        renderAll();
+      });
+    });
+
+    root.querySelector("#observeGenerateBtn").addEventListener("click", function () {
+      state.generated = true;
+      persist();
+      renderAll();
+      setFlashMessage(flashNote, "Synthèse générée.");
+    });
+
+    root.querySelector("#observeResetBtn").addEventListener("click", function () {
+      if (!window.confirm("Réinitialiser cette fiche ?")) {
+        return;
+      }
+
+      state.answers = {};
+      state.generated = false;
+      textareas.forEach(function (field) {
+        field.value = "";
+      });
+      persist();
+      renderAll();
+      setFlashMessage(flashNote, "Fiche réinitialisée.");
+    });
+
+    syncInputs();
+    renderAll();
+  }
+
+  function renderChecklistModule(activity) {
+    const task = activity.checklistTask || {};
+    const items = task.items || [];
+    const cards = items.map(function (item, index) {
+      return (
+        '<article class="rewrite-card reflect-card" data-checklist-card="' + escapeHtml(item.id || String(index)) + '">' +
+          '<div class="rewrite-card-head">' +
+            '<span class="module-kpi">Item ' + String(index + 1).padStart(2, "0") + "</span>" +
+            '<span class="rewrite-status" id="checklistStatus-' + escapeHtml(item.id || String(index)) + '">À décider</span>' +
+          "</div>" +
+          "<p>" + escapeHtml(item.label || "") + "</p>" +
+          '<div class="module-inline-actions">' +
+            '<button class="btn btn-ghost" type="button" data-checklist-choice="yes" data-checklist-item="' + escapeHtml(item.id || String(index)) + '">Oui</button>' +
+            '<button class="btn btn-ghost" type="button" data-checklist-choice="no" data-checklist-item="' + escapeHtml(item.id || String(index)) + '">Non</button>' +
+          "</div>" +
+        "</article>"
+      );
+    }).join("");
+
+    return (
+      '<div class="activity-module">' +
+        '<section class="module-note-grid">' +
+          '<article class="module-note">' +
+            "<h2>Consigne</h2>" +
+            "<p>" + escapeHtml(task.objective || activity.instruction || "") + "</p>" +
+            '<div class="activity-copy-box">' + escapeHtml(task.intro || "") + "</div>" +
+          "</article>" +
+          '<article class="module-note">' +
+            "<h2>Repère</h2>" +
+            "<p>" + escapeHtml(activity.feedbacks && activity.feedbacks[1] || "") + "</p>" +
+            '<span class="module-kpi">' + escapeHtml(task.subtitle || "Préparation") + "</span>" +
+          "</article>" +
+        "</section>" +
+        '<section class="module-panel">' +
+          '<div class="module-panel-head">' +
+            "<div><h2>Checklist interactive</h2><p>Répondez à chaque item pour situer le point de bascule.</p></div>" +
+            '<span class="module-kpi" id="checklistCountPill">0 / ' + items.length + ' réponses</span>' +
+          "</div>" +
+          '<div class="reflect-grid">' + cards + "</div>" +
+        "</section>" +
+        '<section class="module-panel module-result-panel">' +
+          '<div class="module-panel-head">' +
+            "<div><h2>Interprétation rapide</h2><p>Reliez votre score Oui/Non à une phrase courte de décision.</p></div>" +
+            '<span class="module-status-badge" id="checklistResultBadge">En attente</span>' +
+          "</div>" +
+          '<p class="module-result-text" id="checklistResultText">Complétez la checklist pour situer le point de bascule.</p>' +
+          '<div class="module-field">' +
+            '<label for="checklistClosingNote">' + escapeHtml(task.closingPrompt || "") + "</label>" +
+            '<textarea id="checklistClosingNote" data-checklist-note placeholder="' + escapeHtml(task.closingPlaceholder || "") + '"></textarea>' +
+          "</div>" +
+          '<p class="module-result-note" id="checklistResultNote">' + escapeHtml(task.interpretation || "") + "</p>" +
+          '<div class="module-actions">' +
+            '<button class="btn btn-ghost" type="button" id="checklistResetBtn">Réinitialiser</button>' +
+            '<span class="module-inline-note" id="checklistFlashNote"></span>' +
+          "</div>" +
+        "</section>" +
+      "</div>"
+    );
+  }
+
+  function initChecklistModule(root, context) {
+    const activity = context.activity || {};
+    const task = activity.checklistTask || {};
+    const items = task.items || [];
+    const storageKey = makeKey(context);
+    const defaultState = { answers: {}, note: "" };
+    const state = readStorage(storageKey, defaultState);
+    const countPill = root.querySelector("#checklistCountPill");
+    const resultBadge = root.querySelector("#checklistResultBadge");
+    const resultText = root.querySelector("#checklistResultText");
+    const resultNote = root.querySelector("#checklistResultNote");
+    const noteField = root.querySelector("[data-checklist-note]");
+    const flashNote = root.querySelector("#checklistFlashNote");
+
+    if (!state.answers || typeof state.answers !== "object") {
+      state.answers = {};
+    }
+
+    state.note = String(state.note || "");
+
+    function persist() {
+      writeStorage(storageKey, state);
+    }
+
+    function answeredTotal() {
+      return items.reduce(function (count, item, index) {
+        const itemId = item.id || String(index);
+        return count + (state.answers[itemId] ? 1 : 0);
+      }, 0);
+    }
+
+    function yesTotal() {
+      return items.reduce(function (count, item, index) {
+        const itemId = item.id || String(index);
+        return count + (state.answers[itemId] === "yes" ? 1 : 0);
+      }, 0);
+    }
+
+    function renderCards() {
+      items.forEach(function (item, index) {
+        const itemId = item.id || String(index);
+        const answer = state.answers[itemId] || "";
+        const statusNode = root.querySelector("#checklistStatus-" + itemId);
+        const card = root.querySelector('[data-checklist-card="' + itemId + '"]');
+
+        root.querySelectorAll('[data-checklist-item="' + itemId + '"]').forEach(function (button) {
+          button.classList.toggle("is-active", button.dataset.checklistChoice === answer);
+        });
+
+        if (card) {
+          card.classList.toggle("is-done", Boolean(answer));
+          card.classList.toggle("is-warning", answer === "yes");
+        }
+
+        if (!statusNode) {
+          return;
+        }
+
+        statusNode.className = "rewrite-status";
+        if (answer === "yes") {
+          statusNode.textContent = "Oui";
+          statusNode.classList.add("is-warning");
+        } else if (answer === "no") {
+          statusNode.textContent = "Non";
+          statusNode.classList.add("is-success");
+        } else {
+          statusNode.textContent = "À décider";
+        }
+      });
+    }
+
+    function renderAll() {
+      const answered = answeredTotal();
+      const yes = yesTotal();
+      const threshold = Math.max(1, Number(task.yesThreshold || 3));
+
+      renderCards();
+
+      if (countPill) {
+        countPill.textContent = answered + " / " + items.length + " réponses";
+      }
+
+      if (noteField) {
+        noteField.value = state.note;
+      }
+
+      if (!resultBadge || !resultText || !resultNote) {
+        return;
+      }
+
+      if (!answered) {
+        resultBadge.textContent = "En attente";
+        resultBadge.className = "module-status-badge";
+        resultText.textContent = "Commencez par répondre aux items de la checklist.";
+      } else if (answered < items.length) {
+        resultBadge.textContent = "En cours";
+        resultBadge.className = "module-status-badge is-warning";
+        resultText.textContent = yes + " réponse(s) Oui pour l'instant. Complétez tous les items pour situer plus finement le point de bascule.";
+      } else if (yes >= threshold) {
+        resultBadge.textContent = "Intervenir";
+        resultBadge.className = "module-status-badge is-success";
+        resultText.textContent = yes + " item(s) sur " + items.length + " sont cochés Oui : l'intervention devient pertinente sans attendre davantage.";
+      } else {
+        resultBadge.textContent = "Surveiller";
+        resultBadge.className = "module-status-badge is-warning";
+        resultText.textContent = yes + " item(s) sur " + items.length + " sont cochés Oui : le point de bascule n'est pas encore clairement atteint, mais la vigilance reste utile.";
+      }
+
+      resultNote.textContent = state.note.trim()
+        ? "Votre phrase de décision : " + state.note.trim()
+        : (task.interpretation || "");
+    }
+
+    root.addEventListener("click", function (event) {
+      const button = event.target.closest("[data-checklist-choice]");
+      if (!button) {
+        return;
+      }
+
+      state.answers[button.dataset.checklistItem] = button.dataset.checklistChoice;
+      persist();
+      renderAll();
+    });
+
+    if (noteField) {
+      noteField.addEventListener("input", function () {
+        state.note = noteField.value;
+        persist();
+        renderAll();
+      });
+    }
+
+    root.querySelector("#checklistResetBtn").addEventListener("click", function () {
+      if (!window.confirm("Réinitialiser cette checklist ?")) {
+        return;
+      }
+
+      state.answers = {};
+      state.note = "";
+      persist();
+      renderAll();
+      setFlashMessage(flashNote, "Checklist réinitialisée.");
+    });
+
+    renderAll();
+  }
+
+  function renderForumModule(activity) {
+    const task = activity.forumTask || {};
+    const peers = task.peerPosts || [];
+    const peerCards = peers.map(function (peer, index) {
+      return (
+        '<article class="rewrite-card" data-forum-peer="' + escapeHtml(peer.id || String(index)) + '">' +
+          '<div class="rewrite-card-head">' +
+            '<span class="module-kpi">' + escapeHtml(peer.author || ("Pair " + (index + 1))) + "</span>" +
+            '<span class="rewrite-status" id="forumPeerStatus-' + escapeHtml(peer.id || String(index)) + '">À commenter</span>' +
+          "</div>" +
+          '<div class="rewrite-original-block">' +
+            '<span class="rewrite-card-label">Phrase proposée</span>' +
+            '<div class="activity-copy-box rewrite-original">' + escapeHtml(peer.phrase || "") + "</div>" +
+          "</div>" +
+          '<div class="module-field">' +
+            '<label for="forumComment-' + index + '">' + escapeHtml(task.commentLabel || "Mon commentaire") + "</label>" +
+            '<textarea id="forumComment-' + index + '" data-forum-comment="' + escapeHtml(peer.id || String(index)) + '" placeholder="' + escapeHtml(task.commentPlaceholder || "") + '"></textarea>' +
+          "</div>" +
+        "</article>"
+      );
+    }).join("");
+
+    return (
+      '<div class="activity-module">' +
+        '<section class="module-note-grid">' +
+          '<article class="module-note">' +
+            "<h2>Consigne de publication</h2>" +
+            "<p>" + escapeHtml(task.objective || activity.instruction || "") + "</p>" +
+            '<div class="activity-copy-box">' + escapeHtml(task.intro || "") + "</div>" +
+          "</article>" +
+          '<article class="module-note">' +
+            "<h2>Critère simple</h2>" +
+            "<p>" + escapeHtml(task.criterion || "") + "</p>" +
+            '<span class="module-kpi">Échange entre pairs</span>' +
+          "</article>" +
+        "</section>" +
+        '<section class="module-panel module-panel-soft">' +
+          '<div class="module-panel-head">' +
+            "<div><h2>Ma phrase d'apaisement</h2><p>Formulez une intervention courte, réaliste et soutenante.</p></div>" +
+            '<span class="module-kpi" id="forumParticipationPill">0 / 2 étapes</span>' +
+          "</div>" +
+          '<div class="module-field">' +
+            '<label for="forumOwnPhrase">' + escapeHtml(task.phraseLabel || "Ma phrase") + "</label>" +
+            '<textarea id="forumOwnPhrase" data-forum-own-phrase placeholder="' + escapeHtml(task.phrasePlaceholder || "") + '"></textarea>' +
+            '<small>' + escapeHtml(task.phraseHint || "") + "</small>" +
+          "</div>" +
+          '<div class="reflect-summary-box" id="forumOwnPreview">Votre phrase apparaîtra ici une fois rédigée.</div>' +
+        "</section>" +
+        '<section class="module-panel">' +
+          '<div class="module-panel-head">' +
+            "<div><h2>Contributions des pairs</h2><p>Commentez au moins une proposition en montrant ce qui valide, apaise ou cadre la situation.</p></div>" +
+            '<span class="module-kpi" id="forumCommentCount">0 commentaire</span>' +
+          "</div>" +
+          '<div class="rewrite-grid">' + peerCards + "</div>" +
+        "</section>" +
+        '<section class="module-panel module-result-panel">' +
+          '<div class="module-panel-head">' +
+            "<div><h2>Validation de la participation</h2><p>Publiez votre phrase puis commentez au moins un pair.</p></div>" +
+            '<span class="module-status-badge" id="forumResultBadge">En attente</span>' +
+          "</div>" +
+          "<p class=\"module-result-text\" id=\"forumResultText\">Ajoutez votre phrase d'apaisement puis commentez au moins une proposition de pair.</p>" +
+          '<p class="module-result-note" id="forumResultNote"></p>' +
+          '<div class="module-actions">' +
+            '<button class="btn btn-primary" type="button" id="forumValidateBtn">Valider ma participation</button>' +
+            '<button class="btn btn-ghost" type="button" id="forumResetBtn">Réinitialiser</button>' +
+            '<span class="module-inline-note" id="forumFlashNote"></span>' +
+          "</div>" +
+        "</section>" +
+      "</div>"
+    );
+  }
+
+  function initForumModule(root, context) {
+    const activity = context.activity || {};
+    const task = activity.forumTask || {};
+    const peers = task.peerPosts || [];
+    const storageKey = makeKey(context);
+    const defaultState = { ownPhrase: "", comments: {}, validated: false };
+    const state = readStorage(storageKey, defaultState);
+    const ownField = root.querySelector("[data-forum-own-phrase]");
+    const commentFields = Array.from(root.querySelectorAll("[data-forum-comment]"));
+    const participationPill = root.querySelector("#forumParticipationPill");
+    const commentCount = root.querySelector("#forumCommentCount");
+    const ownPreview = root.querySelector("#forumOwnPreview");
+    const resultBadge = root.querySelector("#forumResultBadge");
+    const resultText = root.querySelector("#forumResultText");
+    const resultNote = root.querySelector("#forumResultNote");
+    const flashNote = root.querySelector("#forumFlashNote");
+
+    if (!state.comments || typeof state.comments !== "object") {
+      state.comments = {};
+    }
+
+    state.ownPhrase = String(state.ownPhrase || "");
+    state.validated = Boolean(state.validated);
+
+    function persist() {
+      writeStorage(storageKey, state);
+    }
+
+    function validCommentIds() {
+      return peers.reduce(function (acc, peer, index) {
+        const peerId = peer.id || String(index);
+        if (String(state.comments[peerId] || "").trim().length >= 16) {
+          acc.push(peerId);
+        }
+        return acc;
+      }, []);
+    }
+
+    function isPhraseReady() {
+      return String(state.ownPhrase || "").trim().length >= 18;
+    }
+
+    function syncInputs() {
+      if (ownField) {
+        ownField.value = state.ownPhrase;
+      }
+
+      commentFields.forEach(function (field) {
+        field.value = state.comments[field.dataset.forumComment] || "";
+      });
+    }
+
+    function renderPeers() {
+      const completedComments = validCommentIds();
+
+      peers.forEach(function (peer, index) {
+        const peerId = peer.id || String(index);
+        const statusNode = root.querySelector("#forumPeerStatus-" + peerId);
+        const card = root.querySelector('[data-forum-peer="' + peerId + '"]');
+        const isDone = completedComments.indexOf(peerId) !== -1;
+
+        if (card) {
+          card.classList.toggle("is-done", isDone);
+        }
+
+        if (!statusNode) {
+          return;
+        }
+
+        statusNode.className = "rewrite-status";
+        if (isDone) {
+          statusNode.textContent = "Commenté";
+          statusNode.classList.add("is-success");
+        } else if (String(state.comments[peerId] || "").trim()) {
+          statusNode.textContent = "En cours";
+          statusNode.classList.add("is-progress");
+        } else {
+          statusNode.textContent = "À commenter";
+        }
+      });
+    }
+
+    function renderAll() {
+      const commentIds = validCommentIds();
+      const commentedAuthors = commentIds.map(function (peerId) {
+        const peer = peers.find(function (item, index) {
+          return (item.id || String(index)) === peerId;
+        });
+        return peer && peer.author ? peer.author : peerId;
+      });
+      const completedSteps = (isPhraseReady() ? 1 : 0) + (commentIds.length ? 1 : 0);
+
+      renderPeers();
+
+      if (participationPill) {
+        participationPill.textContent = completedSteps + " / 2 étapes";
+      }
+
+      if (commentCount) {
+        commentCount.textContent = commentIds.length + " commentaire" + (commentIds.length > 1 ? "s" : "");
+      }
+
+      if (ownPreview) {
+        ownPreview.textContent = isPhraseReady()
+          ? state.ownPhrase.trim()
+          : "Votre phrase apparaîtra ici une fois rédigée.";
+      }
+
+      if (!resultBadge || !resultText || !resultNote) {
+        return;
+      }
+
+      if (!state.validated) {
+        if (!state.ownPhrase.trim() && !commentIds.length) {
+          resultBadge.textContent = "En attente";
+          resultBadge.className = "module-status-badge";
+          resultText.textContent = "Ajoutez votre phrase d'apaisement puis commentez au moins une proposition de pair.";
+        } else {
+          resultBadge.textContent = "En cours";
+          resultBadge.className = "module-status-badge is-warning";
+          resultText.textContent = "Préparez une phrase courte puis un commentaire explicite avant de valider votre participation.";
+        }
+      } else if (isPhraseReady() && commentIds.length) {
+        resultBadge.textContent = "Prêt";
+        resultBadge.className = "module-status-badge is-success";
+        resultText.textContent = "Votre phrase est publiée et au moins un pair a reçu un retour argumenté.";
+      } else {
+        resultBadge.textContent = "À compléter";
+        resultBadge.className = "module-status-badge is-warning";
+        resultText.textContent = "La validation attend une phrase suffisamment claire et au moins un commentaire exploitable pour un pair.";
+      }
+
+      resultNote.textContent = commentIds.length
+        ? "Pairs commentés : " + commentedAuthors.join(", ")
+        : "Pensez à commenter au moins une proposition de pair.";
+    }
+
+    if (ownField) {
+      ownField.addEventListener("input", function () {
+        state.ownPhrase = ownField.value;
+        state.validated = false;
+        persist();
+        renderAll();
+      });
+    }
+
+    commentFields.forEach(function (field) {
+      field.addEventListener("input", function () {
+        state.comments[field.dataset.forumComment] = field.value;
+        state.validated = false;
+        persist();
+        renderAll();
+      });
+    });
+
+    root.querySelector("#forumValidateBtn").addEventListener("click", function () {
+      state.validated = true;
+      persist();
+      renderAll();
+      setFlashMessage(flashNote, "Participation vérifiée.");
+    });
+
+    root.querySelector("#forumResetBtn").addEventListener("click", function () {
+      if (!window.confirm("Réinitialiser cette participation ?")) {
+        return;
+      }
+
+      state.ownPhrase = "";
+      state.comments = {};
+      state.validated = false;
+      syncInputs();
+      persist();
+      renderAll();
+      setFlashMessage(flashNote, "Forum réinitialisé.");
+    });
+
+    syncInputs();
+    renderAll();
+  }
+
   const modules = {
+    observe: {
+      render: renderObserveModule,
+      init: initObserveModule
+    },
     sort: {
       render: renderSortModule,
       init: initSortModule
+    },
+    checklist: {
+      render: renderChecklistModule,
+      init: initChecklistModule
     },
     prep: {
       render: renderPrepModule,
@@ -3224,6 +3922,10 @@
     evaluation: {
       render: renderEvaluationModule,
       init: initEvaluationModule
+    },
+    forum: {
+      render: renderForumModule,
+      init: initForumModule
     }
   };
 

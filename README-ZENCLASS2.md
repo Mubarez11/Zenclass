@@ -12,6 +12,41 @@ Base de travail autonome pour compléter la plateforme ZenClass par axe, objecti
   - `objectif.html`
   - `activite.html`
 
+## Handoff 2026-04-23
+
+### axe-3 / obj-2 - Tache 8 integree
+
+Le parcours numerique de la tache 8 a ete integre dans `axe-3 / obj-2` avec 4 activites enrichies :
+
+- `Activite 1` : `observe`
+- `Activite 2` : `checklist`
+- `Activite 3` : `reflect`
+- `Activite 4` : `forum`
+
+### Ressources ajoutees
+
+- Axe 3 :
+  - `1.PDF à part tout au début_Fiche_ressource_Tache8_Intervenir_pour_apaiser.pdf`
+  - `2.Apprenant_Axe3_Tache8_Parcours_numerique_apaiser_la_classe.pdf`
+  - article `Bølstad et al. (2023)` via DOI
+- Axe 2 / objectif 3 :
+  - PDF local `Stress de l’évaluation scolaire _ un nouveau regard sur un problème ancien.pdf`
+  - DOI `Prokofieva et al. (2017)` conserve comme reference academique
+
+### Fichiers modifies
+
+- `plateforme-etudiante/data.js`
+- `plateforme-etudiante/activity-modules.js`
+- `plateforme-etudiante/app.js`
+- `README.md`
+- `HANDOFF-2026-04-23.md`
+
+### Verifications faites
+
+- Syntaxe JS OK sur les 3 fichiers modifies
+- Verification navigateur OK sur les pages `objectif`, `activite` et `ressources theoriques` des axes 2 et 3
+- Console OK hors `favicon.ico` manquant
+
 ## Handoff 2026-04-19
 
 ### objectif.html - Page Objectif redesign (axe-2, obj-3)
@@ -90,13 +125,16 @@ Refonte du hero de la page activite pour remplacer la sphere surchargee par un g
 ## Pour reprendre demain
 
 1. Ouvrir `README.md`
-2. Ouvrir `HANDOFF-2026-04-21.md`
-3. Ouvrir `activite.html?axe=axe-2&objectif=obj-3&activite=1`
-   - Vérifier le hero globe sur desktop
-   - Vérifier le hero globe sur mobile
-   - Ajuster la position des labels si l'utilisateur le demande
-4. Tester d'autres objectifs/axes pour vérifier la rétrocompatibilité
-5. Si demandé : étendre le design hero aux autres pages activité ou objectif
+2. Ouvrir `HANDOFF-2026-04-23.md`
+3. Ouvrir `objectif.html?axe=axe-3&objectif=obj-2`
+4. Ouvrir `activite.html?axe=axe-3&objectif=obj-2&activite=1`
+   - vérifier l'encadre ressource
+   - vérifier le flux de prise de notes
+5. Ouvrir `activite.html?axe=axe-3&objectif=obj-2&activite=4`
+   - vérifier la phrase personnelle
+   - vérifier le commentaire sur un pair
+6. Vérifier `plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-2`
+7. Vérifier `plateforme-etudiante-zenclass-ressources-theoriques.html?axe=axe-3`
 
 ## Pense-bête technique
 
@@ -113,6 +151,8 @@ Refonte du hero de la page activite pour remplacer la sphere surchargee par un g
 - Chaque objectif contient des `activities`
 - Les activités simples utilisent la structure par défaut
 - Les activités enrichies utilisent un `moduleType`
+  - `observe`
+  - `checklist`
   - `sort`
   - `prep`
   - `verbatim`
@@ -120,6 +160,7 @@ Refonte du hero de la page activite pour remplacer la sphere surchargee par un g
   - `reflect`
   - `rephrase`
   - `pathway`
+  - `forum`
 
 ## Fichiers à modifier en priorité
 

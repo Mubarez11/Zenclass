@@ -84,6 +84,15 @@
     return "activite.html?axe=" + encodeURIComponent(axisId) + "&objectif=" + encodeURIComponent(objectiveId) + "&activite=" + encodeURIComponent(activityNumber);
   }
 
+  function resolveLocalHref(href) {
+    const value = String(href || "").trim();
+    if (!value || /^(?:[a-z]+:|#|\/)/i.test(value)) {
+      return value;
+    }
+
+    return value.indexOf("../") === 0 ? value : "../" + value;
+  }
+
   function activityTaskCount(activity) {
     if (Number(activity && activity.taskCount) > 0) {
       return Number(activity.taskCount);
@@ -511,7 +520,7 @@
                 meta +
                 embed +
                 '<div class="resource-item-actions">' +
-                  '<a class="btn btn-ghost" href="' + resource.href + '" target="_blank" rel="noopener noreferrer">' + resource.actionLabel + "</a>" +
+                  '<a class="btn btn-ghost" href="' + resolveLocalHref(resource.href) + '" target="_blank" rel="noopener noreferrer">' + resource.actionLabel + "</a>" +
                 "</div>" +
               "</article>"
             );
