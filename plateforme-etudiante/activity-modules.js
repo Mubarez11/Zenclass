@@ -1214,6 +1214,108 @@
     });
   }
 
+  function pathwayContainsId(list, id) {
+    return (list || []).indexOf(id) !== -1;
+  }
+
+  function pathwayChoiceStatus(isSelected, isExpected) {
+    if (isSelected && isExpected) {
+      return "correct";
+    }
+
+    if (isSelected && !isExpected) {
+      return "incorrect";
+    }
+
+    if (!isSelected && isExpected) {
+      return "missed";
+    }
+
+    return "neutral";
+  }
+
+  function pathwayDetail(status, title, message, meta) {
+    return {
+      status: status,
+      title: title || "Point de correction",
+      message: message || "",
+      meta: meta || ""
+    };
+  }
+
+  function pathwayResult(valid, message, task, details) {
+    const result = {
+      valid: valid,
+      message: message || ""
+    };
+    const source = task && (task.source || task.evidence || task.scientificReference || "");
+
+    if (Array.isArray(details) && details.length) {
+      result.details = details;
+    }
+
+    if (source) {
+      result.source = source;
+    }
+
+    return result;
+  }
+
+  function pathwayLookupLabel(items, id, fallback) {
+    const match = (items || []).find(function (item) {
+      return item && item.id === id;
+    });
+
+    return match ? (match.label || match.text || fallback || id || "") : (fallback || id || "");
+  }
+
+  function pathwayExpectedMeta(isSelected, isExpected) {
+    const selectedText = isSelected ? "choisi" : "non choisi";
+    const expectedText = isExpected ? "à sélectionner" : "à écarter";
+
+    return "Votre réponse : " + selectedText + " | Attendu : " + expectedText;
+  }
+
+  function pathwayStatusLabel(status) {
+    const labels = {
+      correct: "Juste",
+      incorrect: "Faux",
+      missed: "Attendu",
+      neutral: "Écarté juste",
+      warning: "À préciser"
+    };
+
+    return labels[status] || "Info";
+  }
+
+  function renderPathwayFeedback(result, fallback) {
+    if (!result) {
+      return escapeHtml(fallback || "");
+    }
+
+    const details = Array.isArray(result.details) ? result.details : [];
+    const detailsHtml = details.map(function (detail) {
+      const status = detail.status || "warning";
+
+      return (
+        '<article class="pathway-feedback-detail is-' + escapeHtml(status) + '">' +
+          '<span class="pathway-feedback-status">' + escapeHtml(pathwayStatusLabel(status)) + "</span>" +
+          '<strong class="pathway-feedback-title">' + escapeHtml(detail.title || "Point de correction") + "</strong>" +
+          (detail.message ? '<p class="pathway-feedback-message">' + escapeHtml(detail.message) + "</p>" : "") +
+          (detail.meta ? '<p class="pathway-feedback-meta">' + escapeHtml(detail.meta) + "</p>" : "") +
+        "</article>"
+      );
+    }).join("");
+
+    return (
+      '<div class="pathway-feedback-panel">' +
+        '<p class="pathway-feedback-summary">' + escapeHtml(result.message || fallback || "") + "</p>" +
+        (result.source ? '<p class="pathway-feedback-source">' + escapeHtml(result.source) + "</p>" : "") +
+        (detailsHtml ? '<div class="pathway-feedback-list">' + detailsHtml + "</div>" : "") +
+      "</div>"
+    );
+  }
+
   function evaluatePathwayRewrite(task, value) {
     const normalized = normalizeText(value);
     const minLength = Math.max(12, Number(task.minLength || 18));
@@ -1223,30 +1325,37 @@
     });
 
     if (!normalized) {
-      return {
-        valid: false,
-        message: task.retryMessage || "Ajoutez une reformulation avant de vérifier cette tâche."
-      };
+      return pathwayResult(false, task.retryMessage || "Ajoutez une reformulation avant de vérifier cette tâche.", task, [
+        pathwayDetail("missed", "Réponse absente", "Ajoutez une proposition avant de vérifier.")
+      ]);
     }
 
     if (normalized.length < minLength) {
-      return {
-        valid: false,
-        message: task.retryMessage || "La reformulation est encore trop courte pour conserver l'information utile."
-      };
+      return pathwayResult(false, task.retryMessage || "La reformulation est encore trop courte pour conserver l'information utile.", task, [
+        pathwayDetail("warning", "Réponse trop courte", "Votre réponse doit être assez développée pour montrer l'information conservée et la pression retirée.", "Longueur actuelle : " + normalized.length + " caractères | Attendu : " + minLength + " minimum")
+      ]);
     }
 
     if (missingGroups.length || blockedPhrases.length) {
-      return {
-        valid: false,
-        message: task.retryMessage || "Conservez mieux l'information utile et retirez les formulations encore stressantes."
-      };
+      const details = [];
+
+      missingGroups.forEach(function (group, index) {
+        const label = task.requiredGroupLabels && task.requiredGroupLabels[index]
+          ? task.requiredGroupLabels[index]
+          : "Élément attendu";
+        details.push(pathwayDetail("missed", label, "Cet élément doit apparaître dans votre réponse pour montrer que la logique pédagogique est conservée.", "Indices possibles : " + group.join(", ")));
+      });
+
+      blockedPhrases.forEach(function (phrase) {
+        details.push(pathwayDetail("incorrect", "Formulation encore stressante", "Cette formulation reprend un marqueur que la tâche demande de retirer.", "À éviter : " + phrase));
+      });
+
+      return pathwayResult(false, task.retryMessage || "Conservez mieux l'information utile et retirez les formulations encore stressantes.", task, details);
     }
 
-    return {
-      valid: true,
-      message: task.successMessage || "La reformulation conserve l'essentiel tout en abaissant la pression."
-    };
+    return pathwayResult(true, task.successMessage || "La reformulation conserve l'essentiel tout en abaissant la pression.", task, [
+      pathwayDetail("correct", "Logique respectée", "Votre réponse conserve le sens pédagogique et retire les marqueurs de pression ciblés.")
+    ]);
   }
 
   function renderPathwayTaskContent(task, index) {
@@ -1650,13 +1759,28 @@
 
       if (task.type === "multi-select") {
         const selected = response.selected || [];
-        const valid = sameIdSet(selected, task.correctIds || []);
-        return {
-          valid: valid,
-          message: valid
+        const correctIds = task.correctIds || [];
+        const valid = sameIdSet(selected, correctIds);
+        const details = (task.options || []).filter(function (option) {
+          const isSelected = pathwayContainsId(selected, option.id);
+          const isExpected = pathwayContainsId(correctIds, option.id);
+          return task.reviewAllOptions || isSelected || isExpected;
+        }).map(function (option) {
+          const isSelected = pathwayContainsId(selected, option.id);
+          const isExpected = pathwayContainsId(correctIds, option.id);
+          const status = pathwayChoiceStatus(isSelected, isExpected);
+
+          return pathwayDetail(status, option.label || "Proposition", option.feedback || "", pathwayExpectedMeta(isSelected, isExpected));
+        });
+
+        return pathwayResult(
+          valid,
+          valid
             ? (task.successMessage || "Les bons éléments ont été repérés.")
-            : (task.retryMessage || "Revenez aux propositions réellement alignées avec l'objectif de repérage.")
-        };
+            : (task.retryMessage || "Revenez aux propositions réellement alignées avec l'objectif de repérage."),
+          task,
+          details
+        );
       }
 
       if (task.type === "segment-select") {
@@ -1664,61 +1788,162 @@
           const selected = (response.selectedByCase && response.selectedByCase[caseItem.id]) || [];
           return sameIdSet(selected, caseItem.correctIds || []);
         });
-        return {
-          valid: valid,
-          message: valid
+        const details = [];
+
+        (task.cases || []).forEach(function (caseItem) {
+          const selected = (response.selectedByCase && response.selectedByCase[caseItem.id]) || [];
+          const correctIds = caseItem.correctIds || [];
+
+          (caseItem.segments || []).forEach(function (segment) {
+            const isSelected = pathwayContainsId(selected, segment.id);
+            const isExpected = pathwayContainsId(correctIds, segment.id);
+
+            if (task.reviewAllOptions || isSelected || isExpected) {
+              details.push(pathwayDetail(
+                pathwayChoiceStatus(isSelected, isExpected),
+                (caseItem.label || "Phrase") + " : " + (segment.text || "Segment"),
+                segment.feedback || "",
+                pathwayExpectedMeta(isSelected, isExpected)
+              ));
+            }
+          });
+        });
+
+        return pathwayResult(
+          valid,
+          valid
             ? (task.successMessage || "Les segments qui ajoutent réellement de la pression sont bien isolés.")
-            : (task.retryMessage || "Ne gardez que les segments qui ajoutent une menace, une injonction ou un jugement inutile.")
-        };
+            : (task.retryMessage || "Ne gardez que les segments qui ajoutent une menace, une injonction ou un jugement inutile."),
+          task,
+          details
+        );
       }
 
       if (task.type === "categorize") {
         const valid = (task.items || []).every(function (item) {
           return response.values && response.values[item.id] === item.correctCategory;
         });
-        return {
-          valid: valid,
-          message: valid
+        const details = (task.items || []).map(function (item) {
+          const selected = response.values && response.values[item.id];
+          const isCorrect = selected === item.correctCategory;
+          const expectedLabel = pathwayLookupLabel(task.categories, item.correctCategory, item.correctCategory);
+          const selectedLabel = selected ? pathwayLookupLabel(task.categories, selected, selected) : "aucune famille choisie";
+
+          return pathwayDetail(
+            isCorrect ? "correct" : (selected ? "incorrect" : "missed"),
+            item.label || "Formulation",
+            item.feedback || "",
+            "Votre réponse : " + selectedLabel + " | Attendu : " + expectedLabel
+          );
+        });
+
+        return pathwayResult(
+          valid,
+          valid
             ? (task.successMessage || "Les formulations sont correctement classées.")
-            : (task.retryMessage || "Reprenez la famille dominante de chaque formulation.")
-        };
+            : (task.retryMessage || "Reprenez la famille dominante de chaque formulation."),
+          task,
+          details
+        );
       }
 
       if (task.type === "mapping") {
         const valid = (task.items || []).every(function (item) {
           return response.values && response.values[item.id] === item.correctOption;
         });
-        return {
-          valid: valid,
-          message: valid
+        const details = (task.items || []).map(function (item) {
+          const selected = response.values && response.values[item.id];
+          const isCorrect = selected === item.correctOption;
+          const expectedLabel = pathwayLookupLabel(task.options, item.correctOption, item.correctOption);
+          const selectedLabel = selected ? pathwayLookupLabel(task.options, selected, selected) : "aucune reformulation choisie";
+
+          return pathwayDetail(
+            isCorrect ? "correct" : (selected ? "incorrect" : "missed"),
+            item.label || "Formulation",
+            item.feedback || "",
+            "Votre réponse : " + selectedLabel + " | Attendu : " + expectedLabel
+          );
+        });
+
+        return pathwayResult(
+          valid,
+          valid
             ? (task.successMessage || "Les bonnes reformulations de départ sont choisies.")
-            : (task.retryMessage || "Associez chaque tournure stressante à la reformulation qui informe sans menacer.")
-        };
+            : (task.retryMessage || "Associez chaque tournure stressante à la reformulation qui informe sans menacer."),
+          task,
+          details
+        );
       }
 
       if (task.type === "bucket-sort") {
         const valid = (task.items || []).every(function (item) {
           return response.values && response.values[item.id] === item.correctBucket;
         });
-        return {
-          valid: valid,
-          message: valid
+        const details = (task.items || []).map(function (item) {
+          const selected = response.values && response.values[item.id];
+          const isCorrect = selected === item.correctBucket;
+          const expectedLabel = pathwayLookupLabel(task.buckets, item.correctBucket, item.correctBucket);
+          const selectedLabel = selected ? pathwayLookupLabel(task.buckets, selected, selected) : "aucune colonne choisie";
+
+          return pathwayDetail(
+            isCorrect ? "correct" : (selected ? "incorrect" : "missed"),
+            item.label || "Fragment",
+            item.feedback || "",
+            "Votre réponse : " + selectedLabel + " | Attendu : " + expectedLabel
+          );
+        });
+
+        return pathwayResult(
+          valid,
+          valid
             ? (task.successMessage || "Le tri entre information utile et pression ajoutée est correct.")
-            : (task.retryMessage || "Revoyez ce qui doit rester pour agir et ce qui ajoute une pression évitable.")
-        };
+            : (task.retryMessage || "Revoyez ce qui doit rester pour agir et ce qui ajoute une pression évitable."),
+          task,
+          details
+        );
       }
 
       if (task.type === "short-write") {
         const text = String(response.text || "").trim();
         const minLength = Math.max(20, Number(task.minLength || 50));
-        const missingGroups = pathwayMissingGroups(normalizeText(text), task.requiredGroups || []);
+        const normalizedText = normalizeText(text);
+        const groups = task.requiredGroups || [];
+        const missingGroups = groups.map(function (group, index) {
+          return {
+            group: group,
+            index: index
+          };
+        }).filter(function (entry) {
+          return !textContainsAny(normalizedText, entry.group);
+        });
         const valid = Boolean(text) && text.length >= minLength && !missingGroups.length;
-        return {
-          valid: valid,
-          message: valid
+        const details = [];
+
+        if (!text) {
+          details.push(pathwayDetail("missed", "Réponse absente", "Ajoutez une justification avant de vérifier."));
+        } else if (text.length < minLength) {
+          details.push(pathwayDetail("warning", "Réponse trop courte", "Votre justification doit être assez développée pour expliciter la logique.", "Longueur actuelle : " + text.length + " caractères | Attendu : " + minLength + " minimum"));
+        }
+
+        missingGroups.forEach(function (entry) {
+          const label = task.requiredGroupLabels && task.requiredGroupLabels[entry.index]
+            ? task.requiredGroupLabels[entry.index]
+            : "Élément attendu";
+          details.push(pathwayDetail("missed", label, "Cet axe doit apparaître pour que le diagnostic soit clair.", "Indices possibles : " + entry.group.join(", ")));
+        });
+
+        if (valid) {
+          details.push(pathwayDetail("correct", "Justification complète", "Votre réponse mentionne les éléments attendus et explique le mécanisme de pression."));
+        }
+
+        return pathwayResult(
+          valid,
+          valid
             ? (task.successMessage || "La justification met clairement en lumière le mécanisme de pression.")
-            : (task.retryMessage || "Développez votre réponse en montrant mieux en quoi la formulation crée une menace ou une pression.")
-        };
+            : (task.retryMessage || "Développez votre réponse en montrant mieux en quoi la formulation crée une menace ou une pression."),
+          task,
+          details
+        );
       }
 
       if (task.type === "compare") {
@@ -1728,12 +1953,45 @@
           const note = String(response.notes && response.notes[caseItem.id] || "").trim();
           return choice === caseItem.correctId && note.length >= minNoteLength;
         });
-        return {
-          valid: valid,
-          message: valid
+        const details = [];
+
+        (task.cases || []).forEach(function (caseItem) {
+          const choice = response.choices && response.choices[caseItem.id];
+          const selectedOption = (caseItem.options || []).find(function (option) {
+            return option.id === choice;
+          });
+          const expectedOption = (caseItem.options || []).find(function (option) {
+            return option.id === caseItem.correctId;
+          });
+          const note = String(response.notes && response.notes[caseItem.id] || "").trim();
+
+          details.push(pathwayDetail(
+            choice === caseItem.correctId ? "correct" : (choice ? "incorrect" : "missed"),
+            caseItem.prompt || "Comparaison",
+            selectedOption && selectedOption.feedback
+              ? selectedOption.feedback
+              : "Choisissez la version qui garde l'information utile sans ajouter de menace.",
+            "Votre réponse : " + (selectedOption ? selectedOption.label : "aucune version choisie") + " | Attendu : " + (expectedOption ? expectedOption.label : caseItem.correctId)
+          ));
+
+          details.push(pathwayDetail(
+            note.length >= minNoteLength ? "correct" : "missed",
+            "Justification - " + (caseItem.prompt || "comparaison"),
+            note.length >= minNoteLength
+              ? "Votre justification est assez développée pour expliciter le choix."
+              : "Ajoutez une justification qui explique pourquoi la version attendue diminue la menace, l'urgence ou le jugement.",
+            "Longueur actuelle : " + note.length + " caractères | Attendu : " + minNoteLength + " minimum"
+          ));
+        });
+
+        return pathwayResult(
+          valid,
+          valid
             ? (task.successMessage || "Vous choisissez désormais la version la plus contenante et vous savez l'expliquer.")
-            : (task.retryMessage || "Choisissez la version la plus neutre puis justifiez en quoi elle apaise la consigne.")
-        };
+            : (task.retryMessage || "Choisissez la version la plus neutre puis justifiez en quoi elle apaise la consigne."),
+          task,
+          details
+        );
       }
 
       if (task.type === "rewrite") {
@@ -1746,12 +2004,28 @@
           const value = String(response.fields && response.fields[field.id] || "").trim();
           return value.length >= minLength;
         });
-        return {
-          valid: valid,
-          message: valid
+        const details = (task.fields || []).map(function (field) {
+          const value = String(response.fields && response.fields[field.id] || "").trim();
+          const isComplete = value.length >= minLength;
+
+          return pathwayDetail(
+            isComplete ? "correct" : "missed",
+            field.label || "Repère",
+            isComplete
+              ? (field.feedback || "Ce repère est assez concret pour être réutilisé.")
+              : "Complétez ce repère avec un exemple observable ou une action professionnelle précise.",
+            "Longueur actuelle : " + value.length + " caractères | Attendu : " + minLength + " minimum"
+          );
+        });
+
+        return pathwayResult(
+          valid,
+          valid
             ? (task.successMessage || "Les repères de vigilance sont maintenant explicités.")
-            : (task.retryMessage || "Complétez chaque repère avec un contenu concret et réutilisable en classe.")
-        };
+            : (task.retryMessage || "Complétez chaque repère avec un contenu concret et réutilisable en classe."),
+          task,
+          details
+        );
       }
 
       return { valid: false, message: "Type de tâche non pris en charge." };
@@ -1832,6 +2106,120 @@
       }
     }
 
+    function syncPathwayValidationMarkers(task, card, response, result) {
+      if (!card) {
+        return;
+      }
+
+      card.querySelectorAll(".is-correct, .is-incorrect, .is-missed").forEach(function (node) {
+        node.classList.remove("is-correct", "is-incorrect", "is-missed");
+      });
+
+      if (!result) {
+        return;
+      }
+
+      if (task.type === "multi-select") {
+        const selected = response.selected || [];
+        const correctIds = task.correctIds || [];
+
+        card.querySelectorAll("[data-pathway-option-task]").forEach(function (button) {
+          const optionId = button.dataset.pathwayOptionId;
+          const isSelected = pathwayContainsId(selected, optionId);
+          const isExpected = pathwayContainsId(correctIds, optionId);
+          const status = pathwayChoiceStatus(isSelected, isExpected);
+
+          if (status !== "neutral") {
+            button.classList.add("is-" + status);
+          }
+        });
+      }
+
+      if (task.type === "segment-select") {
+        const selectedByCase = response.selectedByCase || {};
+
+        (task.cases || []).forEach(function (caseItem) {
+          const selected = selectedByCase[caseItem.id] || [];
+          const correctIds = caseItem.correctIds || [];
+
+          card.querySelectorAll('[data-pathway-segment-task][data-pathway-case-id="' + caseItem.id + '"]').forEach(function (button) {
+            const segmentId = button.dataset.pathwaySegmentId;
+            const isSelected = pathwayContainsId(selected, segmentId);
+            const isExpected = pathwayContainsId(correctIds, segmentId);
+            const status = pathwayChoiceStatus(isSelected, isExpected);
+
+            if (status !== "neutral") {
+              button.classList.add("is-" + status);
+            }
+          });
+        });
+      }
+
+      if (task.type === "categorize" || task.type === "mapping") {
+        const values = response.values || {};
+
+        card.querySelectorAll("[data-pathway-category-task]").forEach(function (select) {
+          const itemId = select.dataset.pathwayItemId;
+          const item = (task.items || []).find(function (candidate) {
+            return candidate.id === itemId;
+          });
+          const expected = item && (task.type === "mapping" ? item.correctOption : item.correctCategory);
+          const selected = values[itemId];
+          const status = selected === expected ? "correct" : (selected ? "incorrect" : "missed");
+          const row = select.closest(".pathway-select-row");
+
+          select.classList.add("is-" + status);
+          if (row) {
+            row.classList.add("is-" + status);
+          }
+        });
+      }
+
+      if (task.type === "bucket-sort") {
+        const values = response.values || {};
+
+        card.querySelectorAll("[data-pathway-bucket-task]").forEach(function (button) {
+          const itemId = button.dataset.pathwayItemId;
+          const bucketId = button.dataset.pathwayBucketId;
+          const item = (task.items || []).find(function (candidate) {
+            return candidate.id === itemId;
+          });
+          const expected = item && item.correctBucket;
+          const selected = values[itemId];
+
+          if (selected === bucketId && selected === expected) {
+            button.classList.add("is-correct");
+          } else if (selected === bucketId && selected !== expected) {
+            button.classList.add("is-incorrect");
+          } else if (bucketId === expected && selected !== expected) {
+            button.classList.add("is-missed");
+          }
+        });
+      }
+
+      if (task.type === "compare") {
+        const choices = response.choices || {};
+
+        card.querySelectorAll("[data-pathway-compare-task]").forEach(function (button) {
+          const caseId = button.dataset.pathwayCaseId;
+          const choiceId = button.dataset.pathwayChoiceId;
+          const caseItem = (task.cases || []).find(function (candidate) {
+            return candidate.id === caseId;
+          });
+          const expected = caseItem && caseItem.correctId;
+          const selected = choices[caseId];
+
+          if (selected === choiceId && selected === expected) {
+            button.classList.add("is-correct");
+          } else if (selected === choiceId && selected !== expected) {
+            button.classList.add("is-incorrect");
+          } else if (choiceId === expected && selected !== expected) {
+            button.classList.add("is-missed");
+          }
+        });
+      }
+    }
+
     function renderTaskCard(task, index, isNext) {
       const taskId = getPathwayTaskId(task, index);
       const response = responseFor(taskId);
@@ -1848,6 +2236,7 @@
       }
 
       syncTaskControls(task, card, response);
+      syncPathwayValidationMarkers(task, card, response, result);
 
       card.classList.remove("is-done", "is-next", "is-warning");
       statusNode.className = "rewrite-status";
@@ -1857,13 +2246,13 @@
         statusNode.textContent = "Validée";
         statusNode.classList.add("is-success");
         feedbackNode.classList.add("is-success");
-        feedbackNode.textContent = result.message;
+        feedbackNode.innerHTML = renderPathwayFeedback(result, task.cue || task.prompt || "");
         card.classList.add("is-done");
       } else if (result && !result.valid) {
         statusNode.textContent = "À reprendre";
         statusNode.classList.add("is-warning");
         feedbackNode.classList.add("is-warning");
-        feedbackNode.textContent = result.message;
+        feedbackNode.innerHTML = renderPathwayFeedback(result, task.cue || task.prompt || "");
         card.classList.add("is-warning");
       } else if (touched) {
         statusNode.textContent = "En cours";

@@ -257,6 +257,17 @@
   }
 
   function renderDefaultActivityContent(activity) {
+    if (Array.isArray(activity.contentSections) && activity.contentSections.length) {
+      return activity.contentSections.map(function (section) {
+        return (
+          '<div class="content-block">' +
+            '<h2>' + (section.title || "Section") + '</h2>' +
+            '<div class="activity-copy-box">' + (section.body || "--") + '</div>' +
+          '</div>'
+        );
+      }).join("");
+    }
+
     return (
       '<div class="content-block">' +
         "<h2>Consigne</h2>" +

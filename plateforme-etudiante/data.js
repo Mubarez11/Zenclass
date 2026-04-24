@@ -10,6 +10,212 @@ function makeActivities(count) {
   });
 }
 
+const axe1Objective2Activities = [
+  {
+    number: 1,
+    title: "Présentation + prise de notes guidée",
+    duration: "20 min",
+    instruction:
+      "Comprendre les effets du stress sur les émotions, les apprentissages et le bien-être (anxiété, motivation, performance).",
+    feedbacks: [
+      "Diaporama structuré, lecture scientifique et fiche de prise de notes guidée.",
+      "La fiche de prise de notes est proposée comme support facultatif."
+    ],
+    contentSections: [
+      {
+        title: "Modalité et but",
+        body:
+          "<p><strong>Modalité :</strong> Distance</p>" +
+          "<p><strong>But :</strong> Comprendre les effets du stress sur les émotions, les apprentissages et le bien-être (anxiété, motivation, performance)</p>"
+      },
+      {
+        title: "Ressources",
+        body:
+          "<ul class='activity-feedback-list'>" +
+            "<li>Diaporama structuré <a href='zenclass_axe1_tache2/materiel_role_des_emotions/presentation_role_emotions.html' target='_blank' rel='noopener noreferrer'>presentation_role_emotions.html</a></li>" +
+            "<li>Lecture de <a href='https://link.springer.com/article/10.1186/s40359-025-03041-z' target='_blank' rel='noopener noreferrer'>Benítez-Agudelo et al. (2025)</a></li>" +
+            "<li>Fiche de prise de notes guidée <a href='zenclass_axe1_tache2/materiel_role_des_emotions/prisedenote_role_des_emotions_dans_les_apprentissages.md' target='_blank' rel='noopener noreferrer'>prisedenote_role_des_emotions_dans_les_apprentissages.md</a></li>" +
+          "</ul>"
+      },
+      {
+        title: "Consignes",
+        body:
+          "<p>Nous vous proposons cette feuille facultative pour la prise de note. Vous pouvez la télécharger en cliquant sur le lien suivant: <a href='zenclass_axe1_tache2/materiel_role_des_emotions/prisedenote_role_des_emotions_dans_les_apprentissages.md' target='_blank' rel='noopener noreferrer'>[lien]</a>.</p>"
+      }
+    ]
+  },
+  {
+    number: 2,
+    title: "Question ouverte écrite",
+    duration: "10 min",
+    instruction:
+      "Identifier ses représentations du lien entre émotions et apprentissages.",
+    feedbacks: [
+      "Rédigez deux situations scolaires plausibles.",
+      "Longueur attendue : environ 8 à 12 lignes au total."
+    ],
+    contentSections: [
+      {
+        title: "Modalité et but",
+        body:
+          "<p><strong>Modalité :</strong> Distance</p>" +
+          "<p><strong>But :</strong> Identifier ses représentations du lien entre émotions et apprentissages</p>"
+      },
+      {
+        title: "Consignes",
+        body:
+          "<p>Dans ce forum, vous allez réfléchir au rôle des émotions dans la vie scolaire.</p>" +
+          "<p>Imaginez deux situations scolaires différentes pouvant susciter une émotion chez un élève. Pour chacune, rédigez un court paragraphe dans lequel vous :</p>" +
+          "<ul class='activity-feedback-list'>" +
+            "<li>présentez la situation ;</li>" +
+            "<li>nommez au moins une émotion possible ;</li>" +
+            "<li>décrivez l'effet de cette émotion sur le comportement, le bien-être ou les apprentissages de l'élève.</li>" +
+          "</ul>" +
+          "<p>Essayez d'être concret. Appuyez-vous sur des situations plausibles de classe.</p>" +
+          "<p>Vous pouvez choisir des émotions dites négatives (stress, peur, colère, honte, frustration) ou positives (joie, fierté, soulagement, enthousiasme).</p>" +
+          "<p>Longueur attendue : environ 8 à 12 lignes au total.</p>"
+      }
+    ]
+  },
+  {
+    number: 3,
+    title: "Discussion entre pairs",
+    duration: "30 min",
+    instruction:
+      "Construire une compréhension partagée du rôle des émotions dans les apprentissages.",
+    feedbacks: [
+      "Comparez vos réponses individuelles postée sur le forum.",
+      "Discutez des effets possibles de différentes émotions sur les apprentissages et le bien-être des élèves."
+    ],
+    contentSections: [
+      {
+        title: "Modalité et but",
+        body:
+          "<p><strong>Modalité :</strong> Présentiel</p>" +
+          "<p><strong>But :</strong> Construire une compréhension partagée du rôle des émotions dans les apprentissages</p>"
+      },
+      {
+        title: "Consigne",
+        body:
+          "<p>En binômes, échangez à partir de vos réponses individuelles postée sur le forum.</p>" +
+          "<p>L'objectif est de comparer vos exemples, d'identifier des points communs et de discuter des effets possibles de différentes émotions sur les apprentissages et le bien-être des élèves.</p>"
+      },
+      {
+        title: "Déroulement",
+        body:
+          "<p><strong>1. Binômes fixes (5 min)</strong></p>" +
+          "<ul class='activity-feedback-list'>" +
+            "<li>Lecture mutuelle des productions.</li>" +
+            "<li>Repérage des émotions citées.</li>" +
+          "</ul>" +
+          "<p><strong>2. Discussion structurée (20 min)</strong></p>" +
+          "<p><strong>3. Trace collective (5 min)</strong></p>" +
+          "<ul class='activity-feedback-list'>" +
+            "<li>Premières hypothèses sur leurs effets différenciés</li>" +
+          "</ul>"
+      },
+      {
+        title: "Questions déclencheuses possibles",
+        body:
+          "<ul class='activity-feedback-list'>" +
+            "<li>Quelles émotions reviennent le plus souvent dans vos exemples ?</li>" +
+            "<li>Dans quelles situations ces émotions semblent-elles soutenir les apprentissages ?</li>" +
+            "<li>Dans quelles situations les freinent-elles ?</li>" +
+            "<li>Le stress a-t-il toujours un effet négatif ?</li>" +
+            "<li>Comment un enseignant peut-il repérer et prendre en compte ces émotions en classe ?</li>" +
+          "</ul>"
+      }
+    ]
+  },
+  {
+    number: 4,
+    title: "synthèse et debriefing de l'axe 1",
+    duration: "40 min",
+    instruction:
+      "concevoir une synthèse commune de la séquence.",
+    feedbacks: [
+      "Recueillez les réponses en grand groupe.",
+      "Présentez une synthèse structurée autour de 3 messages clés."
+    ],
+    contentSections: [
+      {
+        title: "Modalité et but",
+        body:
+          "<p><strong>Modalité :</strong> Présentiel</p>" +
+          "<p><strong>But :</strong> concevoir une synthèse commune de la séquence.</p>"
+      },
+      {
+        title: "Retour en grand groupe (15 min)",
+        body:
+          "<p>L'enseignant poses les questions au tableau, une part une, en recueillant les réponses.</p>" +
+          "<ul class='activity-feedback-list'>" +
+            "<li>Quelles émotions ont été le plus souvent citées dans vos exemples ?</li>" +
+            "<li>Dans quels cas les émotions soutiennent-elles les apprentissages ?</li>" +
+            "<li>Dans quels cas les freinent-elles ?</li>" +
+            "<li>Le stress est-il toujours négatif ? Pourquoi ?</li>" +
+            "<li>Qu'est-ce qui, dans ces échanges, vous semble particulièrement important pour le rôle de l'enseignant ?</li>" +
+          "</ul>"
+      },
+      {
+        title: "Mise en ordre (10 min)",
+        body:
+          "<p>L'enseignant reformules, regroupe, et hiérarchises:</p>" +
+          "<ul class='activity-feedback-list'>" +
+            "<li>émotions → effets sur l'éducation</li>" +
+            "<li>émotions → effets sur le bien-être</li>" +
+          "</ul>"
+      },
+      {
+        title: "Synthèse institutionnelle (15 min)",
+        body:
+          "<p>Présentation orale d'une synthèse structurée autour de 3 messages clés :</p>" +
+          "<ul class='activity-feedback-list'>" +
+            "<li>Le bien-être des élèves n'est pas secondaire à l'apprentissage mais une pertie cruciale de celle-ci.</li>" +
+            "<li>Les émotions sont omniprésentes dans les apprentissages.</li>" +
+            "<li>Elles ont des effets différenciés selon leur nature, leur intensité et leur durée.</li>" +
+          "</ul>"
+      }
+    ]
+  },
+  {
+    number: 5,
+    title: "Retour réflexif",
+    duration: "25 min",
+    instruction:
+      "Faire le lien avec sa pratique professionnelle.",
+    feedbacks: [
+      "Appuyez-vous sur la présentation, la lecture, les réflexions individuelles du forum et la discussion de groupe.",
+      "Longueur attendue: 15 à 20 lignes."
+    ],
+    contentSections: [
+      {
+        title: "Modalité et but",
+        body:
+          "<p><strong>Modalité :</strong> Distance</p>" +
+          "<p><strong>But :</strong> Faire le lien avec sa pratique professionnelle</p>"
+      },
+      {
+        title: "Consignes",
+        body:
+          "<p>Dans ce forum, faite une retour reflexif sur le rôle des émotions en classe en utilisant la présentation, la lecture de Benítez-Agudelo et. al (2025), les réflexions individuelles du forum, ainsi que votre discussion de groupe.</p>" +
+          "<p>Rédigez un court retour réflexif dans le forum à partir des points suivants :</p>" +
+          "<ul class='activity-feedback-list'>" +
+            "<li>ce que j'ai compris du rôle des émotions dans l'éducation ;</li>" +
+            "<li>ce que j'ai compris plus précisément du rôle :</li>" +
+            "<li>du stress ;</li>" +
+            "<li>du soulagement ;</li>" +
+            "<li>de la honte ;</li>" +
+            "<li>de la fierté ;</li>" +
+            "<li>ce que cela confirme dans ma pratique ;</li>" +
+            "<li>ce que cela bouscule dans ma pratique ;</li>" +
+            "<li>trois situations de classe dans lesquelles ces éléments me semblent particulièrement importants.</li>" +
+          "</ul>" +
+          "<p>Longueur attendue: 15 à 20 lignes.</p>"
+      }
+    ]
+  }
+];
+
 const axe2Objective2Activities = [
   {
     number: 1,
@@ -69,152 +275,183 @@ const axe2Objective3Activities = [
   {
     number: 1,
     moduleType: "pathway",
-    title: "Repérer les formulations qui mettent la pression",
+    title: "Distinguer information utile et pression ajoutée",
     duration: "20 min",
     difficulty: "Fondations",
     taskCount: 8,
     instruction:
-      "Commencez par détecter, sans encore réécrire, les mots et tournures qui transforment une consigne informative en consigne stressante.",
+      "Commencez par détecter, sans encore réécrire, ce qui relève d'une information nécessaire et ce qui ajoute une pression évitable au message.",
     feedbacks: [
-      "Observez d'abord l'effet émotionnel produit, avant de chercher une meilleure formulation.",
-      "Distinguez ce qui informe l'élève de ce qui ajoute une menace, une urgence ou un jugement.",
-      "Gardez une trace des signaux linguistiques que vous retrouvez souvent dans votre propre pratique."
+      "Une note, une date ou une durée peuvent être stressantes, mais ce sont parfois des informations indispensables : le problème pédagogique vient surtout du surplus de menace, de jugement ou d'urgence.",
+      "Les ressources de l'axe 2 présentent la pression évaluative comme un stresseur scolaire majeur ; l'objectif est donc d'annoncer l'évaluation clairement sans l'intensifier par le langage.",
+      "À chaque correction, vérifiez la même logique : information utile conservée, pression ajoutée repérée, justification explicite."
     ],
     learningPath: {
-      subtitle: "Activité de sensibilisation",
-      outcome: "Être capable d'isoler les déclencheurs linguistiques les plus fréquents avant toute reformulation.",
-      focusTags: ["notation", "urgence", "menace implicite", "comparaison sociale"],
+      subtitle: "Diagnostic guidé",
+      outcome: "Être capable d'isoler la pression linguistique évitable sans supprimer l'information pédagogique nécessaire.",
+      focusTags: ["information utile", "pression évaluative", "menace implicite", "comparaison sociale", "jugement"],
       progressLabel: "Parcours 8 tâches",
       supportCards: [
         {
-          label: "Point d'attention",
-          text: "Ne corrigez rien au départ : regardez seulement ce qui augmente la tension chez l'élève."
+          label: "Règle de tri",
+          text: "Ne classez pas une phrase comme problématique parce qu'elle parle d'une note ou d'un temps : cherchez le surplus qui menace, juge, compare ou presse brutalement."
         },
         {
           label: "Ce qu'on conserve",
-          text: "L'information pédagogique utile : date, consigne, évaluation, temps disponible."
+          text: "L'information pédagogique utile : date, consigne, critères, évaluation annoncée, temps disponible et action attendue."
         },
         {
-          label: "Ce qu'on surveille",
-          text: "Les mots qui rappellent brutalement l'erreur, la sanction, la comparaison ou le manque de temps."
+          label: "Ce qu'on allège",
+          text: "Les marqueurs qui augmentent l'enjeu perçu : alerte, sanction implicite, injonction de perfection, comparaison sociale ou jugement global."
         }
       ],
       reflectionLabel: "Trace de sortie",
-      reflectionPrompt: "Quels trois signaux linguistiques voulez-vous désormais surveiller avant une annonce évaluative ?",
-      reflectionPlaceholder: "Ex. menace implicite, injonction de performance, comparaison avec les autres...",
-      completionMessage: "Le repérage est posé. Vous êtes prêt à passer à une transformation plus guidée.",
+      reflectionPrompt: "Quels trois signaux linguistiques précis voulez-vous surveiller avant une annonce évaluative ?",
+      reflectionPlaceholder: "Ex. alerte inutile, menace implicite, comparaison sociale, jugement dévalorisant...",
+      completionMessage: "Le diagnostic est posé : vous pouvez maintenant reformuler en conservant l'information utile et en retirant la pression ajoutée.",
       tasks: [
         {
           id: "obj3-a1-t1",
           type: "multi-select",
           level: "Niveau 1",
-          title: "Cadrer son regard avant d'analyser",
-          description: "Sélectionnez les trois repères qui cadrent correctement cette activité de sensibilisation.",
-          cue: "Avant de réécrire, on observe ce qui ajoute de la pression au message.",
-          prompt: "Cochez uniquement les trois affirmations justes pour lancer le parcours.",
+          title: "Installer la règle de tri",
+          description: "Sélectionnez les trois repères qui rendent l'analyse moins subjective et moins ambiguë.",
+          cue: "La bonne cible n'est pas la phrase la plus désagréable : c'est le surplus linguistique évitable.",
+          prompt: "Cochez uniquement les trois repères qui doivent guider toute l'activité.",
+          reviewAllOptions: true,
+          source: "Logique scientifique : les ressources de l'axe 2 décrivent la pression évaluative comme un stresseur contextuel ; le travail de formulation consiste à réduire le surplus de menace sans effacer le cadre pédagogique.",
           options: [
             {
-              id: "observe",
-              label: "J'observe d'abord l'effet émotionnel produit par la consigne."
+              id: "keep-info",
+              label: "Je conserve l'information nécessaire : date, note, durée, tâche ou critère.",
+              feedback: "Juste : retirer toute information évaluative rendrait la consigne floue. Les ressources insistent sur le fait que le cadre scolaire existe ; c'est la manière de l'annoncer qui peut augmenter ou réduire la pression."
             },
             {
-              id: "keep",
-              label: "Je garde en tête l'information utile que l'élève doit recevoir."
+              id: "spot-surplus",
+              label: "Je repère les mots qui ajoutent menace, jugement, comparaison ou urgence brutale.",
+              feedback: "Juste : ces marqueurs transforment une annonce en signal de danger social ou scolaire, ce qui peut accroître l'activation émotionnelle chez l'élève."
             },
             {
-              id: "rewrite-now",
-              label: "Je réécris immédiatement chaque phrase avant de l'analyser."
+              id: "separate-context",
+              label: "Je distingue le stresseur de contexte et la pression ajoutée par la formulation.",
+              feedback: "Juste : une évaluation peut déjà être un stresseur, mais une phrase comme « attention » ou « vous allez le sentir » ajoute une menace évitable."
             },
             {
-              id: "pressure",
-              label: "Je cherche les mots qui ajoutent une menace, une urgence ou un jugement."
+              id: "erase-evaluation",
+              label: "Je supprime toute mention de note, de contrôle ou de temps restant.",
+              feedback: "Faux : cela diminue peut-être l'impression de pression, mais l'élève perd une information utile pour agir et se préparer. Le bon geste est d'annoncer clairement sans menacer."
             },
             {
-              id: "blame",
-              label: "Je juge d'abord la personnalité de l'enseignant qui parle."
+              id: "choose-feeling",
+              label: "Je choisis surtout les phrases qui me paraissent personnellement les plus stressantes.",
+              feedback: "Faux : ce critère est trop subjectif. L'activité demande d'identifier des indices linguistiques observables : menace, comparaison, jugement ou urgence brutale."
             }
           ],
-          correctIds: ["observe", "keep", "pressure"],
-          successMessage: "Le cadre d'observation est posé : vous pouvez maintenant repérer la pression dans des consignes concrètes.",
-          retryMessage: "Revenez au but de l'activité : observer, conserver l'information utile et repérer la pression ajoutée."
+          correctIds: ["keep-info", "spot-surplus", "separate-context"],
+          successMessage: "Le cadre d'observation est posé : vous allez chercher le surplus de pression, pas supprimer le cadre scolaire.",
+          retryMessage: "Reprenez la règle : conserver l'information utile, repérer les marqueurs de menace ou de jugement, éviter le tri purement subjectif."
         },
         {
           id: "obj3-a1-t2",
           type: "multi-select",
           level: "Niveau 1",
-          title: "Repérer les annonces qui ajoutent de la pression",
-          description: "Lisez huit consignes de classe et cochez uniquement celles qui ajoutent une menace, une injonction ou un jugement évitable.",
-          cue: "Toutes les phrases parlent d'école, mais seules certaines ajoutent une pression inutile.",
-          prompt: "Sélectionnez les quatre formulations qui risquent d'augmenter la tension chez un élève anxieux.",
+          title: "Repérer le surplus de pression évitable",
+          description: "Lisez huit annonces de classe et cochez seulement celles qui ajoutent un marqueur explicite de menace, de jugement, de comparaison ou d'urgence brutale.",
+          cue: "Certaines annonces restent potentiellement stressantes parce qu'elles parlent d'évaluation ou de temps, mais elles informent sans ajouter de menace.",
+          prompt: "Sélectionnez les quatre formulations qui ajoutent une pression évitable au-delà de l'information utile.",
+          reviewAllOptions: true,
+          source: "Logique scientifique : Prokofieva et al. (2017) relient le stress scolaire à la pression évaluative ; la correction distingue donc l'annonce nécessaire de l'intensification par alerte, menace, jugement ou comparaison sociale.",
           options: [
             {
               id: "n1",
-              label: "Cette activité est notée et comptera pour votre bulletin."
+              label: "Cette activité est notée et comptera pour votre bulletin.",
+              feedback: "À écarter : la phrase peut activer un enjeu évaluatif, mais elle donne une information nécessaire sans alerte ni sanction. Elle est à formuler calmement, pas à masquer."
             },
             {
               id: "n2",
-              label: "Vous aurez un contrôle vendredi sur le chapitre 3."
+              label: "Vous aurez un contrôle vendredi sur le chapitre 3.",
+              feedback: "À écarter : l'annonce d'un contrôle peut être un stresseur, mais la formulation reste neutre et prévisible. Elle aide l'élève à anticiper."
             },
             {
               id: "n3",
-              label: "Il vous reste 5 minutes pour terminer l'essentiel de l'exercice."
+              label: "Il vous reste 5 minutes pour terminer l'essentiel de l'exercice.",
+              feedback: "À écarter : le temps restant est une contrainte réelle. La phrase donne une priorité d'action (« l'essentiel ») sans injonction brutale."
             },
             {
               id: "n4",
-              label: "Je vous rends les copies et nous regarderons les points à renforcer."
+              label: "Je vous rends les copies et nous regarderons les points à renforcer.",
+              feedback: "À écarter : l'annonce conserve le cadre d'apprentissage et oriente vers la progression, sans jugement global sur les élèves."
             },
             {
               id: "r1",
-              label: "Attention, c'est noté et ça compte pour votre bulletin."
+              label: "Attention, c'est noté, donc ne faites pas d'erreurs.",
+              feedback: "À sélectionner : « attention » signale un danger et « ne faites pas d'erreurs » impose une perfection peu réaliste. La pression évaluative est renforcée par l'alerte et l'injonction."
             },
             {
               id: "r2",
-              label: "Ceux qui n'ont pas travaillé vont le sentir."
+              label: "Ceux qui n'ont pas travaillé vont le sentir.",
+              feedback: "À sélectionner : la phrase annonce une conséquence négative ciblée. Elle transforme le contrôle en menace implicite plutôt qu'en information de préparation."
             },
             {
               id: "r3",
-              label: "Dépêchez-vous, après je ramasse tout."
+              label: "Dépêchez-vous, après je ramasse tout.",
+              feedback: "À sélectionner : l'urgence est formulée comme une injonction brusque. Elle peut augmenter l'activation physiologique et réduire les ressources attentionnelles disponibles."
             },
             {
               id: "r4",
-              label: "Certains d'entre vous ont beaucoup à améliorer, c'est décevant."
+              label: "Les autres ont déjà presque terminé, vous devriez en être là.",
+              feedback: "À sélectionner : la comparaison sociale met les élèves en compétition et peut renforcer la peur d'être en retard ou jugé devant le groupe."
             }
           ],
           correctIds: ["r1", "r2", "r3", "r4"],
-          successMessage: "Vous avez isolé les formulations qui ajoutent une pression évitable.",
-          retryMessage: "Revoyez les phrases : certaines informent seulement, tandis que d'autres ajoutent une alerte, une menace ou un jugement."
+          successMessage: "Vous avez isolé les formulations où le langage ajoute une pression évitable.",
+          retryMessage: "Ne cochez pas seulement ce qui parle d'une note ou du temps : cochez les phrases qui ajoutent une menace, un jugement, une comparaison ou une injonction brutale."
         },
         {
           id: "obj3-a1-t3",
           type: "segment-select",
           level: "Niveau 2",
-          title: "Surligner les mots de pression",
-          description: "Dans chaque phrase, cliquez uniquement sur les segments qui ajoutent de la pression au-delà de l'information utile.",
-          cue: "Ne cliquez pas sur ce qui informe simplement l'élève ; ciblez ce qui menace, presse ou juge.",
-          prompt: "Sélectionnez uniquement les segments qui augmentent la pression émotionnelle.",
+          title: "Surligner seulement le surplus anxiogène",
+          description: "Dans chaque annonce, cliquez sur les segments à retirer ou à reformuler, sans toucher à l'information utile.",
+          cue: "Une même phrase peut contenir une information à garder et un marqueur de pression à alléger.",
+          prompt: "Sélectionnez uniquement les segments qui ajoutent une pression évitable.",
+          reviewAllOptions: true,
+          source: "Logique scientifique : les ressources distinguent le stresseur contextuel (évaluation, temps, exposition) et les formulations qui majorent la menace perçue.",
           cases: [
             {
               id: "case1",
               label: "Phrase 1",
               description: "Annonce d'une activité notée",
               segments: [
-                { id: "c1s1", text: "Attention," },
-                { id: "c1s2", text: "c'est noté" },
-                { id: "c1s3", text: "et cela comptera pour votre bulletin." },
-                { id: "c1s4", text: "Ne faites pas d'erreurs." }
+                { id: "c1s1", text: "Cette activité est notée", feedback: "À écarter : c'est l'information évaluative utile. Elle peut être sensible, mais elle doit être annoncée clairement." },
+                { id: "c1s2", text: "et comptera pour votre bulletin.", feedback: "À écarter : c'est une conséquence institutionnelle à connaître. Le problème n'est pas l'information, mais son habillage menaçant." },
+                { id: "c1s3", text: "Attention,", feedback: "À sélectionner : le mot fonctionne comme une alerte et augmente l'enjeu perçu avant même la consigne." },
+                { id: "c1s4", text: "ne faites pas d'erreurs.", feedback: "À sélectionner : l'injonction de perfection centre l'élève sur l'échec possible, ce qui peut nourrir l'anxiété de performance." }
               ],
-              correctIds: ["c1s1", "c1s4"]
+              correctIds: ["c1s3", "c1s4"]
             },
             {
               id: "case2",
               label: "Phrase 2",
               description: "Annonce d'un contrôle",
               segments: [
-                { id: "c2s1", text: "Vous aurez un contrôle vendredi." },
-                { id: "c2s2", text: "Ceux qui n'ont pas travaillé" },
-                { id: "c2s3", text: "vont le sentir." }
+                { id: "c2s1", text: "Vous aurez un contrôle vendredi sur le chapitre 3.", feedback: "À écarter : la date et le contenu rendent l'évaluation prévisible, ce qui aide la préparation." },
+                { id: "c2s2", text: "Ceux qui n'ont pas travaillé", feedback: "À sélectionner : le segment cible un groupe d'élèves et prépare une sanction implicite." },
+                { id: "c2s3", text: "vont le sentir.", feedback: "À sélectionner : la conséquence reste menaçante et floue ; elle intensifie la pression au lieu d'indiquer comment se préparer." }
               ],
               correctIds: ["c2s2", "c2s3"]
+            },
+            {
+              id: "case3",
+              label: "Phrase 3",
+              description: "Annonce du temps restant",
+              segments: [
+                { id: "c3s1", text: "Il vous reste 5 minutes", feedback: "À écarter : c'est une information temporelle utile si elle est donnée calmement." },
+                { id: "c3s2", text: "pour terminer l'essentiel.", feedback: "À écarter : le segment aide à prioriser l'action et peut sécuriser la tâche." },
+                { id: "c3s3", text: "Dépêchez-vous,", feedback: "À sélectionner : l'injonction accélère brutalement et peut faire monter la tension." },
+                { id: "c3s4", text: "après je ramasse tout.", feedback: "À sélectionner : la formulation ferme la possibilité d'ajustement et transforme le ramassage en menace." }
+              ],
+              correctIds: ["c3s3", "c3s4"]
             }
           ],
           successMessage: "Vous distinguez mieux ce qui informe de ce qui met sous pression.",
@@ -225,49 +462,58 @@ const axe2Objective3Activities = [
           type: "categorize",
           level: "Niveau 2",
           title: "Classer les stresseurs par famille",
-          description: "Associez chaque formulation stressante à sa famille dominante pour comprendre le mécanisme en jeu.",
-          cue: "Cherchez la source principale de pression : note, temps, menace implicite ou comparaison sociale.",
+          description: "Associez chaque surplus de pression à sa famille dominante pour comprendre le mécanisme en jeu.",
+          cue: "Cherchez le mécanisme principal : alerte évaluative, urgence, menace, comparaison ou jugement.",
           prompt: "Attribuez à chaque formulation la bonne famille de stresseur.",
+          source: "Logique scientifique : le stress scolaire peut être renforcé par l'évaluation, l'urgence temporelle, l'exposition sociale et le jugement. La catégorie aide à choisir ensuite une reformulation ciblée.",
           categories: [
-            { id: "evaluation", label: "Pression évaluative" },
-            { id: "temps", label: "Urgence temporelle" },
+            { id: "evaluation-alert", label: "Alerte évaluative" },
+            { id: "performance", label: "Injonction de performance" },
+            { id: "temps", label: "Urgence temporelle brutale" },
             { id: "menace", label: "Menace implicite" },
-            { id: "comparaison", label: "Comparaison sociale" }
+            { id: "comparaison", label: "Comparaison sociale" },
+            { id: "jugement", label: "Jugement dévalorisant" }
           ],
           items: [
             {
               id: "cat1",
-              label: "Ça comptera pour votre bulletin.",
-              correctCategory: "evaluation"
+              label: "Attention, c'est noté.",
+              correctCategory: "evaluation-alert",
+              feedback: "La pression vient surtout de l'alerte accolée à l'évaluation : la note n'est pas cachée, mais elle est dramatisée."
             },
             {
               id: "cat2",
-              label: "Dépêchez-vous.",
-              correctCategory: "temps"
+              label: "Ne faites pas d'erreurs.",
+              correctCategory: "performance",
+              feedback: "La phrase exige une performance sans erreur et oriente l'attention vers l'échec possible."
             },
             {
               id: "cat3",
-              label: "Ceux qui n'ont pas travaillé vont le sentir.",
-              correctCategory: "menace"
+              label: "Dépêchez-vous.",
+              correctCategory: "temps",
+              feedback: "Le problème dominant est l'accélération imposée, qui peut renforcer la tension corporelle et cognitive."
             },
             {
               id: "cat4",
-              label: "Les autres ont déjà presque fini.",
-              correctCategory: "comparaison"
+              label: "Ceux qui n'ont pas travaillé vont le sentir.",
+              correctCategory: "menace",
+              feedback: "La phrase annonce une conséquence négative sans préciser d'aide ou de critère : elle fonctionne comme menace implicite."
             },
             {
               id: "cat5",
-              label: "C'est noté.",
-              correctCategory: "evaluation"
+              label: "Les autres ont déjà presque fini.",
+              correctCategory: "comparaison",
+              feedback: "La pression vient du regard social et de la comparaison avec les pairs."
             },
             {
               id: "cat6",
-              label: "Tout le monde vous regarde déjà.",
-              correctCategory: "comparaison"
+              label: "C'est décevant.",
+              correctCategory: "jugement",
+              feedback: "Le message ne décrit pas une action à améliorer : il porte un jugement global qui peut menacer l'estime de soi."
             }
           ],
           successMessage: "Les grandes familles de stresseurs sont maintenant repérées.",
-          retryMessage: "Reprenez la logique dominante de chaque phrase : évaluer, presser, menacer ou comparer."
+          retryMessage: "Reprenez la logique dominante de chaque phrase : alerter autour d'une note, exiger la perfection, presser, menacer, comparer ou juger."
         },
         {
           id: "obj3-a1-t5",
@@ -277,6 +523,7 @@ const axe2Objective3Activities = [
           description: "Répartissez chaque fragment dans la bonne colonne : information utile à conserver ou pression ajoutée à alléger.",
           cue: "Gardez seulement ce dont l'élève a objectivement besoin pour agir dans la tâche.",
           prompt: "Classez chaque fragment dans la bonne colonne.",
+          source: "Logique scientifique : pour réduire un stresseur scolaire évitable, on garde le cadre qui permet d'agir et on retire les signaux qui augmentent la menace perçue.",
           buckets: [
             { id: "utile", label: "Information utile" },
             { id: "pression", label: "Pression ajoutée" }
@@ -284,43 +531,51 @@ const axe2Objective3Activities = [
           items: [
             {
               id: "bucket1",
-              label: "contrôle vendredi",
-              correctBucket: "utile"
+              label: "contrôle vendredi sur le chapitre 3",
+              correctBucket: "utile",
+              feedback: "Utile : date et contenu aident l'élève à se préparer."
             },
             {
               id: "bucket2",
-              label: "activité notée",
-              correctBucket: "utile"
+              label: "activité notée et coefficient annoncé",
+              correctBucket: "utile",
+              feedback: "Utile : l'enjeu évaluatif doit être connu pour que l'élève comprenne le cadre."
             },
             {
               id: "bucket3",
-              label: "5 minutes restantes",
-              correctBucket: "utile"
+              label: "5 minutes pour finaliser l'essentiel",
+              correctBucket: "utile",
+              feedback: "Utile : le temps restant est associé à une priorité d'action, ce qui peut aider la régulation."
             },
             {
               id: "bucket4",
-              label: "je ramasse ensuite les feuilles",
-              correctBucket: "utile"
+              label: "copies rendues avec points à renforcer",
+              correctBucket: "utile",
+              feedback: "Utile : la restitution est liée à une progression possible plutôt qu'à un jugement."
             },
             {
               id: "bucket5",
               label: "attention",
-              correctBucket: "pression"
+              correctBucket: "pression",
+              feedback: "Pression ajoutée : l'alerte dramatise le message sans donner d'action supplémentaire."
             },
             {
               id: "bucket6",
               label: "ne faites pas d'erreurs",
-              correctBucket: "pression"
+              correctBucket: "pression",
+              feedback: "Pression ajoutée : l'injonction de perfection focalise sur la faute et l'échec possible."
             },
             {
               id: "bucket7",
               label: "vont le sentir",
-              correctBucket: "pression"
+              correctBucket: "pression",
+              feedback: "Pression ajoutée : la conséquence est présentée comme sanction implicite."
             },
             {
               id: "bucket8",
               label: "c'est décevant",
-              correctBucket: "pression"
+              correctBucket: "pression",
+              feedback: "Pression ajoutée : c'est un jugement dévalorisant, pas une indication pour progresser."
             }
           ],
           successMessage: "Vous savez maintenant séparer le cadre utile du surplus anxiogène.",
@@ -331,14 +586,26 @@ const axe2Objective3Activities = [
           type: "short-write",
           level: "Niveau 3",
           title: "Justifier un diagnostic de stress",
-          description: "Expliquez pourquoi une tournure précise peut augmenter la tension émotionnelle chez certains élèves.",
-          cue: "Appuyez-vous sur l'idée de menace, de jugement ou de sanction implicite.",
-          prompt: "Expliquez en quelques phrases pourquoi la formulation « Ceux qui n'ont pas travaillé vont le sentir » peut augmenter la tension émotionnelle.",
-          placeholder: "Décrivez ce que cette phrase laisse entendre pour l'élève et pourquoi cela peut être vécu comme une menace.",
-          minLength: 55,
-          requiredGroups: [["menace", "pression", "sanction", "peur", "stress"]],
-          successMessage: "Votre justification rend explicite le mécanisme de pression émotionnelle.",
-          retryMessage: "Votre réponse doit montrer en quoi cette formulation peut être vécue comme une menace ou une pression."
+          description: "Expliquez pourquoi deux formulations proches n'ont pas le même effet probable sur le ressenti de l'élève.",
+          cue: "Votre justification doit distinguer l'information utile de l'alerte anxiogène.",
+          prompt: "Expliquez pourquoi « Attention, c'est noté, donc ne faites pas d'erreurs » est plus à risque que « Cette activité est notée et comptera pour votre bulletin ». Appuyez-vous sur l'information utile et sur le surplus de pression.",
+          placeholder: "Ex. Les deux phrases annoncent une évaluation, mais la première ajoute...",
+          minLength: 120,
+          requiredGroups: [
+            ["noté", "notée", "évaluation", "evaluation", "bulletin"],
+            ["information", "utile", "conserver", "garder", "cadre"],
+            ["attention", "alerte", "erreur", "erreurs", "perfection"],
+            ["menace", "pression", "stress", "peur", "anxiété", "anxiete"]
+          ],
+          requiredGroupLabels: [
+            "mention de l'enjeu évaluatif",
+            "distinction avec l'information utile à conserver",
+            "repérage de l'alerte ou de l'injonction de perfection",
+            "explication du mécanisme de pression ou de menace"
+          ],
+          source: "Logique scientifique : les ressources de l'axe 2 indiquent que la pression évaluative peut déclencher des réponses émotionnelles et physiologiques ; l'enjeu est donc de réduire les signaux de menace tout en gardant l'information scolaire.",
+          successMessage: "Votre justification distingue clairement l'information évaluative utile du surplus qui augmente la menace perçue.",
+          retryMessage: "Développez votre réponse : mentionnez l'évaluation utile, ce qu'il faut conserver, l'alerte ou l'injonction d'erreur, puis le mécanisme de pression."
         },
         {
           id: "obj3-a1-t7",
@@ -347,6 +614,7 @@ const axe2Objective3Activities = [
           title: "Comparer deux versions d'une même annonce",
           description: "Choisissez, pour chaque situation, la version la plus neutre puis expliquez ce qui change dans le ressenti possible.",
           cue: "La meilleure version informe clairement sans menace, sans urgence brutale et sans jugement.",
+          source: "Logique scientifique : la formulation contenante réduit les signaux de menace tout en maintenant la prévisibilité, deux conditions importantes pour limiter la pression scolaire.",
           cases: [
             {
               id: "cmp1",
@@ -354,11 +622,13 @@ const axe2Objective3Activities = [
               options: [
                 {
                   id: "a",
-                  label: "Vendredi, vous avez un contrôle. Ceux qui n'ont pas travaillé vont le sentir."
+                  label: "Vendredi, vous avez un contrôle. Ceux qui n'ont pas travaillé vont le sentir.",
+                  feedback: "Version à écarter : elle conserve l'information utile mais ajoute une menace implicite dirigée vers certains élèves."
                 },
                 {
                   id: "b",
-                  label: "Vendredi, vous aurez un contrôle. Vous pouvez revoir les points essentiels avant la séance."
+                  label: "Vendredi, vous aurez un contrôle. Vous pouvez revoir les points essentiels avant la séance.",
+                  feedback: "Version attendue : elle garde la date et le contrôle, puis donne une action de préparation sans menace."
                 }
               ],
               correctId: "b",
@@ -371,16 +641,37 @@ const axe2Objective3Activities = [
               options: [
                 {
                   id: "a",
-                  label: "Dépêchez-vous, vous avez 5 minutes pour finir."
+                  label: "Dépêchez-vous, vous avez 5 minutes pour finir.",
+                  feedback: "Version à écarter : le temps est utile, mais « dépêchez-vous » ajoute une urgence corporelle et brutale."
                 },
                 {
                   id: "b",
-                  label: "Il vous reste 5 minutes pour terminer l'essentiel de votre travail."
+                  label: "Il vous reste 5 minutes pour terminer l'essentiel de votre travail.",
+                  feedback: "Version attendue : elle conserve le temps restant et indique une priorité, ce qui soutient l'action."
                 }
               ],
               correctId: "b",
               noteLabel: "Expliquez ce qui change pour l'élève dans cette formulation.",
               notePlaceholder: "Ex. le cadre temporel reste clair, mais sans injonction brutale."
+            },
+            {
+              id: "cmp3",
+              prompt: "Quelle version rend les copies sans jugement dévalorisant ?",
+              options: [
+                {
+                  id: "a",
+                  label: "Je vous rends les copies. Certains résultats sont décevants.",
+                  feedback: "Version à écarter : le jugement global peut être vécu comme une atteinte à la valeur de l'élève et n'indique pas comment progresser."
+                },
+                {
+                  id: "b",
+                  label: "Je vous rends les copies. Nous regarderons les points à renforcer pour progresser.",
+                  feedback: "Version attendue : elle conserve la restitution et transforme le retour en appui d'apprentissage."
+                }
+              ],
+              correctId: "b",
+              noteLabel: "Expliquez pourquoi cette version soutient mieux l'apprentissage.",
+              notePlaceholder: "Ex. elle parle de points à renforcer plutôt que de juger les élèves."
             }
           ],
           minNoteLength: 28,
@@ -392,23 +683,27 @@ const axe2Objective3Activities = [
           type: "triple-note",
           level: "Niveau 4",
           title: "Formaliser trois repères de vigilance",
-          description: "Complétez trois repères concrets que vous pourrez réutiliser immédiatement dans les activités suivantes.",
-          cue: "Cette liste doit devenir votre filtre rapide avant une note, un contrôle ou une reprise de copies.",
+          description: "Complétez trois repères concrets que vous pourrez réutiliser avant une annonce évaluative.",
+          cue: "Vos repères doivent être observables dans une phrase, pas seulement des intentions générales.",
+          source: "Logique scientifique : les ressources de l'axe 2 invitent à agir sur des stresseurs contextuels évitables ; des repères linguistiques précis rendent cette prévention applicable en classe.",
           fields: [
             {
               id: "mot",
               label: "1. Un mot à surveiller",
-              placeholder: "Ex. attention, dépêchez-vous..."
+              placeholder: "Ex. attention, dépêchez-vous...",
+              feedback: "Repère attendu : un mot qui signale une alerte ou une urgence inutile."
             },
             {
               id: "tournure",
               label: "2. Une tournure à reformuler",
-              placeholder: "Ex. ne faites pas d'erreurs, vont le sentir..."
+              placeholder: "Ex. ne faites pas d'erreurs, vont le sentir...",
+              feedback: "Repère attendu : une tournure qui menace, exige la perfection, compare ou juge."
             },
             {
               id: "reflexe",
               label: "3. Un réflexe professionnel à adopter",
-              placeholder: "Ex. annoncer d'abord l'information utile, puis proposer une marche à suivre."
+              placeholder: "Ex. annoncer d'abord l'information utile, puis proposer une marche à suivre.",
+              feedback: "Repère attendu : un geste de formulation transférable, par exemple garder le cadre puis enlever l'alerte."
             }
           ],
           minLength: 8,
@@ -1199,8 +1494,8 @@ window.platformData = {
           id: "obj-2",
           label: "Objectif 2",
           title: "Expliquer le rôle des émotions dans les apprentissages et le bien-être des élèves.",
-          duration: "--",
-          activities: makeActivities(4)
+          duration: "2 h 05",
+          activities: axe1Objective2Activities
         },
         {
           id: "obj-3",
@@ -1464,6 +1759,32 @@ window.platformData = {
     }
   ],
   theoryResourcesByAxis: {
+    "axe-1": [
+      {
+        type: "Présentation",
+        title: "Le rôle des émotions dans les apprentissages et le bien être des élèves",
+        description: "Diaporama structuré utilisé dans l'activité A.1.",
+        meta: "Axe 1, objectif 2, activité A.1.",
+        href: "zenclass_axe1_tache2/materiel_role_des_emotions/presentation_role_emotions.html",
+        actionLabel: "Ouvrir la présentation"
+      },
+      {
+        type: "Article scientifique",
+        title: "Longitudinal effects of stress in an academic context on psychological well-being, physiological markers, health behaviors, and academic performance in university students",
+        description: "Lecture mobilisée dans l'activité A.1.",
+        meta: "Benítez-Agudelo, Restrepo, Navarro-Jiménez & Clemente-Suárez (2025). BMC Psychology, 13.",
+        href: "https://link.springer.com/article/10.1186/s40359-025-03041-z",
+        actionLabel: "Lire l'article"
+      },
+      {
+        type: "Fiche",
+        title: "Prise de notes guidée",
+        description: "Fiche facultative de prise de notes pour l'activité A.1.",
+        meta: "Consigne : Nous vous proposons cette feuille facultative pour la prise de note. Vous pouvez la télécharger en cliquant sur le lien suivant.",
+        href: "zenclass_axe1_tache2/materiel_role_des_emotions/prisedenote_role_des_emotions_dans_les_apprentissages.md",
+        actionLabel: "Ouvrir la fiche"
+      }
+    ],
     "axe-2": [
       {
         type: "Article PDF",

@@ -1273,72 +1273,7 @@
             <button class="flip-toggle-btn" data-filter="performance">Performance <span class="flip-toggle-count">1</span></button>
           </div>
         </div>
-        <div class="flip-grid" id="flipGrid">
-          <a class="flip-card" data-category="fondations" data-act-num="1" href="#">
-            <div class="flip-card-img-wrap">
-              <img class="flip-card-img" id="flipImg1" alt="Activité 1">
-              <div class="flip-card-img-overlay"></div>
-              <span class="flip-card-badge foundations" id="flipBadge1">Fondations</span>
-              <span class="flip-card-num">1</span>
-            </div>
-            <div class="flip-card-body">
-              <h3 class="flip-card-title" id="flipTitle1"></h3>
-              <div class="flip-card-meta">
-                <span id="flipTasks1">8 tâches</span>
-                <span id="flipDur1">20 min</span>
-              </div>
-              <div class="flip-card-arrow">→</div>
-            </div>
-          </a>
-          <a class="flip-card" data-category="guide" data-act-num="2" href="#">
-            <div class="flip-card-img-wrap">
-              <img class="flip-card-img" id="flipImg2" alt="Activité 2">
-              <div class="flip-card-img-overlay"></div>
-              <span class="flip-card-badge guided" id="flipBadge2">Guidé</span>
-              <span class="flip-card-num">2</span>
-            </div>
-            <div class="flip-card-body">
-              <h3 class="flip-card-title" id="flipTitle2"></h3>
-              <div class="flip-card-meta">
-                <span id="flipTasks2">7 tâches</span>
-                <span id="flipDur2">25 min</span>
-              </div>
-              <div class="flip-card-arrow">→</div>
-            </div>
-          </a>
-          <a class="flip-card" data-category="reflexif" data-act-num="3" href="#">
-            <div class="flip-card-img-wrap">
-              <img class="flip-card-img" id="flipImg3" alt="Activité 3">
-              <div class="flip-card-img-overlay"></div>
-              <span class="flip-card-badge reflexif" id="flipBadge3">Réflexif</span>
-              <span class="flip-card-num">3</span>
-            </div>
-            <div class="flip-card-body">
-              <h3 class="flip-card-title" id="flipTitle3"></h3>
-              <div class="flip-card-meta">
-                <span id="flipTasks3">7 tâches</span>
-                <span id="flipDur3">15 min</span>
-              </div>
-              <div class="flip-card-arrow">→</div>
-            </div>
-          </a>
-          <a class="flip-card" data-category="performance" data-act-num="4" href="#">
-            <div class="flip-card-img-wrap">
-              <img class="flip-card-img" id="flipImg4" alt="Activité 4">
-              <div class="flip-card-img-overlay"></div>
-              <span class="flip-card-badge performance" id="flipBadge4">Performance</span>
-              <span class="flip-card-num">4</span>
-            </div>
-            <div class="flip-card-body">
-              <h3 class="flip-card-title" id="flipTitle4"></h3>
-              <div class="flip-card-meta">
-                <span id="flipTasks4">8 tâches</span>
-                <span id="flipDur4">30 min</span>
-              </div>
-              <div class="flip-card-arrow">→</div>
-            </div>
-          </a>
-        </div>
+        <div class="flip-grid" id="flipGrid"></div>
       </div>
     </section>
   </main>
@@ -1403,8 +1338,32 @@
         }
 
         if (objData && objData.activities) {
+          var flipGrid = document.getElementById('flipGrid');
           var catKey = { 'Fondations': 'fondations', 'Guidé': 'guide', 'Réflexif': 'reflexif', 'Performance': 'performance' };
           var catCounts = { fondations: 0, guide: 0, reflexif: 0, performance: 0 };
+
+          if (flipGrid) {
+            flipGrid.innerHTML = objData.activities.map(function(act, idx) {
+              var num = idx + 1;
+              return '' +
+                '<a class="flip-card" data-category="fondations" data-act-num="' + num + '" href="#">' +
+                  '<div class="flip-card-img-wrap">' +
+                    '<img class="flip-card-img" id="flipImg' + num + '" alt="Activité ' + num + '">' +
+                    '<div class="flip-card-img-overlay"></div>' +
+                    '<span class="flip-card-badge foundations" id="flipBadge' + num + '">Activité</span>' +
+                    '<span class="flip-card-num">' + num + '</span>' +
+                  '</div>' +
+                  '<div class="flip-card-body">' +
+                    '<h3 class="flip-card-title" id="flipTitle' + num + '"></h3>' +
+                    '<div class="flip-card-meta">' +
+                      '<span id="flipTasks' + num + '"></span>' +
+                      '<span id="flipDur' + num + '">--</span>' +
+                    '</div>' +
+                    '<div class="flip-card-arrow">→</div>' +
+                  '</div>' +
+                '</a>';
+            }).join('');
+          }
 
           objData.activities.forEach(function(act, idx) {
             var num = idx + 1;
@@ -1416,13 +1375,17 @@
             var cardEl = document.querySelector('[data-act-num="' + num + '"]');
 
             if (titleEl) titleEl.textContent = act.title || ('Activité ' + num);
-            if (tasksEl) tasksEl.textContent = (act.taskCount || act.tasks || '--') + ' tâches';
+            if (tasksEl) {
+              var taskCount = act.taskCount || act.tasks || '';
+              tasksEl.textContent = taskCount ? taskCount + ' tâche' + (Number(taskCount) > 1 ? 's' : '') : '';
+              tasksEl.style.display = taskCount ? '' : 'none';
+            }
             if (durEl) durEl.textContent = act.duration || '--';
 
             var difficulty = act.difficulty || '';
             var badgeClass = catKey[difficulty] || 'fondations';
             if (badgeEl) {
-              badgeEl.textContent = difficulty || badgeClass;
+              badgeEl.textContent = difficulty || 'Activité';
               badgeEl.className = 'flip-card-badge ' + badgeClass;
             }
             if (cardEl) cardEl.setAttribute('data-category', badgeClass);

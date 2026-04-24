@@ -12,6 +12,44 @@ Base de travail autonome pour compléter la plateforme ZenClass par axe, objecti
   - `objectif.html`
   - `activite.html`
 
+## Handoff 2026-04-24
+
+### axe-2 / obj-3 / activite-1 - Feedbacks clarifies
+
+L'activite `Distinguer information utile et pression ajoutee` a ete retravaillee pour eviter les choix ambigus du type "toutes les phrases semblent stressantes".
+
+- Les taches distinguent maintenant l'information pedagogique utile de la pression linguistique ajoutee.
+- La tache de selection des formulations a ete reformulee autour de marqueurs observables : menace, jugement, comparaison sociale, urgence brutale, injonction de perfection.
+- Les feedbacks indiquent ce qui est juste, faux, attendu ou correctement ecarte.
+- Chaque correction peut afficher la logique scientifique associee aux ressources axe 2, notamment Prokofieva et al. (2017) sur la pression evaluative.
+- Le rendu visuel des corrections utilise des etats distincts : vert pour juste, rouge pour faux, orange pour attendu manque.
+
+### Supports Axe 1 inclus
+
+Le dossier `zenclass_axe1_tache2/` est inclus dans le push GitHub avec :
+
+- `axe1_tache2.md`
+- `materiel_role_des_emotions/presentation_role_emotions.html`
+- `materiel_role_des_emotions/prisedenote_role_des_emotions_dans_les_apprentissages.md`
+
+### Fichiers modifies / ajoutes
+
+- `plateforme-etudiante/data.js`
+- `plateforme-etudiante/activity-modules.js`
+- `plateforme-etudiante/styles.css`
+- `README.md`
+- `README-ZENCLASS2.md`
+- `HANDOFF-2026-04-24.md`
+- `zenclass_axe1_tache2/`
+
+### Verifications faites
+
+- Syntaxe JS OK sur `plateforme-etudiante/data.js`.
+- Syntaxe JS OK sur `plateforme-etudiante/activity-modules.js`.
+- Verification navigateur OK sur `activite.html?axe=axe-2&objectif=obj-3&activite=1`.
+- Test mobile rapide en `390x844`.
+- Console OK hors `favicon.ico` manquant.
+
 ## Handoff 2026-04-23
 
 ### axe-3 / obj-2 - Tache 8 integree
